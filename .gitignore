@@ -1,0 +1,12 @@
+node_modules/
+build/
+out/
+footage/
+footage_src/
+covers/ref/
+tools_ref/
+assets/*.wav
+assets/*.m4a
+.DS_Store
+*.log
+.artarch/

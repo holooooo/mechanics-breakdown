@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>塞尔达式化学引擎 · 效果预览 + 实现方法</title>
+<meta name="description" content="用 48×48 网格 + 三条规则，复刻塞尔达式「化学引擎」的教学原型。可交互预览、源码讲解、解析视频。">
+<link rel="icon" href="brand/avatar.png">
+<link rel="stylesheet" href="site.css">
+<script type="importmap">{"imports":{"three":"./vendor/three/build/three.module.js","three/addons/":"./vendor/three/examples/jsm/"}}</script>
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <img class="avatar" src="brand/avatar.png" alt="粑粑柑（梭哈ai版）">
+    <div class="who"><b>粑粑柑（梭哈ai版）</b><span>塞尔达式化学引擎 · 教学原型</span></div>
+  </div>
+  <nav class="tabs" role="tablist">
+    <button role="tab" data-tab="preview" class="on">效果预览</button>
+    <button role="tab" data-tab="method">实现方法</button>
+    <button role="tab" data-tab="video">解析视频</button>
+  </nav>
+</header>
+
+<main>
+<section id="tab-preview" class="tab on">
+  <div class="stage">
+    <canvas id="gl"></canvas>
+    <div class="rules">
+      <span class="chip ok">元素 → 材料 ✓</span>
+      <span class="chip ok">元素 → 元素 ✓</span>
+      <span class="chip no">材料 → 材料 ✗</span>
+    </div>
+    <div class="hint">点击地面点火 · 拖动旋转 · 滚轮缩放</div>
+    <div class="loading" id="loading">正在生成世界…</div>
+  </div>
+  <aside class="panel glass">
+    <div class="row">
+      <label>场景
+        <select id="scene">
+          <option value="meadow">草地燃烧</option>
+          <option value="lab">连锁机关</option>
+          <option value="lift">上升气流</option>
+        </select>
+      </label>
+      <label>天空
+        <select id="sky">
+          <option value="day">白天</option>
+          <option value="dawn">黎明</option>
+          <option value="dusk">黄昏</option>
+          <option value="storm">暴风雨</option>
+          <option value="night">夜晚</option>
+        </select>
+      </label>
+    </div>
+    <div class="btns">
+      <button id="b-fire">点一把火</button>
+      <button id="b-rain" class="toggle">下雨</button>
+      <button id="b-shock" class="toggle">通电</button>
+      <button id="b-ice">放冰块</button>
+      <button id="b-glider">放滑翔伞</button>
+      <button id="b-reset" class="warn">重置</button>
+    </div>
+    <div class="sl">
+      <label>风向 <output id="o-dir">东</output><input id="wdir" type="range" min="0" max="359" value="0"></label>
+      <label>风力 <output id="o-str">0.0</output><input id="wstr" type="range" min="0" max="2" step="0.1" value="0"></label>
+    </div>
+    <div class="row">
+      <button id="b-pause" class="toggle">暂停</button>
+      <button id="b-step">单步 ▸</button>
+      <label class="inl">速度
+        <select id="speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option><option value="4">4×</option></select>
+      </label>
+    </div>
+    <div class="dv">
+      <button id="b-data" class="toggle">数据视图</button>
+      <div class="radio" id="fields">
+        <label><input type="radio" name="field" value="0" checked>温度</label>
+        <label><input type="radio" name="field" value="1">湿度</label>
+        <label><input type="radio" name="field" value="3">燃料</label>
+        <label><input type="radio" name="field" value="2">电荷</label>
+      </div>
+    </div>
+    <div class="stats" id="stats"></div>
+  </aside>
+</section>
+
+<section id="tab-method" class="tab">
+  <article class="doc">
+    <h1>怎么用 48×48 网格做出“化学引擎”</h1>
+    <p class="lead">核心想法只有一句：<b>不要给每个物体写“被火烧了会怎样”，而是让元素（火、水、电、风）只和“材料属性”打交道，再让元素之间按固定规则互相影响。</b>剩下的涌现，都是规则组合出来的。</p>
+
+    <h2>三条规则（GDC 2017）</h2>
+    <div class="cards3">
+      <div class="card ok"><h3>元素 → 材料 ✓</h3><p>火遇到有燃料、够干的格子就点燃；电遇到导体就传导；水让格子变湿。元素可以改变材料的状态。</p></div>
+      <div class="card ok"><h3>元素 → 元素 ✓</h3><p>水浇灭火，热融化冰，冰水变成可导电的水，火产生上升气流。元素之间也有固定的互动规则。</p></div>
+      <div class="card no"><h3>材料 → 材料 ✗</h3><p>草不能直接点燃旁边的草。燃烧的格子只“放热”，邻居是否着火，由它自己的温度和属性决定。这条禁令让系统保持可预期。</p></div>
+    </div>
+
+    <h2>数据布局</h2>
+    <p>世界被切成 48×48 个格子，每个格子只是几个平行数组里的一个数（<code>Float32Array</code>，下标 <code>i = z*48 + x</code>）：</p>
+    <div class="tbl">
+      <div><code>temp</code><span>温度，环境 20，燃烧可达 900</span></div>
+      <div><code>wet</code><span>湿度 0..1，水格恒为 1</span></div>
+      <div><code>fuel</code><span>燃料 0..1，草多木少，石头为 0</span></div>
+      <div><code>burn</code><span>燃烧强度，渲染火焰用</span></div>
+      <div><code>ash</code><span>灰烬量，渲染焦黑用</span></div>
+      <div><code>ice</code><span>冰块质量</span></div>
+      <div><code>charge</code><span>电荷，沿导体逐格衰减传递</span></div>
+      <div><code>steam</code><span>蒸发 / 淬火强度，渲染蒸汽用</span></div>
+    </div>
+
+    <h2>规则流水线</h2>
+    <div class="pipe">
+      <div>事件<small>点火 · 下雨 · 通电 · 放冰</small></div><i>→</i>
+      <div>60Hz 规则 tick<small>燃烧 · 传热 · 雨水 · 融冰 · 导电 · 气流</small></div><i>→</i>
+      <div>状态数组<small>temp / wet / fuel / …</small></div><i>→</i>
+      <div>Three.js 渲染<small>只读数组，不参与计算</small></div>
+    </div>
+
+    <h2>装进你的游戏</h2>
+    <div class="cards3">
+      <div class="card"><h3>1. 模拟与渲染分离</h3><p>模拟是纯 JS、固定步长、确定性（不用 Math.random），可以在 Node 里测试。渲染每帧只读数组，所以同一份模拟能驱动预览、录屏、回放。</p></div>
+      <div class="card"><h3>2. 规则只看属性</h3><p>规则里不要出现“如果是草”。写成“fuel &gt; 0.05 且 wet &lt; 0.3”。新增一种材料，只需要给它一组属性，不用改任何规则。</p></div>
+      <div class="card"><h3>3. 先网格后三维</h3><p>先在二维网格里把规则跑顺，再用空间查询把三维物体映射到格子：位置 → 格子下标 → 读属性 → 写回事件。别一上来就做三维流体。</p></div>
+    </div>
+
+    <h2>源码查看</h2>
+    <p>下面直接读取 <code>src/sim.js</code> 里的真实代码，每条规则都是一个独立的小函数。</p>
+    <div class="srcbar">
+      <select id="region">
+        <option value="cell">cell · 格子与材料</option>
+        <option value="burn">burn · 燃烧</option>
+        <option value="heat">heat · 热传导</option>
+        <option value="rain">rain · 雨水</option>
+        <option value="melt">melt · 融冰</option>
+        <option value="charge">charge · 导电</option>
+        <option value="updraft">updraft · 上升气流</option>
+        <option value="glider">glider · 滑翔伞</option>
+      </select>
+      <span id="srcmeta"></span>
+    </div>
+    <pre class="code"><code id="code">加载中…</code></pre>
+
+    <h2>来源与说明</h2>
+    <ul class="src">
+      <li>GDC 2017：《Change and Constant: Breaking Conventions with The Legend of Zelda: Breath of the Wild》，Hidemaro Fujibayashi、Satoru Takizawa、Takuhiro Dohta。</li>
+      <li>日文报道：<a href="https://game.watch.impress.co.jp/docs/news/1047403.html" target="_blank" rel="noopener">GAME Watch · game.watch.impress.co.jp/docs/news/1047403</a></li>
+    </ul>
+    <p class="note">这是一个简化的教学原型，是原创实现，不含任天堂代码：用网格近似空间，没有流体模拟，电荷只靠相邻格传导，数值是为了好看和好懂调出来的，并非游戏内真实参数。</p>
+  </article>
+</section>
+
+<section id="tab-video" class="tab">
+  <div class="vwrap">
+    <img src="media/poster.jpg" alt="解析视频画面" style="width:100%;border-radius:16px;display:block">
+    <p class="note">完整解析视频「塞尔达化学引擎 · 机制拆解 01」发布在 B站 / 抖音，搜索作者 <b>粑粑柑（梭哈ai版）</b> 即可观看。视频里的 3D 画面都是用这个仓库的 <code>film.html</code> 逐帧渲染的。</p>
+  </div>
+</section>
+</main>
+<script type="module" src="app.js"></script>
+</body>
+</html>
