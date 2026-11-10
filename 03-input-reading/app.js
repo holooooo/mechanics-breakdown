@@ -1,6 +1,7 @@
 // 机制拆解 03 · 读指令简史 — 交互预览。原创教学原型，帧数为演示设计，不对应任何商业游戏。
 import { createWorld } from './src/world.js';
 import { createSim, CELL, cellAt, cellCenter } from './src/sim.js';
+import { pressure, weights, pick } from './src/pressure.js';
 import { createDuel, MOVES, DODGE, THRUST, FPS, HP, canReact, reactionFrames } from './src/duel.js';
 
 const $ = (id) => document.getElementById(id);
@@ -33,18 +34,28 @@ function showTab(name) {
 document.querySelectorAll('.tabs button').forEach((b) => (b.onclick = () => showTab(b.dataset.tab)));
 
 // ---------- source viewer ----------
-let src = null;
+const REGIONS = {
+  duel: [['modes', 'modes · 三种“知道”的时刻'], ['perceive', 'perceive · 感知延迟'], ['fair', 'fair · 公平性判定'], ['react', 'react · 敌人的闪避反应']],
+  pressure: [['pressure', 'pressure · 压力分'], ['weights', 'weights · 招式权重']],
+};
+const srcs = {};
 async function loadRegion() {
   const code = $('code');
   try {
-    if (!src) src = await fetch('./src/duel.js').then((r) => r.text());
+    const file = $('file').value, path = `src/${file}.js`;
+    if (!srcs[file]) srcs[file] = await fetch('./' + path).then((r) => r.text());
+    const src = srcs[file];
     const name = $('region').value;
     const m = src.match(new RegExp('//#region ' + name + '\\s*\\n([\\s\\S]*?)\\n\\s*//#endregion'));
     if (!m) { code.textContent = '// 没有找到区域 ' + name; return; }
-    $('srcmeta').textContent = `src/duel.js · #region ${name} · ${m[1].split('\n').length} 行`;
+    $('srcmeta').textContent = `${path} · #region ${name} · ${m[1].split('\n').length} 行`;
     code.innerHTML = highlight(m[1]);
   } catch (e) { code.textContent = '// 读取源码失败：' + e.message; }
 }
+$('file').onchange = () => {
+  $('region').innerHTML = REGIONS[$('file').value].map(([v, t]) => `<option value="${v}">${t}</option>`).join('');
+  loadRegion();
+};
 $('region').onchange = loadRegion;
 function highlight(s) {
   const re = /(\/\/[^\n]*)|('(?:\\.|[^'\\\n])*'|"(?:\\.|[^"\\\n])*"|`(?:\\.|[^`\\])*`)|\b(const|let|var|function|return|if|else|for|of|in|new|export|continue|break|while|true|false|null|this|switch|case)\b|\b(\d+\.?\d*(?:e-?\d+)?)\b|\b([A-Za-z_$][\w$]*)(?=\()/g;
@@ -69,6 +80,41 @@ Object.assign(sim, { CELL, cellAt, cellCenter });
 sim.schedule([{ t: 0, type: 'wind', x: 0.4, z: 0.2 }]);
 world.setSim(sim);
 
+// ---------- pressure (informational only) ----------
+const PRESS_WIN = 1.5, PICK_EVERY = 1.6, FIERCE = ['剑气', '红光投技'];
+const presses = []; // 最近的按键时刻（模拟时间，秒）
+let pickSlot = null, nextMove = null, pressureNow = null;
+const hash01 = (n) => { let x = (Math.imul(n + 1, 0x9e3779b1) ^ 0x85ebca6b) >>> 0; x = Math.imul(x ^ (x >>> 15), 0x2c1b3c6d) >>> 0; x = Math.imul(x ^ (x >>> 12), 0x297a2d39) >>> 0; return ((x ^ (x >>> 15)) >>> 0) / 4294967296; };
+function pressureTick() {
+  while (presses.length && presses[0] < simT - PRESS_WIN) presses.shift();
+  const st = D.state(), pl = st.player;
+  const input = { hp: clamp(pl.hp / HP), pressesPerSec: presses.length / PRESS_WIN, healing: pl.action === 'heal' && pl.phase !== 'idle' };
+  const p = pressure(input), ws = weights(p), total = ws.reduce((s, m) => s + m.w, 0);
+  const slot = Math.floor(simT / PICK_EVERY);
+  if (slot !== pickSlot) { pickSlot = slot; nextMove = { name: pick(p, hash01(slot)), slot, at: simT }; }
+  const fierce = ws.filter((m) => FIERCE.includes(m.name)).reduce((s, m) => s + m.w, 0) / total;
+  pressureNow = { ...input, p, fierce, weights: ws.map((m) => ({ name: m.name, pct: m.w / total * 100 })), next: nextMove.name };
+  return pressureNow;
+}
+let pressKey = '';
+function pressurePanel() {
+  const s = pressureTick();
+  const hot = FIERCE.includes(nextMove.name);
+  const key = [s.p.toFixed(3), s.pressesPerSec.toFixed(2), s.hp.toFixed(2), s.healing, nextMove.slot, nextMove.name].join('|');
+  if (key === pressKey) return; pressKey = key;
+  $('pfill').style.width = (s.p * 100).toFixed(0) + '%';
+  $('pval').textContent = s.p.toFixed(2);
+  $('pins').innerHTML = `<span>血量 <b>${Math.round(s.hp * 100)}%</b></span><span>按键 <b>${s.pressesPerSec.toFixed(1)}</b>/秒</span><span>喝药 <b>${s.healing ? '是' : '否'}</b></span>`;
+  const max = Math.max(...s.weights.map((w) => w.pct));
+  $('pw').innerHTML = s.weights.map((w) => `<div class="pr${FIERCE.includes(w.name) ? ' fierce' : ''}"><span>${w.name}</span><div class="pb"><i style="width:${(w.pct / max * 100).toFixed(0)}%"></i></div><em>${w.pct.toFixed(1)}%</em></div>`).join('');
+  const el = $('pnext');
+  if (el.textContent !== nextMove.name || el.dataset.slot !== String(nextMove.slot)) {
+    el.textContent = nextMove.name; el.dataset.slot = nextMove.slot;
+    el.classList.toggle('hot', hot);
+    if (hot) el.animate([{ background: 'rgba(255,60,60,.9)', transform: 'scale(1.15)' }, { background: 'rgba(255,60,60,.18)', transform: 'none' }], { duration: 700 });
+  }
+}
+
 // ---------- duel state ----------
 const PX = -0.95, EX = 0.95, FZ = 0.2;
 let mode = 'perceive', delay = reactionFrames(250), aggression = 1;
@@ -86,6 +132,7 @@ function newDuel() {
 const curFrame = () => Math.round(now * FPS);
 function act(kind) {
   if (!MOVES[kind]) return;
+  presses.push(simT);
   const frame = curFrame();
   if (acts.some((a) => a.frame === frame)) return; // 同一帧只算一次
   acts.push({ frame, kind });
@@ -309,7 +356,7 @@ function draw() {
   const st = D.state();
   const fighters = poses(st);
   world.render(10 + simT, { cam: camSide(simT, aspectDist(), 2.0, 1.5708 + 0.25), sky: 'day', bloom: 0.6, fighters, noTrees: true });
-  hud(fighters, st); chart(); fairPanel(); renderLog(); frames++;
+  hud(fighters, st); chart(); fairPanel(); pressurePanel(); renderLog(); frames++;
 }
 function frame(t) {
   requestAnimationFrame(frame);
@@ -329,6 +376,9 @@ window.APP = {
   get D() { return D; }, get log() { return log; }, get acts() { return acts; }, get mode() { return mode; }, get delay() { return delay; },
   get now() { return now; }, get frames() { return frames; }, get paused() { return paused; },
   state: () => D.state(),
+  get pressure() { return pressureNow || pressureTick(); },
+  get presses() { return presses; },
+  get simT() { return simT; },
   reset() { newDuel(); log.length = 0; renderLog.k = ''; },
   step(dt) { advance(dt, true); draw(); },
 };

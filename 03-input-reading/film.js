@@ -2,6 +2,7 @@
 import { createWorld } from './src/world.js';
 import { createSim, CELL, cellAt, cellCenter } from './src/sim.js';
 import { createDuel, MOVES, DODGE, THRUST, FPS } from './src/duel.js';
+import { weights as pWeights } from './src/pressure.js';
 
 const $ = id => document.getElementById(id);
 const TL = window.TIMELINE;
@@ -20,7 +21,8 @@ const L = (id, i) => SC[id].lines[i];
 const rel = (id, i, o = 0) => L(id, i).start - SC[id].start + o;
 const script = await fetch('./script.json').then(r => r.json());
 const code = await fetch('./src/duel.js').then(r => r.text());
-const FOOT_END = L('hook', 2).end + 0.3;
+const pcode = await fetch('./src/pressure.js').then(r => r.text());
+const FOOT_END = L('hook', 3).end + 0.3;
 const world = await createWorld($('gl'), { width: 1920, height: 1080, quality: 1 });
 window.WORLD = world;
 
@@ -92,19 +94,19 @@ const shots = {
     return { dd, dT: lt, view: { cam, sky: { a: 'dusk', b: 'day', k: 0.25 }, bloom: 0.7 } };
   },
   levels(t, lt) {
-    const modes = ['button', 'button', 'state', 'perceive', 'perceive'];
+    const modes = ['button', 'button', 'button', 'state', 'perceive', 'perceive'];
     const li = Math.max(0, SC.levels.lines.findIndex(l => t < l.end + 0.2));
     const mode = modes[li];
     const key = 'levels' + li, a0 = rel('levels', li);
     const dd = duel(key, { mode, delay: 15 }, loopActs(a0, a0 + 6, 2.2, 'slash', 0.5));
-    return { dd, dT: lt, mode, view: { cam: camSide(lt, 4.9, 1.2), sky: 'day' }, chart: li >= 1 };
+    return { dd, dT: lt, mode, view: { cam: camSide(lt, 4.9, 1.2), sky: 'day' }, chart: li >= 2 };
   },
   arcade(t, lt) {
     const dd = duel('arcade', { mode: 'button' }, loopActs(0, SC.arcade.end - SC.arcade.start, 1.9, 'quick', 0.4));
     return { dd, dT: lt, mode: 'button', view: { cam: camSide(lt, 6, 1.8, 1.5708 - 0.3), sky: { a: 'day', b: 'dusk', k: 0.4 } }, dim: 0.7 };
   },
   souls(t, lt) {
-    const acts = [[rel('souls', 1, 2.6), 'heal'], [rel('souls', 2, 1.0), 'heal'], [rel('souls', 3, 0.6), 'heal']];
+    const acts = [[rel('souls', 0, 0.5), 'heal'], [rel('souls', 3, 1.0), 'heal'], [rel('souls', 4, 0.8), 'heal']];
     const dd = duel('souls', { mode: 'state', aggression: 1 }, acts);
     return { dd, dT: lt, mode: 'state', view: { cam: camSide(lt, 4.4, 1.3, 1.5708 + 0.45), sky: { a: 'dusk', b: 'storm', k: 0.25 } }, vigL: 1 };
   },
@@ -113,11 +115,15 @@ const shots = {
     return { dd, dT: lt, view: { cam: camSide(lt, 8, 2.5), sky: 'night' }, dim: 0.93 };
   },
   pb0(t, lt) {
-    const dd = duel('pb0', { mode: 'perceive', delay: 30 }, loopActs(rel('pb0', 3) - 0.3, SC.pb0.end - SC.pb0.start, 1.9, 'slash', 0.3));
+    const dd = duel('pb0', { mode: 'perceive', delay: 30 }, loopActs(rel('pb0', 2) + 3, SC.pb0.end - SC.pb0.start, 1.9, 'slash', 0.3));
     return { dd, dT: lt, mode: 'perceive', delay: 30, view: { cam: camSide(lt, 5.2, 1.4, 1.5708 - 0.35), sky: { a: 'dusk', b: 'day', k: 0.3 } }, shachi: true };
   },
+  pressure(t, lt) {
+    const dd = duel('pressure', { mode: 'perceive', delay: 15 }, loopActs(rel('pressure', 5) - 0.2, SC.pressure.end - SC.pressure.start, 1.1, 'quick', 0.2));
+    return { dd, dT: lt, mode: 'perceive', view: { cam: camSide(lt, 5.4, 1.3, 1.5708 - 0.5), sky: { a: 'dusk', b: 'storm', k: 0.35 } } };
+  },
   impl(t, lt) {
-    const acts = [[rel('impl', 1, 1.0), 'slash'], [rel('impl', 1, 3.4), 'slash'], [rel('impl', 2, 0.6), 'slash'], [rel('impl', 2, 2.9), 'quick'], [rel('impl', 3, 0.5), 'quick']];
+    const acts = [[rel('impl', 1, 1.0), 'slash'], [rel('impl', 1, 3.4), 'slash'], [rel('impl', 2, 0.6), 'slash'], [rel('impl', 2, 2.9), 'quick'], [rel('impl', 3, 0.6), 'quick'], [rel('impl', 3, 2.4), 'quick'], [rel('impl', 4, 0.6), 'slash']];
     const dd = duel('impl', { mode: 'perceive', delay: 15 }, acts);
     return { dd, dT: lt, mode: 'perceive', view: { cam: camSide(lt, 5.4, 1.3, 1.5708 + 0.5), sky: { a: 'day', b: 'dusk', k: 0.5 } }, chart: true };
   },
@@ -147,10 +153,10 @@ const icons = {
   coin: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M8 9h8M12 9v8M9 13h6"/></svg>',
   fav: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.3l6.2 3.7-1.6-7 5.4-4.7-7.2-.6L12 2 9.2 8.7 2 9.3l5.4 4.7-1.6 7z"/></svg>',
 };
-function codeHTML(region) {
-  const m = code.indexOf('//#region ' + region); if (m < 0) return '';
-  const end = code.indexOf('//#endregion', m);
-  const lines = code.slice(code.indexOf('\n', m) + 1, end).replace(/\s+$/, '').split('\n').slice(0, 14);
+function codeHTML(region, src = code) {
+  const m = src.indexOf('//#region ' + region); if (m < 0) return '';
+  const end = src.indexOf('//#endregion', m);
+  const lines = src.slice(src.indexOf('\n', m) + 1, end).replace(/\s+$/, '').split('\n').slice(0, 14);
   const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   return lines.map(ln => { let h = esc(ln); const ci = h.indexOf('//'); let c = ci >= 0 ? h.slice(0, ci) : h; const cm = ci >= 0 ? h.slice(ci) : '';
     c = c.replace(/\b(function|const|let|if|else|return|switch|case|export)\b/g, '<span class="kw">$1</span>').replace(/\b(\d+)\b/g, '<span class="num">$1</span>').replace(/\b([a-zA-Z_]\w*)(?=\()/g, '<span class="fn">$1</span>').replace(/('[^']*')/g, '<span class="str">$1</span>');
@@ -189,7 +195,8 @@ function cards(id, t, lt, shot) {
   if (id === 'levels') {
     const ls = SC.levels.lines;
     const item = (i, n, t1, t2, col) => { const on = t >= ls[i].start && t < (ls[i + 1]?.start ?? 1e9); return `<div class="rule${on ? '' : ''}" style="${pop(ls[i].start + 0.2)};${on ? `border-color:${col};box-shadow:0 0 24px ${col}55` : 'opacity:.55'}"><div class="n" style="color:${col}">${n}</div><div><div class="eq" style="font-size:30px">${t1}</div><small>${t2}</small></div></div>`; };
-    return `<div style="position:absolute;left:80px;top:170px;width:640px">${item(1, '①', '读按键', '按下那一帧就知道 · 0 帧', '#ff6b6b')}${item(2, '②', '读动作', '动作一开始就被通知 · 约 2 帧', '#ffb347')}${item(3, '③', '看画面', '看到抬手 + 反应 0.25 秒 ≈ 15 帧', '#7ee08f')}</div>`;
+    const fu = win(t, ls[1].start + 0.2, ls[2].start + 0.1, 0.35);
+    return `<div class="card" style="left:50%;transform:translateX(-50%);top:180px;width:980px;text-align:center;opacity:${fu.toFixed(2)}"><h3>先认识一个单位</h3><div class="big" style="font-size:54px">1 帧 = <span style="color:#ffb347">1/60 秒</span> ≈ 16.7 毫秒</div><p style="margin-top:12px;font-size:26px">人看到画面再按键 ≈ 0.25 秒 ≈ <b style="color:#7ee08f">15 帧</b></p></div><div style="position:absolute;left:80px;top:170px;width:640px;opacity:${ramp(t, ls[2].start, 0.3).toFixed(2)}">${item(2, '①', '读按键', '按下那一帧就知道 · 0 帧', '#ff6b6b')}${item(3, '②', '读动作', '动作一开始就被通知 · 约 2 帧', '#ffb347')}${item(4, '③', '看画面', '看到抬手 + 反应 0.25 秒 ≈ 15 帧', '#7ee08f')}</div>`;
   }
   if (id === 'arcade') {
     const l1 = L('arcade', 1), l2 = L('arcade', 2);
@@ -200,18 +207,18 @@ function cards(id, t, lt, shot) {
   }
   if (id === 'souls') {
     const l = SC.souls.lines;
-    return `<div class="card" style="right:90px;top:170px;width:760px;${pop(l[2].start + 0.3)}"><h3>Elden Ring AI 文档（玩家整理）</h3>
+    return `<div class="card" style="right:90px;top:170px;width:760px;${pop(l[3].start + 0.3)}"><h3>Elden Ring AI 文档（玩家整理）</h3>
         <pre style="font:22px/1.6 'SF Mono',Menlo,monospace;color:#dfe6ea;margin:0">INTERUPT_UseItem
 <span style="color:#7f9aa8">-- 目标使用道具时触发</span>
 <span style="color:#7f9aa8">-- 由玩家行为脚本 act(143, 1) 调用</span></pre>
         <div style="margin-top:14px;display:flex;gap:12px;align-items:center;font-size:24px"><span class="chip" style="background:#3a3f48;margin:0">按键</span><span style="color:#ff6b6b;font-weight:900">✗</span><span class="chip" style="background:#ffb347;color:#2a1600;margin:0">动作开始</span><span style="color:#7ee08f;font-weight:900">✓</span></div></div>
-      <div class="card" style="right:90px;top:560px;width:760px;padding:20px 30px;${pop(l[4].start + 0.2)}"><p style="font-size:26px;color:#fff">FromSoftware 从未正式承认 · 以上为社区分析</p></div>`;
+      <div class="card" style="right:90px;top:560px;width:760px;padding:20px 30px;${pop(l[4].start + 2.2)}"><p style="font-size:26px;color:#fff">FromSoftware 从未正式承认 · 以上为社区分析</p></div>`;
   }
   if (id === 'mantis') {
     const l = SC.mantis.lines, k1 = appear(l[1].start + 0.2), sw = ramp(t, l[2].start + 1.2, 0.8);
     const shake = t > l[1].start + 2.0 && t < l[2].start ? Math.sin(t * 70) * 6 : 0;
     const games = ['恶魔城 月下夜想曲', '幻想水浒传', '心跳回忆', '警察故事'];
-    return `<div style="position:absolute;left:0;right:0;top:150px;text-align:center;${pop(l[0].start + 0.2)}"><div style="font:900 26px 'SF Mono',Menlo,monospace;letter-spacing:10px;color:#7ee08f">METAL GEAR SOLID · 1998</div><div style="font-size:66px;font-weight:900;margin-top:10px">心理螳螂 <span style="color:#7ee08f">PSYCHO MANTIS</span></div></div>
+    return `<div style="position:absolute;left:0;right:0;top:150px;text-align:center;${pop(l[1].start - 0.1)}"><div style="font:900 26px 'SF Mono',Menlo,monospace;letter-spacing:10px;color:#7ee08f">METAL GEAR SOLID · 1998</div><div style="font-size:66px;font-weight:900;margin-top:10px">心理螳螂 <span style="color:#7ee08f">PSYCHO MANTIS</span></div></div>
       <div class="card" style="left:150px;top:400px;width:640px;opacity:${k1.toFixed(2)}"><h3>MEMORY CARD · 记忆卡</h3>${games.map((g, i) => `<div style="font:600 26px 'SF Mono',Menlo,monospace;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.1);opacity:${appear(l[1].start + 0.6 + i * 0.35).toFixed(2)}">▸ ${g}</div>`).join('')}<p style="margin-top:10px;font-size:20px">示例：科乐美游戏存档</p></div>
       <div style="position:absolute;right:170px;top:380px;width:640px;height:420px;opacity:${k1.toFixed(2)}">
         <svg width="640" height="420" viewBox="0 0 640 420"><g transform="translate(${(120 + shake).toFixed(1)},40)">
@@ -225,27 +232,39 @@ function cards(id, t, lt, shot) {
   }
   if (id === 'pb0') {
     const l = SC.pb0.lines;
-    const qk = win(t, l[1].start + 0.2, l[2].start + 0.3), ak = win(t, l[2].start + 0.2, l[3].start, 0.3);
+    const qk = win(t, l[1].start + 0.2, l[2].start + 0.3), ak = win(t, l[2].start + 0.2, SC.pb0.end - 0.2, 0.3);
     return `<div class="card" style="left:50%;transform:translateX(-50%);top:640px;width:1180px;text-align:center;opacity:${qk.toFixed(2)}"><div style="font-size:44px;font-weight:900">「制作中完全没有使用 <span style="color:#ffb347">读指令</span>」</div><p style="margin-top:10px;font-size:22px">影之刃零制作人 梁其伟 · Automaton 采访（2026-10）</p></div>
-      <div class="card" style="left:50%;transform:translateX(-50%);top:640px;width:1180px;text-align:center;opacity:${ak.toFixed(2)}"><div style="font-size:40px;font-weight:900">最高难度 <span style="color:#ff6b6b">逆天者</span>：Boss 随机应变，没有固定套路</div><p style="margin-top:10px;font-size:22px">开发者采访原话概述</p></div>
-      <div class="card" style="left:90px;top:180px;width:620px;${pop(l[3].start + 0.2)}"><h3>入门难度 · 不削血量</h3>
+      <div class="card" style="left:50%;transform:translateX(-50%);top:640px;width:1180px;text-align:center;opacity:${ak.toFixed(2)}"><div style="font-size:40px;font-weight:900">最高难度 <span style="color:#ff6b6b">逆天者</span>：Boss 随机应变 · 入门难度：反应变慢</div><p style="margin-top:10px;font-size:22px">开发者采访内容概述（Automaton）</p></div>
+      <div class="card" style="left:90px;top:180px;width:620px;display:none"><h3>入门难度 · 不削血量</h3>
         <div style="font-size:26px;margin:6px 0">敌人反应速度 <b style="color:#7ee08f">↓</b></div><div style="font-size:26px;margin:6px 0">进攻欲望 <b style="color:#7ee08f">↓</b></div>
         <div style="margin-top:10px;font:600 22px 'SF Mono',Menlo,monospace;color:#cfd8de">perceive delay = ${shot.delay} 帧</div></div>`;
+  }
+  if (id === 'pressure') {
+    const l = SC.pressure.lines;
+    const c1 = win(t, l[1].start + 0.3, l[2].start + 0.1, 0.35), c2 = win(t, l[2].start + 0.2, l[3].start + 0.1, 0.35), c3 = win(t, l[3].start + 0.2, l[4].start + 0.1, 0.35), c4 = win(t, l[4].start + 0.2, l[5].start + 0.1, 0.35);
+    const pv = clamp((t - l[5].start) / 3.5) ;
+    const ws = pWeights(0.15 + 0.8 * pv), wt = ws.reduce((a, b) => a + b.w, 0);
+    const chartK = ramp(t, l[5].start + 0.2, 0.4);
+    return `<div class="card" style="left:70px;top:150px;width:640px;opacity:${c1.toFixed(2)}"><h3>压力系统（UP 主命名 · 实测推测）</h3>${['血量', '按键频率', '喝药', '反应速度'].map((x, i) => `<div style="font-size:30px;font-weight:800;padding:6px 0;opacity:${ramp(t, l[1].start + 1.2 + i * 0.7, 0.3).toFixed(2)}">▸ ${x}</div>`).join('')}</div>
+      <div class="card" style="left:70px;top:150px;width:640px;opacity:${c2.toFixed(2)}"><h3>压力 → 招式</h3><div class="flow" style="flex-wrap:wrap"><div class="node">越慌<small>压力分 ↑</small></div><div class="arr">→</div><div class="node" style="border-color:#ff6b6b">狠招<small>红光 / 剑气</small></div></div></div>
+      <div class="card" style="left:70px;top:150px;width:640px;opacity:${c3.toFixed(2)}"><h3>UP 主的测试</h3><div style="font-size:30px;font-weight:800">狂按闪避 → <span style="color:#ff6b6b">剑气</span></div><div style="font-size:30px;font-weight:800;margin-top:8px">喝药 → <span style="color:#ff6b6b">剑气</span></div></div>
+      <div class="card" style="left:70px;top:150px;width:700px;opacity:${c4.toFixed(2)}"><h3>游民星空 · 2026-11-01</h3><div style="font-size:30px;font-weight:800">「你越不会躲的招，它就越频繁出」</div><p style="margin-top:8px;font-size:20px">报道中引用的玩家评论</p></div>
+      <div class="card" style="left:90px;top:170px;width:660px;opacity:${chartK.toFixed(2)}"><h3>压力 ${(0.15 + 0.8 * pv).toFixed(2)} · 招式权重（教学示意）</h3>${ws.map(m => `<div style="display:flex;align-items:center;gap:14px;margin:10px 0"><div style="width:150px;font-size:24px;font-weight:700">${m.name}</div><div style="flex:1;height:24px;border-radius:12px;background:rgba(255,255,255,.08);overflow:hidden"><i style="display:block;height:100%;width:${(m.w / wt * 100).toFixed(1)}%;background:${m.name.includes('红光') || m.name.includes('剑气') ? 'linear-gradient(90deg,#ff5a3a,#ff9a6a)' : '#7aa2c8'}"></i></div><div style="width:64px;text-align:right;font:600 20px 'SF Mono',Menlo,monospace">${(m.w / wt * 100).toFixed(0)}%</div></div>`).join('')}</div>`;
   }
   if (id === 'impl') {
     const l = SC.impl.lines;
     return `<div class="card" style="left:90px;top:170px;width:620px;${pop(l[2].start + 0.3)}"><h3>公平规则</h3><div class="big" style="font-size:40px">前摇 ≥ 延迟 + 闪避起手</div>
         <p style="margin-top:10px;font-size:22px">慢斩 22 ≥ 15 + 6 → 躲得开<br>快斩 9 &lt; 21 → 躲不开</p></div>
-      <div class="card" style="left:90px;top:470px;width:620px;${pop(l[3].start + 0.2)}"><h3>难度 = 两个旋钮</h3><div style="font-size:28px">感知延迟（帧） · 进攻欲望</div></div>`;
+      <div class="card" style="left:90px;top:470px;width:620px;${pop(l[4].start + 0.2)}"><h3>难度 = 三个旋钮</h3><div style="font-size:28px">感知延迟 · 进攻欲望 · 招式权重表</div></div>`;
   }
   if (id === 'demo') {
     return `<div class="card" style="left:90px;top:170px;width:600px;${pop(SC.demo.start + 0.3)}"><h3>效果预览 · 网页可玩</h3><p style="font-size:24px;color:#fff">切换三种敌人：读按键 / 读动作 / 看画面</p><p style="font-size:20px">源码：src/duel.js</p></div>
       <div style="position:absolute;left:0;right:0;top:120px;text-align:center"><span class="chip" style="font-size:40px;padding:14px 40px;background:${{ button: '#ff6b6b', state: '#ffb347', perceive: '#5fd3a0' }[shot.mode]};color:#111">${MODE_LABEL[shot.mode]}</span></div>`;
   }
   if (id === 'outro') {
-    const l0 = L(id, 0), l1 = L(id, 1); const k = appear(SC.outro.start + 0.1, 0.7);
+    const l0 = L(id, 1), l1 = L(id, 2); const cr = win(t, SC.outro.start + 0.1, l0.start + 0.1, 0.4); const k = appear(l0.start - 0.2, 0.7);
     const on = n => t > l0.start + 1.6 + n * 0.45; const follow = appear(l0.start + 3.0);
-    return `<div class="endcard" style="opacity:${k.toFixed(3)}"><img class="av" src="brand/avatar.png" style="transform:scale(${(0.8 + 0.2 * k).toFixed(3)})"><div class="id">粑粑柑（梭哈ai版）</div><div class="sub">机制拆解 · 用代码拆游戏</div>
+    return `<div class="card" style="left:50%;transform:translateX(-50%);top:150px;width:1200px;opacity:${cr.toFixed(2)}"><h3>感谢以下作者的实测与素材</h3>${[['尾巴尾巴啊', '《为了打赢魂大人 读指令已经是最基础的武功了》'], ['Oceeart', '《新娘阿花五连投技，拼尽全力无法战胜》'], ['市井小羿', '《详解巴流弦一郎的喝葫芦读指令机制》'], ['还会再会吗m', '《女武神：这货怎么读指令？》'], ['努力做一个Dancer', '《合金装备1经典boss战》'], ['游民星空', '《影之刃零AI确实智能：新娘知道你不会躲》']].map(([a, b]) => `<div style="font-size:26px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.1)"><b style="color:#ffcf73">@${a}</b>　${b}</div>`).join('')}<p style="margin-top:12px;font-size:20px">均来自 B 站 / 游民星空，链接见简介</p></div><div class="endcard" style="opacity:${k.toFixed(3)}"><img class="av" src="brand/avatar.png" style="transform:scale(${(0.8 + 0.2 * k).toFixed(3)})"><div class="id">粑粑柑（梭哈ai版）</div><div class="sub">机制拆解 · 用代码拆游戏</div>
       <div class="btns">${[['like', '点赞'], ['coin', '投币'], ['fav', '收藏']].map(([ic, lb], n) => `<div class="btn${on(n) ? ' on' : ''}">${icons[ic]}${lb}</div>`).join('')}</div>
       <div class="follow" style="opacity:${follow.toFixed(3)};transform:scale(${(0.9 + 0.1 * follow).toFixed(3)})">+ 关注</div>
       <div style="margin-top:26px;font-size:24px;color:#ffe0a0;opacity:${appear(l1.start + 0.3).toFixed(3)}">你被哪个 Boss 读得最狠？评论区见</div></div>`;
@@ -255,11 +274,11 @@ function cards(id, t, lt, shot) {
 function big(id, t) {
   let k = 0, html = '';
   if (id === 'hook') {
-    const q = win(t, L('hook', 2).start + 0.05, FOOT_END, 0.3), b = win(t, L('hook', 3).start + 0.3, SC.hook.end, 0.4);
+    const q = win(t, L('hook', 3).start + 0.05, FOOT_END, 0.3), b = win(t, L('hook', 4).start + 0.3, SC.hook.end, 0.4);
     if (q > 0) { k = q; html = '<div class="l1">它是不是在<span class="acc">偷看你的手柄</span>？</div><div class="l2">IS IT READING YOUR INPUTS?</div>'; }
     if (b > 0) { k = b; html = '<div class="l1"><span class="acc">读指令</span>简史</div><div class="l2">机制拆解 03</div>'; }
   } else if (id === 'levels') {
-    const a = win(t, L('levels', 4).start + 0.2, SC.levels.end, 0.35);
+    const a = win(t, L('levels', 5).start + 0.2, SC.levels.end, 0.35);
     if (a > 0) { k = a; html = '<div class="l1">快了 <span class="acc">十几帧</span> = 被读了</div>'; }
   } else if (id === 'souls') {
     const a = win(t, L('souls', 0).start + 0.2, L('souls', 0).end + 0.3, 0.3);
@@ -267,6 +286,9 @@ function big(id, t) {
   } else if (id === 'pb0') {
     const a = win(t, L('pb0', 0).start + 0.05, L('pb0', 0).end + 0.2, 0.25);
     if (a > 0) { k = a; html = '<div class="l1">那 <span class="acc">影之刃零</span> 呢？</div>'; }
+  } else if (id === 'pressure') {
+    const a = win(t, L('pressure', 5).start + 3.4, SC.pressure.end, 0.35);
+    if (a > 0) { k = a; html = '<div class="l1">读的不是按键，是<span class="acc">你的状态</span></div>'; }
   } else if (id === 'impl') {
     const a = win(t, L('impl', 0).start + 0.1, L('impl', 0).end + 0.2, 0.3);
     if (a > 0) { k = a; html = '<div class="l1">给敌人一段<span class="acc">反应时间</span></div>'; }
@@ -275,10 +297,14 @@ function big(id, t) {
 }
 
 // footage windows: [scene, from(abs), to(abs), dir, count, label]
+const CR_BRIDE = '实机画面 · 影之刃零 · 来自 B站 @Oceeart《新娘阿花五连投技，拼尽全力无法战胜》';
+const CR_WEIBA = '实机画面与测试 · 来自 B站 @尾巴尾巴啊《为了打赢魂大人 读指令已经是最基础的武功了》';
 const FOOT = [
-  ['hook', 0, FOOT_END, 'footage/hook', 340, t => t < 4.3 || t > 8.0 ? '实机画面 · 影之刃零（© S-GAME）' : '实机画面 · 只狼：影逝二度（© FromSoftware）'],
-  ['souls', SC.souls.start, SC.souls.start + 5.2, 'footage/souls', 158, () => '实机画面 · 只狼：影逝二度（© FromSoftware）'],
-  ['pb0', SC.pb0.start, SC.pb0.start + 10.2, 'footage/pb0', 306, () => '实机画面 · 影之刃零（© S-GAME）'],
+  ['hook', 0, FOOT_END, 'footage/hook2', 561, t => t < 11.4 ? CR_BRIDE : t < 15.4 ? '实机画面 · 只狼 · 来自 B站 @市井小羿《详解巴流弦一郎的喝葫芦读指令机制》' : '实机画面 · 影之刃零官方预告（© S-GAME）'],
+  ['souls', L('souls', 1).start, L('souls', 2).end + 0.2, 'footage/souls2', 264, t => t < 5.2 ? '实机画面 · 只狼 · 来自 B站 @市井小羿《详解巴流弦一郎的喝葫芦读指令机制》' : '实机画面 · 艾尔登法环 · 来自 B站 @还会再会吗m《女武神：这货怎么读指令？》'],
+  ['mantis', SC.mantis.start, L('mantis', 0).end + 0.2, 'footage/mantis2', 99, () => '实机画面 · 合金装备 · 来自 B站 @努力做一个Dancer《合金装备1经典boss战，如何不换手柄打败螳螂》'],
+  ['pb0', SC.pb0.start, SC.pb0.start + 10.2, 'footage/pb0', 306, () => '实机画面 · 影之刃零官方实机演示（© S-GAME）'],
+  ['pressure', SC.pressure.start, L('pressure', 4).end + 0.1, 'footage/pressure', 780, t => t < 20.8 ? CR_WEIBA : CR_BRIDE],
 ];
 
 window.renderFrame = async function (t) {
@@ -301,9 +327,10 @@ window.renderFrame = async function (t) {
   op($('panel'), id === 'impl' || id === 'arcade' ? 0 : pk);
   if (showPanel) { $('kicker').textContent = script.scenes[si].kicker; $('title').textContent = script.scenes[si].title.replace('，', '，\n'); $('bullets').innerHTML = ''; }
   let html = cards(id, t, lt, shot);
-  if (shot.chart) html += chart(shot, easeOut(lt / 0.6) * clamp(toNext / 0.4) * (id === 'levels' ? ramp(t, L('levels', 1).start, 0.5) : 1));
+  if (shot.chart) html += chart(shot, easeOut(lt / 0.6) * clamp(toNext / 0.4) * (id === 'levels' ? ramp(t, L('levels', 2).start, 0.5) : 1));
   // fighter tags
-  if (id !== 'mantis' && id !== 'outro' && !(id === 'hook' && t < FOOT_END)) {
+  const inFoot = FOOT.some(([sid, a, b]) => sid === id && t >= a && t < b);
+  if (id !== 'mantis' && id !== 'outro' && !inFoot) {
     const e = fighters[1], p0 = world.project(e.x, 1.95, e.z), p = { x: clamp(p0.x, 200, 1720), y: clamp(p0.y, 190, 900) };
     const modeTag = shot.mode ? `<div style="position:absolute;left:${p.x.toFixed(0)}px;top:${p.y.toFixed(0)}px;transform:translate(-50%,-100%);font-size:22px;font-weight:800;padding:6px 14px;border-radius:10px;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.25)">敌人 · ${MODE_LABEL[shot.mode]}${st.enemy.state === 'waiting' ? ' <span style="color:#ffcf73">反应中…</span>' : st.enemy.state === 'noticed' ? ' <span style="color:#ff6b6b">!</span>' : ''}</div>` : '';
     let bars = '';
@@ -317,9 +344,9 @@ window.renderFrame = async function (t) {
   setHTML($('cards'), html);
   // code panel
   let codeK = 0, reg = null;
-  if (id === 'levels') { codeK = win(t, L('levels', 1).start + 0.5, L('levels', 4).start, 0.4); reg = 'modes'; }
-  if (id === 'impl') { codeK = win(t, L('impl', 1).start + 0.2, SC.impl.end - 0.2, 0.5); reg = t < L('impl', 2).start ? 'perceive' : 'fair'; }
-  if (reg && $('coderegion').textContent !== '//#region ' + reg) { $('codebody').innerHTML = codeHTML(reg); $('coderegion').textContent = '//#region ' + reg; $('codefile').textContent = 'src/duel.js'; }
+  if (id === 'levels') { codeK = win(t, L('levels', 2).start + 0.5, L('levels', 5).start, 0.4); reg = 'modes'; }
+  if (id === 'impl') { codeK = win(t, L('impl', 1).start + 0.2, SC.impl.end - 0.2, 0.5); reg = t < L('impl', 2).start ? 'perceive' : t < L('impl', 3).start ? 'fair' : 'p:weights'; }
+  if (reg && $('coderegion').dataset.r !== reg) { $('coderegion').dataset.r = reg; const pr = reg.startsWith('p:'); const rg = pr ? reg.slice(2) : reg; $('codebody').innerHTML = codeHTML(rg, pr ? pcode : code); $('coderegion').textContent = '//#region ' + rg; $('codefile').textContent = pr ? 'src/pressure.js' : 'src/duel.js'; }
   op($('code'), codeK); tf($('code'), `translateY(${((1 - codeK) * 24).toFixed(1)}px)`);
   setHTML($('hud'), ''); op($('inspector'), 0); op($('legend'), 0); setHTML($('anno'), '');
   // footage

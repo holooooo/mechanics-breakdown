@@ -35,6 +35,13 @@
   "gain": 0.3
  },
  {
+  "scene": "pressure",
+  "line": 0,
+  "offset": -0.15,
+  "type": "whoosh",
+  "gain": 0.3
+ },
+ {
   "scene": "impl",
   "line": 0,
   "offset": -0.15,
@@ -58,42 +65,35 @@
  {
   "scene": "hook",
   "line": 0,
-  "offset": -0.3,
+  "offset": 0,
   "type": "zap",
   "gain": 0.45
  },
  {
   "scene": "hook",
   "line": 0,
-  "offset": 0.8,
+  "offset": 1.2,
   "type": "zap",
   "gain": 0.45
  },
  {
   "scene": "hook",
   "line": 0,
-  "offset": 1.8,
+  "offset": 2.5,
   "type": "zap",
   "gain": 0.45
  },
  {
   "scene": "hook",
   "line": 0,
-  "offset": 2.7,
+  "offset": 3.8,
   "type": "zap",
   "gain": 0.45
  },
  {
   "scene": "hook",
   "line": 0,
-  "offset": 4,
-  "type": "zap",
-  "gain": 0.45
- },
- {
-  "scene": "hook",
-  "line": 0,
-  "offset": 5.2,
+  "offset": 5,
   "type": "zap",
   "gain": 0.45
  },
@@ -107,14 +107,14 @@
  {
   "scene": "hook",
   "line": 0,
-  "offset": 7.8,
+  "offset": 7.5,
   "type": "zap",
   "gain": 0.45
  },
  {
   "scene": "hook",
   "line": 0,
-  "offset": 8.9,
+  "offset": 8.8,
   "type": "zap",
   "gain": 0.45
  },
@@ -128,6 +128,41 @@
  {
   "scene": "hook",
   "line": 0,
+  "offset": 11.6,
+  "type": "zap",
+  "gain": 0.45
+ },
+ {
+  "scene": "hook",
+  "line": 0,
+  "offset": 12.8,
+  "type": "zap",
+  "gain": 0.45
+ },
+ {
+  "scene": "hook",
+  "line": 0,
+  "offset": 15,
+  "type": "zap",
+  "gain": 0.45
+ },
+ {
+  "scene": "hook",
+  "line": 0,
+  "offset": 16.2,
+  "type": "zap",
+  "gain": 0.45
+ },
+ {
+  "scene": "hook",
+  "line": 0,
+  "offset": 12.4,
+  "type": "steam",
+  "gain": 0.5
+ },
+ {
+  "scene": "hook",
+  "line": 0,
   "offset": 1.7,
   "type": "thunder",
   "gain": 0.4
@@ -135,64 +170,37 @@
  {
   "scene": "hook",
   "line": 0,
-  "offset": 7.711,
+  "offset": 15.159,
   "type": "chime",
   "gain": 0.7
  },
  {
   "scene": "hook",
   "line": 0,
-  "offset": 10.593,
+  "offset": 18.041,
   "type": "whoosh",
   "gain": 0.8
  },
  {
   "scene": "hook",
   "line": 0,
-  "offset": 11.693,
+  "offset": 19.141,
   "type": "whoosh",
   "gain": 0.55
  },
  {
   "scene": "hook",
   "line": 0,
-  "offset": 13.293,
+  "offset": 20.741,
   "type": "whoosh",
   "gain": 0.55
  },
  {
   "scene": "hook",
   "line": 0,
-  "offset": 14.893,
+  "offset": 22.341,
   "type": "whoosh",
   "gain": 0.55
- },
- {
-  "scene": "hook",
-  "line": 0,
-  "offset": 16.493,
-  "type": "whoosh",
-  "gain": 0.55
- },
- {
-  "scene": "levels",
-  "line": 0,
-  "offset": 0.9,
-  "type": "whoosh",
-  "gain": 0.55
- },
- {
-  "scene": "levels",
-  "line": 0,
-  "offset": 3.1,
-  "type": "whoosh",
-  "gain": 0.55
- },
- {
-  "scene": "levels",
-  "line": 0,
-  "offset": 0.2,
-  "type": "ui_tick"
  },
  {
   "scene": "levels",
@@ -211,67 +219,94 @@
  {
   "scene": "levels",
   "line": 0,
+  "offset": 8.266,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "levels",
+  "line": 0,
   "offset": 3.166,
   "type": "ui_tick"
  },
  {
   "scene": "levels",
   "line": 0,
-  "offset": 7.805,
+  "offset": 9.313,
   "type": "whoosh",
   "gain": 0.55
  },
  {
   "scene": "levels",
   "line": 0,
-  "offset": 10.005,
+  "offset": 11.513,
   "type": "whoosh",
   "gain": 0.55
  },
  {
   "scene": "levels",
   "line": 0,
-  "offset": 7.105,
+  "offset": 8.613,
   "type": "ui_tick"
  },
  {
   "scene": "levels",
   "line": 0,
-  "offset": 12.136,
+  "offset": 13.252,
   "type": "whoosh",
   "gain": 0.55
  },
  {
   "scene": "levels",
   "line": 0,
-  "offset": 14.336,
+  "offset": 15.452,
   "type": "whoosh",
   "gain": 0.55
  },
  {
   "scene": "levels",
   "line": 0,
-  "offset": 11.436,
+  "offset": 12.552,
   "type": "ui_tick"
  },
  {
   "scene": "levels",
   "line": 0,
-  "offset": 16.914,
+  "offset": 17.583,
   "type": "whoosh",
   "gain": 0.55
  },
  {
   "scene": "levels",
   "line": 0,
-  "offset": 19.114,
+  "offset": 19.783,
   "type": "whoosh",
   "gain": 0.55
  },
  {
   "scene": "levels",
   "line": 0,
-  "offset": 16.214,
+  "offset": 16.883,
+  "type": "ui_tick"
+ },
+ {
+  "scene": "levels",
+  "line": 0,
+  "offset": 22.361,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "levels",
+  "line": 0,
+  "offset": 24.561,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "levels",
+  "line": 0,
+  "offset": 21.661,
   "type": "ui_tick"
  },
  {
@@ -333,79 +368,93 @@
  {
   "scene": "souls",
   "line": 0,
-  "offset": 5.329,
+  "offset": 0.6,
   "type": "steam",
   "gain": 0.35
  },
  {
   "scene": "souls",
   "line": 0,
-  "offset": 5.479,
+  "offset": 0.75,
   "type": "zap",
   "gain": 0.5
  },
  {
   "scene": "souls",
   "line": 0,
-  "offset": 9.283,
+  "offset": 12.884,
   "type": "steam",
   "gain": 0.35
  },
  {
   "scene": "souls",
   "line": 0,
-  "offset": 9.433,
+  "offset": 13.034,
   "type": "zap",
   "gain": 0.5
  },
  {
   "scene": "souls",
   "line": 0,
-  "offset": 15.134,
+  "offset": 18.936,
   "type": "steam",
   "gain": 0.35
  },
  {
   "scene": "souls",
   "line": 0,
-  "offset": 15.284,
+  "offset": 19.086,
   "type": "zap",
   "gain": 0.5
  },
  {
   "scene": "souls",
   "line": 0,
-  "offset": 0.4,
+  "offset": 2.829,
   "type": "zap",
   "gain": 0.45
  },
  {
   "scene": "souls",
   "line": 0,
-  "offset": 1.5,
+  "offset": 4.029,
   "type": "zap",
   "gain": 0.45
  },
  {
   "scene": "souls",
   "line": 0,
-  "offset": 2.6,
+  "offset": 5.429,
   "type": "zap",
   "gain": 0.45
  },
  {
   "scene": "souls",
   "line": 0,
-  "offset": 3.8,
+  "offset": 7.029,
   "type": "zap",
   "gain": 0.45
  },
  {
   "scene": "souls",
   "line": 0,
-  "offset": 4.8,
+  "offset": 8.429,
   "type": "zap",
   "gain": 0.45
+ },
+ {
+  "scene": "souls",
+  "line": 0,
+  "offset": 9.829,
+  "type": "zap",
+  "gain": 0.45
+ },
+ {
+  "scene": "souls",
+  "line": 0,
+  "offset": 4.629,
+  "type": "steam",
+  "gain": 0.4
  },
  {
   "scene": "mantis",
@@ -416,31 +465,31 @@
  {
   "scene": "mantis",
   "line": 0,
-  "offset": 4.079,
+  "offset": 4.08,
   "type": "ui_tick"
  },
  {
   "scene": "mantis",
   "line": 0,
-  "offset": 4.429,
+  "offset": 4.43,
   "type": "ui_tick"
  },
  {
   "scene": "mantis",
   "line": 0,
-  "offset": 4.779,
+  "offset": 4.78,
   "type": "ui_tick"
  },
  {
   "scene": "mantis",
   "line": 0,
-  "offset": 5.129,
+  "offset": 5.13,
   "type": "ui_tick"
  },
  {
   "scene": "mantis",
   "line": 0,
-  "offset": 5.479,
+  "offset": 5.48,
   "type": "wind",
   "dur": 2.4,
   "gain": 0.5
@@ -448,7 +497,7 @@
  {
   "scene": "mantis",
   "line": 0,
-  "offset": 10.085,
+  "offset": 10.086,
   "type": "power_on"
  },
  {
@@ -524,70 +573,245 @@
  {
   "scene": "pb0",
   "line": 0,
-  "offset": 10.802,
+  "offset": 11.202,
   "type": "whoosh",
   "gain": 0.55
  },
  {
-  "scene": "pb0",
+  "scene": "pressure",
   "line": 0,
-  "offset": 12.702,
+  "offset": 0.4,
+  "type": "zap",
+  "gain": 0.4
+ },
+ {
+  "scene": "pressure",
+  "line": 0,
+  "offset": 1.6,
+  "type": "zap",
+  "gain": 0.4
+ },
+ {
+  "scene": "pressure",
+  "line": 0,
+  "offset": 2.9,
+  "type": "zap",
+  "gain": 0.4
+ },
+ {
+  "scene": "pressure",
+  "line": 0,
+  "offset": 4.1,
+  "type": "zap",
+  "gain": 0.4
+ },
+ {
+  "scene": "pressure",
+  "line": 0,
+  "offset": 5.5,
+  "type": "zap",
+  "gain": 0.4
+ },
+ {
+  "scene": "pressure",
+  "line": 0,
+  "offset": 6.8,
+  "type": "zap",
+  "gain": 0.4
+ },
+ {
+  "scene": "pressure",
+  "line": 0,
+  "offset": 8,
+  "type": "zap",
+  "gain": 0.4
+ },
+ {
+  "scene": "pressure",
+  "line": 0,
+  "offset": 9.3,
+  "type": "zap",
+  "gain": 0.4
+ },
+ {
+  "scene": "pressure",
+  "line": 0,
+  "offset": 10.7,
+  "type": "zap",
+  "gain": 0.4
+ },
+ {
+  "scene": "pressure",
+  "line": 0,
+  "offset": 12,
+  "type": "zap",
+  "gain": 0.4
+ },
+ {
+  "scene": "pressure",
+  "line": 0,
+  "offset": 13.4,
+  "type": "zap",
+  "gain": 0.4
+ },
+ {
+  "scene": "pressure",
+  "line": 0,
+  "offset": 14.8,
+  "type": "zap",
+  "gain": 0.4
+ },
+ {
+  "scene": "pressure",
+  "line": 0,
+  "offset": 16.1,
+  "type": "zap",
+  "gain": 0.4
+ },
+ {
+  "scene": "pressure",
+  "line": 0,
+  "offset": 17.5,
+  "type": "zap",
+  "gain": 0.4
+ },
+ {
+  "scene": "pressure",
+  "line": 0,
+  "offset": 18.9,
+  "type": "zap",
+  "gain": 0.4
+ },
+ {
+  "scene": "pressure",
+  "line": 0,
+  "offset": 20.2,
+  "type": "zap",
+  "gain": 0.4
+ },
+ {
+  "scene": "pressure",
+  "line": 0,
+  "offset": 21.6,
+  "type": "zap",
+  "gain": 0.4
+ },
+ {
+  "scene": "pressure",
+  "line": 0,
+  "offset": 22.9,
+  "type": "zap",
+  "gain": 0.4
+ },
+ {
+  "scene": "pressure",
+  "line": 0,
+  "offset": 24.3,
+  "type": "zap",
+  "gain": 0.4
+ },
+ {
+  "scene": "pressure",
+  "line": 0,
+  "offset": 25.6,
+  "type": "zap",
+  "gain": 0.4
+ },
+ {
+  "scene": "pressure",
+  "line": 0,
+  "offset": 30.308,
+  "type": "chime",
+  "gain": 0.6
+ },
+ {
+  "scene": "pressure",
+  "line": 0,
+  "offset": 27.091,
   "type": "whoosh",
   "gain": 0.55
  },
  {
-  "scene": "pb0",
+  "scene": "pressure",
   "line": 0,
-  "offset": 14.602,
+  "offset": 28.191,
   "type": "whoosh",
   "gain": 0.55
  },
  {
-  "scene": "pb0",
+  "scene": "pressure",
   "line": 0,
-  "offset": 16.502,
+  "offset": 29.291,
   "type": "whoosh",
   "gain": 0.55
  },
  {
-  "scene": "pb0",
+  "scene": "pressure",
   "line": 0,
-  "offset": 18.402,
+  "offset": 30.391,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "pressure",
+  "line": 0,
+  "offset": 31.491,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "pressure",
+  "line": 0,
+  "offset": 32.591,
   "type": "whoosh",
   "gain": 0.55
  },
  {
   "scene": "impl",
   "line": 0,
-  "offset": 4.012,
+  "offset": 4.011,
   "type": "whoosh",
   "gain": 0.55
  },
  {
   "scene": "impl",
   "line": 0,
-  "offset": 6.412,
+  "offset": 6.411,
   "type": "whoosh",
   "gain": 0.55
  },
  {
   "scene": "impl",
   "line": 0,
-  "offset": 9.554,
+  "offset": 9.758,
   "type": "whoosh",
   "gain": 0.55
  },
  {
   "scene": "impl",
   "line": 0,
-  "offset": 11.637,
+  "offset": 11.841,
   "type": "whoosh",
   "gain": 0.55
  },
  {
   "scene": "impl",
   "line": 0,
-  "offset": 14.638,
+  "offset": 14.942,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "impl",
+  "line": 0,
+  "offset": 16.742,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "impl",
+  "line": 0,
+  "offset": 21.749,
   "type": "whoosh",
   "gain": 0.55
  },
@@ -600,19 +824,25 @@
  {
   "scene": "impl",
   "line": 0,
-  "offset": 2.612,
+  "offset": 2.611,
   "type": "ui_tick"
  },
  {
   "scene": "impl",
   "line": 0,
-  "offset": 8.554,
+  "offset": 8.758,
   "type": "ui_tick"
  },
  {
   "scene": "impl",
   "line": 0,
-  "offset": 13.955,
+  "offset": 14.159,
+  "type": "ui_tick"
+ },
+ {
+  "scene": "impl",
+  "line": 0,
+  "offset": 20.749,
   "type": "ui_tick"
  },
  {
@@ -678,25 +908,25 @@
  {
   "scene": "outro",
   "line": 0,
-  "offset": 1.6,
+  "offset": 6.318,
   "type": "ui_tick"
  },
  {
   "scene": "outro",
   "line": 0,
-  "offset": 2.05,
+  "offset": 6.768,
   "type": "ui_tick"
  },
  {
   "scene": "outro",
   "line": 0,
-  "offset": 2.5,
+  "offset": 7.218,
   "type": "ui_tick"
  },
  {
   "scene": "outro",
   "line": 0,
-  "offset": 3,
+  "offset": 7.718,
   "type": "chime"
  }
 ]

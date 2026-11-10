@@ -62,6 +62,14 @@
       </div>
     </div>
     <div class="tip" id="tip"><b>试试看：</b>先在「看画面」下出<b>快斩</b>（命中），再切到「读动作」出<b>快斩</b>（被躲开）。同一招，差别只在敌人“知道”的那一帧。</div>
+    <div class="sec" id="pressbox">
+      <h4>压力 <small class="pdim">仅展示 · 不影响上面的对决</small></h4>
+      <div class="pmeter"><div class="pbar"><i id="pfill"></i></div><output id="pval">0.00</output></div>
+      <div class="pins" id="pins"></div>
+      <div class="pw" id="pw"></div>
+      <div class="pnext">敌人下一招 <b id="pnext">—</b></div>
+      <div class="phint">试试：狂按 J、喝药、残血时，压力会上升，狠招占比变大</div>
+    </div>
     <div class="sec">
       <h4>公平吗？</h4>
       <div class="fair" id="fair"></div>
@@ -122,9 +130,23 @@
       <tr><td>+6 起手之后</td><td colspan="3">闪避无敌帧才生效，持续 16 帧；刚好盖住判定帧才算躲开</td></tr>
     </table>
 
+    <h2>压力系统：它读的不是按键，而是你的状态</h2>
+    <p class="note warnnote"><b>玩家实测与推测，非官方。</b>下面的模型只是把社区观察写成了可运行的教学代码，并不是影之刃零的真实实现。</p>
+    <p>B站作者 @尾巴尾巴啊 测试发现，Boss 似乎有一个看不见的“压力分”：玩家越慌（血量低、狂按键、喝药），分越高；分越高，Boss 越爱抽<b>剑气</b>和<b>红光投技</b>这类狠招。Gamersky 转述玩家的观察是“你越不会躲的招，它就越频繁出”。本页的做法：敌人<b>不看你按了哪个键</b>，只看三个状态量，算出 0~1 的压力，再用压力给每个招式加权，最后按权重抽签。</p>
+    <div class="formula">压力 = 0.45×(1−血量) + 0.40×min(1, 每秒按键数÷6) + 0.35×[正在喝药]<small>招式权重 = 基础权重 + 狠度 × 压力²　（压力平方：低压时几乎不变，高压时狠招才突然变多）</small></div>
+    <p>对比一下：影之刃零制作人 Soulframe 在 Automaton 采访中说，制作中<b>完全没有使用“读指令”</b>。所以上面的玩家测试，最多说明 Boss 的选招会受“局面”影响，并不等于它偷看了你的输入。</p>
+    <p>代码在下面的源码查看器里，选 <code>src/pressure.js</code> 即可查看 <code>pressure</code> 与 <code>weights</code> 两段。</p>
+    <ul class="src">
+      <li>@尾巴尾巴啊：<a href="https://www.bilibili.com/video/BV1ae4j6MERe" target="_blank" rel="noopener">BV1ae4j6MERe</a>《想打赢魂系 Boss，读指令已经是最基础的功夫》<span class="cf l">社区</span></li>
+      <li>Gamersky（2026-11-01）：<a href="https://www.gamersky.com/news/202610/2238364.shtml" target="_blank" rel="noopener">gamersky.com/news/202610/2238364.shtml</a><span class="cf l">社区</span></li>
+      <li>@Oceeart：<a href="https://www.bilibili.com/video/BV1cdso6bEJw" target="_blank" rel="noopener">BV1cdso6bEJw</a>；@市井小羿：<a href="https://www.bilibili.com/video/BV1kwzwBTEgZ" target="_blank" rel="noopener">BV1kwzwBTEgZ</a>；@还会再会吗m：<a href="https://www.bilibili.com/video/BV1t5NZe7EWf" target="_blank" rel="noopener">BV1t5NZe7EWf</a>；@努力做一个Dancer：<a href="https://www.bilibili.com/video/BV1JueG6sESe" target="_blank" rel="noopener">BV1JueG6sESe</a><span class="cf l">社区</span></li>
+      <li>制作人 Soulframe 采访：<a href="https://automaton-media.com/articles/interviewsjp/20261009-472623/" target="_blank" rel="noopener">Automaton</a><span class="cf h">高·开发者</span>（作为对照）</li>
+    </ul>
+
     <h2>源码查看</h2>
-    <p>下面读取 <code>src/duel.js</code> 里的真实代码，每个 <code>#region</code> 是一条规则。它是确定性的纯函数（整数帧、无随机时钟），所以能被视频逐帧驱动，也能在页面里实时跑。</p>
+    <p>下面读取 <code>src/duel.js</code> 和 <code>src/pressure.js</code> 里的真实代码，每个 <code>#region</code> 是一条规则。它是确定性的纯函数（整数帧、无随机时钟），所以能被视频逐帧驱动，也能在页面里实时跑。</p>
     <div class="srcbar">
+      <select id="file"><option value="duel">src/duel.js</option><option value="pressure">src/pressure.js · 压力系统</option></select>
       <select id="region">
         <option value="modes">modes · 三种“知道”的时刻</option>
         <option value="perceive">perceive · 感知延迟</option>
@@ -157,7 +179,7 @@
     <div class="vposter"><img src="media/poster.jpg" alt="解析视频画面" style="width:100%;border-radius:16px;display:block"><span>机制拆解 · 第 3 期 · 读指令简史</span></div>
     <p class="note">完整解析视频「机制拆解 03 · 读指令简史」发布在 B站 / 抖音，搜索作者 <b>粑粑柑（梭哈ai版）</b> 即可观看。视频里的 3D 对决画面与帧数据图，都是用本页同一份 <code>src/duel.js</code> 逐帧渲染的。游戏实机素材不包含在仓库内。</p>
     <div class="vlinks">
-      <a href="../01-zelda-chemistry/" rel="noopener">第 1 期 · 塞尔达式化学引擎<small>把状态放在世界的格子里传播</small></a>
+      <a href="../01-zelda-chemistry/" target="_blank" rel="noopener">第 1 期 · 塞尔达式化学引擎<small>把状态放在世界的格子里传播</small></a>
       <a href="../02-genshin-elements/" target="_blank" rel="noopener">第 2 期 · 原神式元素反应<small>每个单位身上一张会衰减的附着表</small></a>
     </div>
   </div>
