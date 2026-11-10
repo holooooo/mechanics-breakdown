@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>读指令简史 · 机制拆解 第 3 期 · 效果预览 + 实现方法</title>
-<meta name="description" content="敌人是怎么“读”你的指令的？读按键、读动作、看画面三种方式的可交互教学原型，附帧数据图、公平性判定与源码讲解。">
+<meta name="description" content="敌人是怎么“读”你的指令的？读按键、读动作、看画面三种方式，加上可玩的「影之刃式 Boss」（它不读按键，只读你的状态）——可交互教学原型，附帧数据图与源码讲解。">
 <link rel="icon" href="brand/avatar.png">
 <link rel="stylesheet" href="site.css">
 <script type="importmap">{"imports":{"three":"../vendor/three/build/three.module.js","three/addons/":"../vendor/three/examples/jsm/"}}</script>
@@ -28,23 +28,22 @@
     <div class="stage">
       <canvas id="gl"></canvas>
       <div id="hud"></div>
-      <div class="keys">
-        <span class="chip"><b>J</b> 慢斩</span><span class="chip"><b>K</b> 快斩</span><span class="chip"><b>H</b> 喝药</span>
-      </div>
-      <div class="hint">你在左，敌人在右 · 用键盘 J / K / H 或右侧按钮出招</div>
+      <div class="bossnote" id="bossnote">它不读按键，只读你的状态</div>
+      <div class="keys" id="keys"></div>
+      <div class="hint" id="hint"></div>
       <div class="loading" id="loading">正在生成世界…</div>
     </div>
     <div id="chartbox"><span class="ct">帧数据 · 最近一次出招</span><div id="chart"></div></div>
   </div>
   <aside class="panel glass">
     <div class="sec">
-      <h4>敌人怎么知道你出招</h4>
-      <div class="seg seg3" id="modes">
-        <button data-m="button">读按键</button><button data-m="state">读动作</button><button data-m="perceive" class="on">看画面</button>
+      <h4>选一种敌人</h4>
+      <div class="seg seg4" id="modes">
+        <button data-m="boss" class="on">影之刃式 Boss</button><button data-m="button">读按键</button><button data-m="state">读动作</button><button data-m="perceive">看画面</button>
       </div>
       <div id="modedesc" style="font-size:12px;color:var(--dim)"></div>
     </div>
-    <div class="sec">
+    <div class="sec duelonly" id="sliders">
       <div class="slider" id="delaybox"><span>感知延迟（仅「看画面」生效）</span><output id="delayout"></output>
         <input type="range" id="delay" min="0" max="40" step="1" value="15"></div>
       <div class="slider"><span>进攻欲望（会不会惩罚喝药）</span><output id="aggout"></output>
@@ -56,26 +55,24 @@
         <button data-k="slash" id="b-slash"><kbd>J</kbd>慢斩<small>前摇 22 帧</small></button>
         <button data-k="quick" id="b-quick"><kbd>K</kbd>快斩<small>前摇 9 帧</small></button>
         <button data-k="heal" id="b-heal"><kbd>H</kbd>喝药<small>30 帧后回血</small></button>
+        <button data-k="dodge" id="b-dodge" class="bossonly"><kbd>L / 空格</kbd>闪避<small>4 帧后无敌 16 帧</small></button>
+        <button data-k="parry" id="b-parry" class="bossonly"><kbd>P</kbd>弹反<small>窗口 8 帧</small></button>
       </div>
       <div class="mini">
         <button data-sp="1" class="on">1×</button><button data-sp="0.25">0.25×</button><button id="b-pause" class="toggle">暂停</button><button id="b-reset" class="warn">重置</button>
       </div>
     </div>
-    <div class="tip" id="tip"><b>试试看：</b>先在「看画面」下出<b>快斩</b>（命中），再切到「读动作」出<b>快斩</b>（被躲开）。同一招，差别只在敌人“知道”的那一帧。</div>
+    <div class="tip" id="tip"></div>
     <div class="sec" id="pressbox">
-      <h4>压力 <small class="pdim">仅展示 · 不影响上面的对决</small></h4>
+      <h4>压力 <small class="pdim" id="pdim"></small></h4>
       <div class="pmeter"><div class="pbar"><i id="pfill"></i></div><output id="pval">0.00</output></div>
       <div class="pins" id="pins"></div>
       <div class="pw" id="pw"></div>
-      <div class="pnext">敌人下一招 <b id="pnext">—</b></div>
-      <div class="phint">试试：狂按 J、喝药、残血时，压力会上升，狠招占比变大</div>
+      <div class="pnext"><span id="pnlabel">敌人下一招</span> <b id="pnext">—</b><em id="pcd"></em></div>
+      <div class="phint" id="phint"></div>
     </div>
     <div class="sec">
-      <h4>公平吗？</h4>
-      <div class="fair" id="fair"></div>
-    </div>
-    <div class="sec">
-      <h4>结果记录</h4>
+      <h4 id="logtitle">结果记录</h4>
       <div class="log" id="log"></div>
     </div>
   </aside>
@@ -84,20 +81,16 @@
 <section id="tab-method" class="tab">
   <article class="doc">
     <h1>敌人是怎么“读”你的指令的</h1>
-    <p class="lead">“读指令”听起来像作弊：你刚一出手，敌人就已经在躲、在反击。其实把它拆开，只有一个问题：<b>敌人在哪一帧知道你要干什么</b>。答案有三种，差别只是几行代码，却是“聪明”和“不公平”之间的分界线。</p>
+    <p class="lead">“读指令”听起来像作弊：你刚一出手，敌人就已经在躲、在反击。其实把它拆开，只有一个问题：<b>敌人在哪一帧知道你要干什么</b>。答案有三种，差别只是几行代码；而最近大家讨论的影之刃零，又给出了第四种思路：<b>不读指令，只读状态</b>。</p>
     <p class="note">本页是原创教学原型，不含任何商业游戏的代码或美术。历史与游戏部分的结论按来源可信度标注：<span class="cf h">高</span> 开发者/文档证实，<span class="cf m">中</span> 媒体或单一技术来源，<span class="cf l">社区</span> 玩家社区观察、未经证实。</p>
 
     <h2>三种“知道”的方式</h2>
     <div class="modes3">
       <div class="mcard a"><h3>① 读按键</h3><div class="lv">notice = act.input</div><p>你按下的那一帧，敌人就知道了，比动作开始还早 2 帧（输入缓冲）。最“全知”，也最容易让人觉得被看穿。</p></div>
       <div class="mcard b"><h3>② 读动作</h3><div class="lv">notice = act.start</div><p>玩家的动作状态机一开始跑，就给 AI 发一个“他出手了”的通知。AI 在<b>第一帧前摇</b>就反应，没有人类感知延迟。</p></div>
-      <div class="mcard c"><h3>③ 看画面</h3><div class="lv">decide = notice + delay</div><p>像人一样：先看见起手姿势，再等一段反应时间（默认 15 帧 ≈ 250 毫秒）才行动。这一档才“公平”。</p></div>
+      <div class="mcard c"><h3>③ 看画面</h3><div class="lv">decide = notice + delay</div><p>像人一样：先看见起手姿势，再等一段反应时间（默认 15 帧 ≈ 250 毫秒）才行动。读的是玩家也看得到的东西。</p></div>
     </div>
-    <p>在“效果预览”里把滑块拖到 0 帧，“看画面”就变成了“读动作”；拖到 40 帧，连慢斩也能打中它。拉到哪里，就是你想给玩家的难度。</p>
-
-    <h2>公平性规则</h2>
-    <div class="formula">前摇 ≥ 感知延迟 + 闪避起手<small>慢斩 22 ≥ 15 + 6 = 21 → 躲得开　快斩 9 &lt; 21 → 躲不开　（250 ms × 60 fps ÷ 1000 ≈ 15 帧）</small></div>
-    <p>闪避的无敌帧要等 6 帧起手之后才生效，所以一个“按人类速度反应”的敌人，需要招式前摇至少有 <b>延迟 + 6</b> 帧。前摇更短的招，人类（和公平的 AI）都来不及躲；如果敌人还是躲开了，玩家就会觉得它偷看了输入。格斗游戏社区常用的人类反应范围是 12–19 帧<span class="cf m">中</span>，单纯视觉反应约 200–250 毫秒<span class="cf m">中</span>。</p>
+    <p>在“效果预览”里把滑块拖到 0 帧，“看画面”就变成了“读动作”；拖到 40 帧，连慢斩也能打中它。格斗游戏社区常用的人类反应范围是 12–19 帧<span class="cf m">中</span>，单纯视觉反应约 200–250 毫秒<span class="cf m">中</span>。</p>
 
     <h2>简史</h2>
     <h3>街霸 II：电脑比你的画面早一帧</h3>
@@ -116,9 +109,9 @@
     <ul class="src">
       <li>制作人梁其伟（Soulframe）在 Automaton 采访中说，最高难度设计成像和真人对战，但“极限状态下电脑会看穿玩家的操作输入……绝对赢不了”，因此<b>制作中完全没有使用“读指令”</b><span class="cf h">高·开发者</span>。</li>
       <li>最高难度<b>逆天者</b>（Hellwalker）的 AI 会根据玩家行为动态变化，没有固定套路<span class="cf h">高·开发者</span>。</li>
-      <li>最简单的<b>入门</b>难度主要降低的是敌人的“进攻欲望”和“对玩家行动的反应速度”，而不是削血量。这正是本页的两个滑块<span class="cf h">高·开发者</span>。</li>
+      <li>最简单的<b>入门</b>难度主要降低的是敌人的“进攻欲望”和“对玩家行动的反应速度”，而不是削血量。这正是「读按键 / 读动作 / 看画面」模式下的两个滑块<span class="cf h">高·开发者</span>。</li>
       <li><b>杀气</b>（Sha-Chi）：敌我共用的一条资源，类似体力 + 架势 + 防御；打空对方的杀气就破防。中文名来自国内媒体与攻略，数值细节非官方<span class="cf m">中</span>。</li>
-      <li>红光/蓝光提示（红=闪避，蓝=弹反）把“该怎么应对”画在敌人身上——这是“公平反馈”的范例：让人类有机会看见、再反应<span class="cf m">中</span>。</li>
+      <li>红光/蓝光提示（红=闪避，蓝=弹反）把“该怎么应对”画在敌人身上——这是把“该怎么应对”告诉玩家的范例：让人类有机会看见、再反应<span class="cf m">中</span>。</li>
     </ul>
 
     <h2>时间线：一次出招发生了什么</h2>
@@ -132,27 +125,39 @@
 
     <h2>压力系统：它读的不是按键，而是你的状态</h2>
     <p class="note warnnote"><b>玩家实测与推测，非官方。</b>下面的模型只是把社区观察写成了可运行的教学代码，并不是影之刃零的真实实现。</p>
-    <p>B站作者 @尾巴尾巴啊 测试发现，Boss 似乎有一个看不见的“压力分”：玩家越慌（血量低、狂按键、喝药），分越高；分越高，Boss 越爱抽<b>剑气</b>和<b>红光投技</b>这类狠招。Gamersky 转述玩家的观察是“你越不会躲的招，它就越频繁出”。本页的做法：敌人<b>不看你按了哪个键</b>，只看三个状态量，算出 0~1 的压力，再用压力给每个招式加权，最后按权重抽签。</p>
+    <p>B站作者 @尾巴尾巴啊 测试发现，Boss 似乎有一个看不见的“压力分”：玩家越慌（血量低、狂按键、喝药），分越高；分越高，Boss 越爱抽<b>剑气</b>和<b>红光投技</b>这类狠招。评论区里玩家的感受是“你越不会躲的招，它就越频繁地出”。本页的做法：敌人<b>不看你按了哪个键</b>，只看三个状态量，算出 0~1 的压力，再用压力给每个招式加权，最后按权重抽签。</p>
     <div class="formula">压力 = 0.45×(1−血量) + 0.40×min(1, 每秒按键数÷6) + 0.35×[正在喝药]<small>招式权重 = 基础权重 + 狠度 × 压力²　（压力平方：低压时几乎不变，高压时狠招才突然变多）</small></div>
-    <p>对比一下：影之刃零制作人 Soulframe 在 Automaton 采访中说，制作中<b>完全没有使用“读指令”</b>。所以上面的玩家测试，最多说明 Boss 的选招会受“局面”影响，并不等于它偷看了你的输入。</p>
-    <p>代码在下面的源码查看器里，选 <code>src/pressure.js</code> 即可查看 <code>pressure</code> 与 <code>weights</code> 两段。</p>
-    <ul class="src">
-      <li>@尾巴尾巴啊：<a href="https://www.bilibili.com/video/BV1ae4j6MERe" target="_blank" rel="noopener">BV1ae4j6MERe</a>《想打赢魂系 Boss，读指令已经是最基础的功夫》<span class="cf l">社区</span></li>
-      <li>Gamersky（2026-11-01）：<a href="https://www.gamersky.com/news/202610/2238364.shtml" target="_blank" rel="noopener">gamersky.com/news/202610/2238364.shtml</a><span class="cf l">社区</span></li>
-      <li>@Oceeart：<a href="https://www.bilibili.com/video/BV1cdso6bEJw" target="_blank" rel="noopener">BV1cdso6bEJw</a>；@市井小羿：<a href="https://www.bilibili.com/video/BV1kwzwBTEgZ" target="_blank" rel="noopener">BV1kwzwBTEgZ</a>；@还会再会吗m：<a href="https://www.bilibili.com/video/BV1t5NZe7EWf" target="_blank" rel="noopener">BV1t5NZe7EWf</a>；@努力做一个Dancer：<a href="https://www.bilibili.com/video/BV1JueG6sESe" target="_blank" rel="noopener">BV1JueG6sESe</a><span class="cf l">社区</span></li>
-      <li>制作人 Soulframe 采访：<a href="https://automaton-media.com/articles/interviewsjp/20261009-472623/" target="_blank" rel="noopener">Automaton</a><span class="cf h">高·开发者</span>（作为对照）</li>
-    </ul>
+    <p><b>对照：</b>影之刃零制作人 Soulframe 在 Automaton 采访中说，制作中<b>完全没有使用“读指令”</b><span class="cf h">高·开发者</span>。所以上面的玩家测试，最多说明 Boss 的选招会受“局面”影响，并不等于它偷看了你的输入。这两种说法并不矛盾，也都没有定论。</p>
 
-    <h2>源码查看</h2>
-    <p>下面读取 <code>src/duel.js</code> 和 <code>src/pressure.js</code> 里的真实代码，每个 <code>#region</code> 是一条规则。它是确定性的纯函数（整数帧、无随机时钟），所以能被视频逐帧驱动，也能在页面里实时跑。</p>
+    <h2>照着压力系统写一个影之刃式 Boss</h2>
+    <p class="note warnnote"><b>仍然是玩家测试与推测，非官方。</b>下面是一个可以在“效果预览”里直接玩的原创原型（默认模式「影之刃式 Boss」），数值都是演示设计。</p>
+    <p>核心一句话写在 <code>src/pbboss.js</code> 的文件头：<b>它不读按键，只读你的状态</b>。玩家的每次按键只进入两个地方：玩家自己的动作状态机，和一个 1.5 秒的滑动计数器。Boss 每约 1.4 秒做一次决定，能看到的只有计数器和血量算出来的三个数字。</p>
+    <div class="steps5">
+      <div><b>① sense</b><span>血量、每秒按键数、是否在喝药</span></div>
+      <i>→</i>
+      <div><b>② choose</b><span>压力分 → 权重 → <code>pick(p, r)</code></span></div>
+      <i>→</i>
+      <div><b>③ telegraph</b><span>0.5 秒红光 / 蓝光预兆</span></div>
+      <i>→</i>
+      <div><b>④ resolve</b><span>对照你的闪避 / 弹反帧</span></div>
+      <i>→</i>
+      <div><b>⑤ 杀气</b><span>弹反削杀气，打空则破防</span></div>
+    </div>
+    <table class="timeline-tbl">
+      <tr><th>招式</th><th>预兆</th><th>怎么应对</th><th>规则</th></tr>
+      <tr><td>普通连斩</td><td><span class="dot blue"></span>蓝光</td><td>弹反 P 或闪避</td><td>两刀；弹反第一刀即打断连招，Boss 杀气 −25</td></tr>
+      <tr><td>剑气</td><td><span class="dot blue"></span>蓝光</td><td>弹反 P 或闪避</td><td>飞行约 0.6 秒的弹道；弹反同样削杀气</td></tr>
+      <tr><td>红光投技</td><td><span class="dot red"></span>红光</td><td>只能闪避</td><td>不可弹反；被抓 −30 血、−20 杀气</td></tr>
+      <tr><td>后撤步</td><td>无</td><td>别白挥刀</td><td>前半段 Boss 无法被击中，挥空</td></tr>
+    </table>
+    <p>玩家：J 慢斩、K 快斩、H 喝药（30 帧后回血，被打中会中断）、L 或空格闪避（4 帧起手后 16 帧无敌）、P 弹反（8 帧窗口，落空有后摇）。<b>杀气</b>是敌我共用的一条资源：被打、被抓会掉，斩击命中和完美弹反会削 Boss 的；Boss 杀气归零就破防 2 秒，站着挨打且伤害翻倍。这里的数值是简化设计，不是官方数据<span class="cf l">非官方</span>。</p>
+    <p>建议玩法：先冷静地每两秒出一刀，看它多半出普通连斩；再狂按 K、喝药，看压力条升高、红光投技的权重变多。用页面右侧“战斗记录”对比两次的结果。</p>
+
+    <h3>源码查看</h3>
+    <p>下面读取 <code>src/duel.js</code>、<code>src/pressure.js</code>、<code>src/pbboss.js</code> 里的真实代码，每个 <code>#region</code> 是一条规则。它们都是确定性的纯函数（整数帧、哈希随机数、无时钟），所以能被视频逐帧驱动，也能在页面里实时跑。</p>
     <div class="srcbar">
-      <select id="file"><option value="duel">src/duel.js</option><option value="pressure">src/pressure.js · 压力系统</option></select>
-      <select id="region">
-        <option value="modes">modes · 三种“知道”的时刻</option>
-        <option value="perceive">perceive · 感知延迟</option>
-        <option value="fair">fair · 公平性判定</option>
-        <option value="react">react · 敌人的闪避反应</option>
-      </select>
+      <select id="file"><option value="duel">src/duel.js · 三种读法</option><option value="pressure">src/pressure.js · 压力系统</option><option value="pbboss" selected>src/pbboss.js · 影之刃式 Boss</option></select>
+      <select id="region"></select>
       <span id="srcmeta"></span>
     </div>
     <pre class="code"><code id="code">加载中…</code></pre>
@@ -168,9 +173,22 @@
       <li>影之刃零制作人采访：<a href="https://automaton-media.com/articles/interviewsjp/20261009-472623/" target="_blank" rel="noopener">Automaton（日语，2026-10-09）</a><span class="cf h">开发者</span>；<a href="https://nc.inverse.com/gaming/phantom-blade-zero-hard-mode-different-game-hellwalker-wuxia" target="_blank" rel="noopener">Inverse</a><span class="cf m">中</span></li>
       <li>杀气 Sha-Chi：<a href="https://www.pcgamer.com/games/action/phantom-blade-zero-preview-chinese-action-games-soulslikes-kung-fu" target="_blank" rel="noopener">PC Gamer</a>、<a href="https://gamersocialclub.ca/2025/08/28/phantom-blade-zero-hands-on-preview" target="_blank" rel="noopener">Gamersocialclub</a><span class="cf m">中</span>，数值细节<span class="cf l">非官方</span></li>
       <li>人类反应时间：<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6916673" target="_blank" rel="noopener">PMC6916673</a>（小样本）、<a href="https://ki.infil.net/reaction.html" target="_blank" rel="noopener">KI reaction</a>、<a href="https://www.gamedeveloper.com/programming/the-killer-groove-the-shadow-ai-of-killer-instinct" target="_blank" rel="noopener">Killer Groove</a><span class="cf m">中</span></li>
-      <li>公平 AI：<a href="https://www.gamedeveloper.com/game-platforms/analysis-game-ai-our-cheatin-hearts" target="_blank" rel="noopener">Our Cheatin' Hearts（Soren Johnson）</a><span class="cf h">高</span>；<a href="https://arxiv.org/pdf/1904.03821" target="_blank" rel="noopener">arXiv 1904.03821</a><span class="cf m">中</span></li>
+      <li>游戏 AI 与作弊：<a href="https://www.gamedeveloper.com/game-platforms/analysis-game-ai-our-cheatin-hearts" target="_blank" rel="noopener">Our Cheatin' Hearts（Soren Johnson）</a><span class="cf h">高</span>；<a href="https://arxiv.org/pdf/1904.03821" target="_blank" rel="noopener">arXiv 1904.03821</a><span class="cf m">中</span></li>
     </ul>
     <p class="note">教学简化：帧数是为演示设计的，不对应任何商业游戏的真实数值；“读动作”只代表魂系文档暗示的通知机制，并不是对某个 Boss 脚本的还原。</p>
+
+    <h2>感谢与素材出处</h2>
+    <p>压力系统与 Boss 的思路、以及视频里的对照素材，来自下面这些 B站创作者的实测与讲解。以下均为玩家/创作者观点，非官方。</p>
+    <ul class="src credits">
+<li>@尾巴尾巴啊：<a href="https://www.bilibili.com/video/BV1ae4j6MERe" target="_blank" rel="noopener">BV1ae4j6MERe</a>《想打赢魂系 Boss，读指令已经是最基础的功夫》，压力系统的测试与解释</li>
+<li>@Oceeart：<a href="https://www.bilibili.com/video/BV1cdso6bEJw" target="_blank" rel="noopener">BV1cdso6bEJw</a></li>
+<li>@市井小羿：<a href="https://www.bilibili.com/video/BV1kwzwBTEgZ" target="_blank" rel="noopener">BV1kwzwBTEgZ</a></li>
+<li>@还会再会吗m：<a href="https://www.bilibili.com/video/BV1t5NZe7EWf" target="_blank" rel="noopener">BV1t5NZe7EWf</a></li>
+<li>@努力做一个Dancer：<a href="https://www.bilibili.com/video/BV1JueG6sESe" target="_blank" rel="noopener">BV1JueG6sESe</a></li>
+<li>@一般通过の溜胸：<a href="https://www.bilibili.com/video/BV19Y411W7zT" target="_blank" rel="noopener">BV19Y411W7zT</a>（心理螳螂读心战）</li>
+<li>@游研更新姬：<a href="https://www.bilibili.com/video/BV1yJ411M7Rt" target="_blank" rel="noopener">BV1yJ411M7Rt</a>（Desk《How the CPU cheated you in Street Fighter 2》的中文字幕转载）</li>
+    </ul>
+    <p class="note">本页是原创教学原型，不含任何商业游戏的代码、美术或实机素材。</p>
   </article>
 </section>
 

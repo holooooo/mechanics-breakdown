@@ -2,7 +2,7 @@
 import { createWorld } from './src/world.js';
 import { createSim, CELL, cellAt, cellCenter } from './src/sim.js';
 import { createDuel, MOVES, DODGE, THRUST, FPS } from './src/duel.js';
-import { weights as pWeights } from './src/pressure.js';
+import { weights as pWeights, pick as pPick } from './src/pressure.js';
 
 const $ = id => document.getElementById(id);
 const TL = window.TIMELINE;
@@ -34,7 +34,7 @@ function duel(key, opts, acts) {
   if (!duels.has(key)) { const d = createDuel(opts); d.schedule(acts.map(([s, kind]) => ({ frame: Math.round(s * FPS), kind }))); duels.set(key, { d, acts }); }
   return duels.get(key);
 }
-const MODE_LABEL = { button: '读按键', state: '读动作', perceive: '看画面' };
+const MODE_LABEL = { button: '读按键', state: '读动作', perceive: '看画面', pb: '影之刃式 · 读状态' };
 
 // pose from duel state
 function poses(st, d, lt) {
@@ -123,9 +123,9 @@ const shots = {
     return { dd, dT: lt, mode: 'perceive', view: { cam: camSide(lt, 5.4, 1.3, 1.5708 - 0.5), sky: { a: 'dusk', b: 'storm', k: 0.35 } } };
   },
   impl(t, lt) {
-    const acts = [[rel('impl', 1, 1.0), 'slash'], [rel('impl', 1, 3.4), 'slash'], [rel('impl', 2, 0.6), 'slash'], [rel('impl', 2, 2.9), 'quick'], [rel('impl', 3, 0.6), 'quick'], [rel('impl', 3, 2.4), 'quick'], [rel('impl', 4, 0.6), 'slash']];
+    const acts = [[rel('impl', 1, 0.8), 'slash'], [rel('impl', 1, 3.6), 'slash']]; for (let x = rel('impl', 2, 0.2); x < SC.impl.end - SC.impl.start - 1; x += 0.55) acts.push([x, 'quick']);
     const dd = duel('impl', { mode: 'perceive', delay: 15 }, acts);
-    return { dd, dT: lt, mode: 'perceive', view: { cam: camSide(lt, 5.4, 1.3, 1.5708 + 0.5), sky: { a: 'day', b: 'dusk', k: 0.5 } }, chart: true };
+    return { dd, dT: lt, mode: 'pb', view: { cam: camSide(lt, 5.4, 1.3, 1.5708 + 0.5), sky: { a: 'day', b: 'dusk', k: 0.5 } }, chart: false, pb: true };
   },
   demo(t, lt) {
     const third = (SC.demo.end - SC.demo.start) / 3, k = Math.min(2, Math.floor(lt / third));
@@ -189,6 +189,16 @@ function chart(shot, k) {
     <text x="${X0 - 186}" y="890" fill="#8fa2ae" font-size="17">1 格 = 1 帧（1/60 秒）</text></svg>`;
 }
 
+// PB-style boss (film demo): pressure rises as the scripted player starts mashing; boss draws a move every 1.4 s
+function pbState(t) {
+  const a = L('impl', 2).start, mash = clamp((t - a) / 6);
+  const hp = 1 - 0.75 * clamp((t - L('impl', 2).start) / 7);
+  const pps = 1.2 + 6.8 * mash, heal = t > L('impl', 3).start + 0.8 && t < L('impl', 3).start + 2.6;
+  const p = Math.min(1, 0.45 * (1 - hp) + 0.4 * Math.min(1, pps / 6) + (heal ? 0.35 : 0));
+  const slot = Math.floor((t - L('impl', 1).start) / 1.4), r = ((Math.imul(slot + 7, 2654435761) >>> 0) % 1000) / 1000;
+  const move = slot >= 0 ? pPick(p, r) : null, ph = ((t - L('impl', 1).start) / 1.4) % 1;
+  return { p, hp, pps, heal, move, ph };
+}
 function cards(id, t, lt, shot) {
   const appear = (a, d = 0.45) => easeOut((t - a) / d);
   const pop = a => { const k = appear(a); return `opacity:${k.toFixed(3)};transform:translateY(${((1 - k) * 24).toFixed(1)}px)`; };
@@ -200,7 +210,7 @@ function cards(id, t, lt, shot) {
   }
   if (id === 'arcade') {
     const l1 = L('arcade', 1), l2 = L('arcade', 2);
-    return `<div class="card" style="left:120px;top:190px;width:780px;${pop(l1.start + 0.2)}"><h3>街霸二 · 逆向分析（sf2platinum）</h3>
+    return `<div class="card" style="left:120px;top:190px;width:780px;opacity:${(appear(l1.end + 0.1)).toFixed(2)}"><h3>街霸二 · 逆向分析（sf2platinum）</h3>
         <div class="flow"><div class="node">你搓出招式<small>招式数据写入</small></div><div class="arr">→</div><div class="node" style="border-color:#ff6b6b">电脑读到<small>第 0 帧</small></div><div class="arr">→</div><div class="node">第一帧画面<small>第 1 帧</small></div></div>
         <p style="margin-top:14px">电脑比你的画面还早一帧知道你在干嘛</p></div>
       <div class="card" style="right:120px;top:190px;width:700px;${pop(l2.start + 0.3)}"><h3>玩家俗称</h3><div class="big" style="font-size:56px;color:#ff6b6b">SNK 综合征</div><p style="margin-top:12px">你一出手，Boss 立刻反击 · 社区说法</p></div>`;
@@ -215,10 +225,11 @@ function cards(id, t, lt, shot) {
       <div class="card" style="right:90px;top:560px;width:760px;padding:20px 30px;${pop(l[4].start + 2.2)}"><p style="font-size:26px;color:#fff">FromSoftware 从未正式承认 · 以上为社区分析</p></div>`;
   }
   if (id === 'mantis') {
-    const l = SC.mantis.lines, k1 = appear(l[1].start + 0.2), sw = ramp(t, l[2].start + 1.2, 0.8);
+    const l = SC.mantis.lines, k1 = appear(l[1].start + 0.2) * (1 - win(t, l[2].start, l[3].start + 5.0, 0.25)), sw = ramp(t, l[3].start + 5.1, 0.6);
     const shake = t > l[1].start + 2.0 && t < l[2].start ? Math.sin(t * 70) * 6 : 0;
+    const hint = win(t, l[3].start + 0.3, l[3].start + 5.0, 0.3), inv = win(t, l[2].start + 2.6, l[2].end, 0.3);
     const games = ['恶魔城 月下夜想曲', '幻想水浒传', '心跳回忆', '警察故事'];
-    return `<div style="position:absolute;left:0;right:0;top:150px;text-align:center;${pop(l[1].start - 0.1)}"><div style="font:900 26px 'SF Mono',Menlo,monospace;letter-spacing:10px;color:#7ee08f">METAL GEAR SOLID · 1998</div><div style="font-size:66px;font-weight:900;margin-top:10px">心理螳螂 <span style="color:#7ee08f">PSYCHO MANTIS</span></div></div>
+    return `<div style="position:absolute;left:0;right:0;top:150px;text-align:center;opacity:${(appear(l[1].start - 0.1) * (1 - win(t, l[2].start, l[3].start + 5.0, 0.25))).toFixed(2)}"><div style="font:900 26px 'SF Mono',Menlo,monospace;letter-spacing:10px;color:#7ee08f">METAL GEAR SOLID · 1998</div><div style="font-size:66px;font-weight:900;margin-top:10px">心理螳螂 <span style="color:#7ee08f">PSYCHO MANTIS</span></div></div>
       <div class="card" style="left:150px;top:400px;width:640px;opacity:${k1.toFixed(2)}"><h3>MEMORY CARD · 记忆卡</h3>${games.map((g, i) => `<div style="font:600 26px 'SF Mono',Menlo,monospace;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.1);opacity:${appear(l[1].start + 0.6 + i * 0.35).toFixed(2)}">▸ ${g}</div>`).join('')}<p style="margin-top:10px;font-size:20px">示例：科乐美游戏存档</p></div>
       <div style="position:absolute;right:170px;top:380px;width:640px;height:420px;opacity:${k1.toFixed(2)}">
         <svg width="640" height="420" viewBox="0 0 640 420"><g transform="translate(${(120 + shake).toFixed(1)},40)">
@@ -228,7 +239,9 @@ function cards(id, t, lt, shot) {
           <path d="M200 60 Q200 0 ${lerp(150, 330, sw).toFixed(0)} -20" stroke="#333" stroke-width="7" fill="none"/></g>
           <g transform="translate(140,330)"><rect width="150" height="60" rx="10" fill="${sw < 0.5 ? '#ffcf73' : '#333'}"/><text x="75" y="40" text-anchor="middle" font-size="26" font-weight="900" fill="#111">PORT 1</text></g>
           <g transform="translate(330,330)"><rect width="150" height="60" rx="10" fill="${sw >= 0.5 ? '#7ee08f' : '#333'}"/><text x="75" y="40" text-anchor="middle" font-size="26" font-weight="900" fill="#111">PORT 2</text></g></svg>
-        <div style="text-align:center;font-size:28px;font-weight:800;opacity:${appear(l[2].start + 1.6).toFixed(2)};color:#7ee08f">换到 2 号口 → 他「读」不到你了</div></div>`;
+        <div style="text-align:center;font-size:28px;font-weight:800;opacity:${appear(l[3].start + 5.2).toFixed(2)};color:#7ee08f">换到 2 号口 → 他「读」不到你了</div></div>
+      <div class="card" style="left:50%;transform:translateX(-50%);top:150px;width:1000px;text-align:center;opacity:${inv.toFixed(2)}"><div style="font-size:40px;font-weight:900">你怎么打，他都<span style="color:#ff6b6b">提前躲开</span></div><p style="margin-top:8px;font-size:22px">他读的是 1 号口手柄的输入</p></div>
+      <div class="card" style="left:50%;transform:translateX(-50%);top:150px;width:1000px;text-align:center;opacity:${hint.toFixed(2)}"><p style="font-size:22px">无线电提示</p><div style="font-size:40px;font-weight:900">「用<span style="color:#7ee08f">控制器端口</span>！」→ 把手柄插到 2 号口</div></div>`;
   }
   if (id === 'pb0') {
     const l = SC.pb0.lines;
@@ -248,23 +261,28 @@ function cards(id, t, lt, shot) {
     return `<div class="card" style="left:70px;top:150px;width:640px;opacity:${c1.toFixed(2)}"><h3>压力系统（UP 主命名 · 实测推测）</h3>${['血量', '按键频率', '喝药', '反应速度'].map((x, i) => `<div style="font-size:30px;font-weight:800;padding:6px 0;opacity:${ramp(t, l[1].start + 1.2 + i * 0.7, 0.3).toFixed(2)}">▸ ${x}</div>`).join('')}</div>
       <div class="card" style="left:70px;top:150px;width:640px;opacity:${c2.toFixed(2)}"><h3>压力 → 招式</h3><div class="flow" style="flex-wrap:wrap"><div class="node">越慌<small>压力分 ↑</small></div><div class="arr">→</div><div class="node" style="border-color:#ff6b6b">狠招<small>红光 / 剑气</small></div></div></div>
       <div class="card" style="left:70px;top:150px;width:640px;opacity:${c3.toFixed(2)}"><h3>UP 主的测试</h3><div style="font-size:30px;font-weight:800">狂按闪避 → <span style="color:#ff6b6b">剑气</span></div><div style="font-size:30px;font-weight:800;margin-top:8px">喝药 → <span style="color:#ff6b6b">剑气</span></div></div>
-      <div class="card" style="left:70px;top:150px;width:700px;opacity:${c4.toFixed(2)}"><h3>游民星空 · 2026-11-01</h3><div style="font-size:30px;font-weight:800">「你越不会躲的招，它就越频繁出」</div><p style="margin-top:8px;font-size:20px">报道中引用的玩家评论</p></div>
+      <div class="card" style="left:70px;top:150px;width:700px;opacity:${c4.toFixed(2)}"><h3>B 站评论区 · 玩家感受</h3><div style="font-size:30px;font-weight:800">「你越不会躲的招，它就越频繁出」</div><p style="margin-top:8px;font-size:20px">@Oceeart 视频下的玩家评论</p></div>
       <div class="card" style="left:90px;top:170px;width:660px;opacity:${chartK.toFixed(2)}"><h3>压力 ${(0.15 + 0.8 * pv).toFixed(2)} · 招式权重（教学示意）</h3>${ws.map(m => `<div style="display:flex;align-items:center;gap:14px;margin:10px 0"><div style="width:150px;font-size:24px;font-weight:700">${m.name}</div><div style="flex:1;height:24px;border-radius:12px;background:rgba(255,255,255,.08);overflow:hidden"><i style="display:block;height:100%;width:${(m.w / wt * 100).toFixed(1)}%;background:${m.name.includes('红光') || m.name.includes('剑气') ? 'linear-gradient(90deg,#ff5a3a,#ff9a6a)' : '#7aa2c8'}"></i></div><div style="width:64px;text-align:right;font:600 20px 'SF Mono',Menlo,monospace">${(m.w / wt * 100).toFixed(0)}%</div></div>`).join('')}</div>`;
   }
   if (id === 'impl') {
     const l = SC.impl.lines;
-    return `<div class="card" style="left:90px;top:170px;width:620px;${pop(l[2].start + 0.3)}"><h3>公平规则</h3><div class="big" style="font-size:40px">前摇 ≥ 延迟 + 闪避起手</div>
-        <p style="margin-top:10px;font-size:22px">慢斩 22 ≥ 15 + 6 → 躲得开<br>快斩 9 &lt; 21 → 躲不开</p></div>
-      <div class="card" style="left:90px;top:470px;width:620px;${pop(l[4].start + 0.2)}"><h3>难度 = 三个旋钮</h3><div style="font-size:28px">感知延迟 · 进攻欲望 · 招式权重表</div></div>`;
+    const pb = pbState(t);
+    const ws = pWeights(pb.p), wt = ws.reduce((a, b) => a + b.w, 0);
+    const k1 = appear(l[1].start + 0.2), k2 = appear(l[2].start + 0.2), k3 = appear(l[3].start + 0.2);
+    return `<div class="card" style="left:70px;top:150px;width:600px;opacity:${k1.toFixed(2)}"><h3>它只读你的状态</h3>
+        <div style="display:flex;gap:18px;font-size:22px">${[['血量', (pb.hp * 100).toFixed(0) + '%'], ['按键/秒', pb.pps.toFixed(1)], ['喝药', pb.heal ? '是' : '否']].map(([a, b]) => `<div><small style="color:#9fb0bd">${a}</small><div style="font:800 30px 'SF Mono',Menlo,monospace">${b}</div></div>`).join('')}</div>
+        <div style="margin-top:14px;font-size:20px;color:#ffcf73">压力分 ${pb.p.toFixed(2)}</div><div style="height:16px;border-radius:8px;background:rgba(255,255,255,.1);overflow:hidden"><i style="display:block;height:100%;width:${(pb.p * 100).toFixed(0)}%;background:linear-gradient(90deg,#ffcf73,#ff4a2a)"></i></div></div>
+      <div class="card" style="left:70px;top:500px;width:600px;opacity:${k2.toFixed(2)}"><h3>招式权重</h3>${ws.map(m => `<div style="display:flex;align-items:center;gap:12px;margin:8px 0"><div style="width:130px;font-size:22px;font-weight:700">${m.name}</div><div style="flex:1;height:20px;border-radius:10px;background:rgba(255,255,255,.08);overflow:hidden"><i style="display:block;height:100%;width:${(m.w / wt * 100).toFixed(1)}%;background:${m.name.includes('红光') || m.name.includes('剑气') ? 'linear-gradient(90deg,#ff5a3a,#ff9a6a)' : '#7aa2c8'}"></i></div><div style="width:56px;text-align:right;font:600 18px 'SF Mono',Menlo,monospace">${(m.w / wt * 100).toFixed(0)}%</div></div>`).join('')}</div>
+      <div class="card" style="right:70px;top:640px;width:560px;opacity:${k3.toFixed(2)}"><div style="font-size:26px;font-weight:800"><span style="color:#ff5a3a">● 红光</span>：不能格挡，只能闪</div><div style="font-size:26px;font-weight:800;margin-top:8px"><span style="color:#5aa8ff">● 蓝光</span>：可以弹反</div></div>`;
   }
   if (id === 'demo') {
-    return `<div class="card" style="left:90px;top:170px;width:600px;${pop(SC.demo.start + 0.3)}"><h3>效果预览 · 网页可玩</h3><p style="font-size:24px;color:#fff">切换三种敌人：读按键 / 读动作 / 看画面</p><p style="font-size:20px">源码：src/duel.js</p></div>
+    return `<div class="card" style="left:90px;top:170px;width:600px;${pop(SC.demo.start + 0.3)}"><h3>效果预览 · 网页可玩</h3><p style="font-size:24px;color:#fff">影之刃式 Boss + 读按键 / 读动作 / 看画面</p><p style="font-size:20px">源码：src/duel.js</p></div>
       <div style="position:absolute;left:0;right:0;top:120px;text-align:center"><span class="chip" style="font-size:40px;padding:14px 40px;background:${{ button: '#ff6b6b', state: '#ffb347', perceive: '#5fd3a0' }[shot.mode]};color:#111">${MODE_LABEL[shot.mode]}</span></div>`;
   }
   if (id === 'outro') {
     const l0 = L(id, 1), l1 = L(id, 2); const cr = win(t, SC.outro.start + 0.1, l0.start + 0.1, 0.4); const k = appear(l0.start - 0.2, 0.7);
     const on = n => t > l0.start + 1.6 + n * 0.45; const follow = appear(l0.start + 3.0);
-    return `<div class="card" style="left:50%;transform:translateX(-50%);top:150px;width:1200px;opacity:${cr.toFixed(2)}"><h3>感谢以下作者的实测与素材</h3>${[['尾巴尾巴啊', '《为了打赢魂大人 读指令已经是最基础的武功了》'], ['Oceeart', '《新娘阿花五连投技，拼尽全力无法战胜》'], ['市井小羿', '《详解巴流弦一郎的喝葫芦读指令机制》'], ['还会再会吗m', '《女武神：这货怎么读指令？》'], ['努力做一个Dancer', '《合金装备1经典boss战》'], ['游民星空', '《影之刃零AI确实智能：新娘知道你不会躲》']].map(([a, b]) => `<div style="font-size:26px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.1)"><b style="color:#ffcf73">@${a}</b>　${b}</div>`).join('')}<p style="margin-top:12px;font-size:20px">均来自 B 站 / 游民星空，链接见简介</p></div><div class="endcard" style="opacity:${k.toFixed(3)}"><img class="av" src="brand/avatar.png" style="transform:scale(${(0.8 + 0.2 * k).toFixed(3)})"><div class="id">粑粑柑（梭哈ai版）</div><div class="sub">机制拆解 · 用代码拆游戏</div>
+    return `<div class="card" style="left:50%;transform:translateX(-50%);top:150px;width:1200px;opacity:${cr.toFixed(2)}"><h3>感谢以下作者的实测与素材</h3>${[['尾巴尾巴啊', '《为了打赢魂大人 读指令已经是最基础的武功了》'], ['Oceeart', '《新娘阿花五连投技，拼尽全力无法战胜》'], ['市井小羿', '《详解巴流弦一郎的喝葫芦读指令机制》'], ['还会再会吗m', '《女武神：这货怎么读指令？》'], ['努力做一个Dancer', '《合金装备1经典boss战》'], ['一般通过の溜胸', '《《合金装备1》尝试硬抗读心打螳螂》'], ['游研更新姬', '街霸2 CPU 作弊（搬运 Desk 原作）']].map(([a, b]) => `<div style="font-size:26px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.1)"><b style="color:#ffcf73">@${a}</b>　${b}</div>`).join('')}<p style="margin-top:12px;font-size:20px">均来自 B 站，链接见简介</p></div><div class="endcard" style="opacity:${k.toFixed(3)}"><img class="av" src="brand/avatar.png" style="transform:scale(${(0.8 + 0.2 * k).toFixed(3)})"><div class="id">粑粑柑（梭哈ai版）</div><div class="sub">机制拆解 · 用代码拆游戏</div>
       <div class="btns">${[['like', '点赞'], ['coin', '投币'], ['fav', '收藏']].map(([ic, lb], n) => `<div class="btn${on(n) ? ' on' : ''}">${icons[ic]}${lb}</div>`).join('')}</div>
       <div class="follow" style="opacity:${follow.toFixed(3)};transform:scale(${(0.9 + 0.1 * follow).toFixed(3)})">+ 关注</div>
       <div style="margin-top:26px;font-size:24px;color:#ffe0a0;opacity:${appear(l1.start + 0.3).toFixed(3)}">你被哪个 Boss 读得最狠？评论区见</div></div>`;
@@ -291,7 +309,7 @@ function big(id, t) {
     if (a > 0) { k = a; html = '<div class="l1">读的不是按键，是<span class="acc">你的状态</span></div>'; }
   } else if (id === 'impl') {
     const a = win(t, L('impl', 0).start + 0.1, L('impl', 0).end + 0.2, 0.3);
-    if (a > 0) { k = a; html = '<div class="l1">给敌人一段<span class="acc">反应时间</span></div>'; }
+    if (a > 0) { k = a; html = '<div class="l1">写一个<span class="acc">影之刃式 Boss</span></div>'; }
   }
   setHTML($('bigtext'), html); op($('bigtext'), k); tf($('bigtext'), `scale(${(0.94 + 0.06 * easeOut(k)).toFixed(3)})`);
 }
@@ -302,7 +320,10 @@ const CR_WEIBA = '实机画面与测试 · 来自 B站 @尾巴尾巴啊《为了
 const FOOT = [
   ['hook', 0, FOOT_END, 'footage/hook2', 561, t => t < 11.4 ? CR_BRIDE : t < 15.4 ? '实机画面 · 只狼 · 来自 B站 @市井小羿《详解巴流弦一郎的喝葫芦读指令机制》' : '实机画面 · 影之刃零官方预告（© S-GAME）'],
   ['souls', L('souls', 1).start, L('souls', 2).end + 0.2, 'footage/souls2', 264, t => t < 5.2 ? '实机画面 · 只狼 · 来自 B站 @市井小羿《详解巴流弦一郎的喝葫芦读指令机制》' : '实机画面 · 艾尔登法环 · 来自 B站 @还会再会吗m《女武神：这货怎么读指令？》'],
+  ['arcade', L('arcade', 1).start, L('arcade', 1).end + 0.1, 'footage/arcade', 192, () => '画面来自 B站 @游研更新姬（中文字幕搬运）· 原作 Desk《How the CPU cheated you in Street Fighter 2》'],
   ['mantis', SC.mantis.start, L('mantis', 0).end + 0.2, 'footage/mantis2', 99, () => '实机画面 · 合金装备 · 来自 B站 @努力做一个Dancer《合金装备1经典boss战，如何不换手柄打败螳螂》'],
+  ['mantis', L('mantis', 2).start, L('mantis', 2).end, 'footage/mantis3', 192, () => '实机画面 · 合金装备 · 来自 B站 @一般通过の溜胸《《合金装备1》尝试硬抗读心打螳螂》'],
+  ['mantis', L('mantis', 3).start, L('mantis', 3).start + 5.0, 'footage/mantis4', 150, () => '实机画面 · 合金装备 · 来自 B站 @一般通过の溜胸《《合金装备1》尝试硬抗读心打螳螂》'],
   ['pb0', SC.pb0.start, SC.pb0.start + 10.2, 'footage/pb0', 306, () => '实机画面 · 影之刃零官方实机演示（© S-GAME）'],
   ['pressure', SC.pressure.start, L('pressure', 4).end + 0.1, 'footage/pressure', 780, t => t < 20.8 ? CR_WEIBA : CR_BRIDE],
 ];
@@ -339,13 +360,20 @@ window.renderFrame = async function (t) {
       const sha = clamp((fi ? 1 - st.events.filter(ev => ev.type === 'dodge').length * 0.18 : 1 - st.events.filter(ev => ev.type === 'hit_enemy' || ev.type === 'dodge').length * 0.08), 0.1, 1);
       bars += `<div style="position:absolute;left:${q.x.toFixed(0)}px;top:${(q.y - 40).toFixed(0)}px;transform:translate(-50%,-100%);width:170px"><div style="font-size:16px;color:#ffcf73;font-weight:800">${who} · 杀气</div><div class="bar" style="width:170px;height:12px;border-radius:6px;background:rgba(0,0,0,.6);overflow:hidden;border:1px solid rgba(255,255,255,.3)"><i style="display:block;height:100%;width:${(sha * 100).toFixed(0)}%;background:linear-gradient(90deg,#ff7a2a,#ffd27a)"></i></div></div>`;
     }
+    if (shot.pb && t > L('impl', 1).start) {
+      const pb = pbState(t), fierce = pb.move === '红光投技' || pb.move === '剑气', blue = pb.move === '普通连斩';
+      if ((fierce || blue) && pb.ph < 0.55) {
+        const q0 = world.project(e.x, 1.2, e.z), q = { x: clamp(q0.x, 260, 1660), y: clamp(q0.y, 280, 820) }, col = fierce ? '#ff4a2a' : '#4aa0ff';
+        html += `<div style="position:absolute;left:${q.x.toFixed(0)}px;top:${q.y.toFixed(0)}px;width:260px;height:260px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle, ${col}88, ${col}00 70%);opacity:${(1 - pb.ph / 0.55).toFixed(2)}"></div><div style="position:absolute;left:${q.x.toFixed(0)}px;top:${(q.y - 170).toFixed(0)}px;transform:translateX(-50%);font-size:60px;font-weight:900;color:${col};-webkit-text-stroke:2px rgba(0,0,0,.5);text-shadow:0 4px 16px #000">${pb.move === '红光投技' ? '红光！闪避' : pb.move === '剑气' ? '剑气' : '蓝光 · 可弹反'}</div>`;
+      }
+    }
     html += modeTag + bars;
   }
   setHTML($('cards'), html);
   // code panel
   let codeK = 0, reg = null;
   if (id === 'levels') { codeK = win(t, L('levels', 2).start + 0.5, L('levels', 5).start, 0.4); reg = 'modes'; }
-  if (id === 'impl') { codeK = win(t, L('impl', 1).start + 0.2, SC.impl.end - 0.2, 0.5); reg = t < L('impl', 2).start ? 'perceive' : t < L('impl', 3).start ? 'fair' : 'p:weights'; }
+  if (id === 'impl') { codeK = win(t, L('impl', 1).start + 0.2, L('impl', 2).start + 2.0, 0.5); reg = t < L('impl', 2).start ? 'p:pressure' : 'p:weights'; }
   if (reg && $('coderegion').dataset.r !== reg) { $('coderegion').dataset.r = reg; const pr = reg.startsWith('p:'); const rg = pr ? reg.slice(2) : reg; $('codebody').innerHTML = codeHTML(rg, pr ? pcode : code); $('coderegion').textContent = '//#region ' + rg; $('codefile').textContent = pr ? 'src/pressure.js' : 'src/duel.js'; }
   op($('code'), codeK); tf($('code'), `translateY(${((1 - codeK) * 24).toFixed(1)}px)`);
   setHTML($('hud'), ''); op($('inspector'), 0); op($('legend'), 0); setHTML($('anno'), '');

@@ -19,16 +19,16 @@ swings('arcade', loopActs(0, E('arcade') - S('arcade'), 1.9, 'quick', 0.4));
 swings('souls', [[rel('souls', 0, 0.5), 'heal'], [rel('souls', 3, 1.0), 'heal'], [rel('souls', 4, 0.8), 'heal']]);
 for (const o of [0.2, 1.4, 2.8, 4.4, 5.8, 7.2]) at('souls', L('souls', 1).start + o, 'zap', { gain: 0.45 }); at('souls', L('souls', 1).start + 2.0, 'steam', { gain: 0.4 });
 at('mantis', L('mantis', 0).start + 0.2, 'chime'); for (let i = 0; i < 4; i++) at('mantis', L('mantis', 1).start + 0.6 + i * 0.35, 'ui_tick');
-at('mantis', L('mantis', 1).start + 2.0, 'wind', { dur: 2.4, gain: 0.5 }); at('mantis', L('mantis', 2).start + 1.2, 'power_on');
+at('mantis', L('mantis', 1).start + 2.0, 'wind', { dur: 2.4, gain: 0.5 }); for (const o of [0.3, 1.2, 2.8, 3.6, 4.5, 5.4]) at('mantis', L('mantis', 2).start + o, 'zap', { gain: 0.4 }); at('mantis', L('mantis', 3).start + 0.3, 'ui_tick'); at('mantis', L('mantis', 3).start + 5.1, 'power_on');
 for (const o of [0.3, 1.2, 2.2, 3.5, 4.4, 5.6, 6.8, 7.9, 9.0]) at('pb0', S('pb0') + o, 'zap', { gain: 0.45 });
 at('pb0', L('pb0', 0).start + 0.05, 'chime', { gain: 0.6 });
 swings('pb0', loopActs(rel('pb0', 2) + 3, E('pb0') - S('pb0'), 1.9, 'slash', 0.3).filter(a => a[0] > 10.2));
 for (const o of [0.4, 1.6, 2.9, 4.1, 5.5, 6.8, 8.0, 9.3, 10.7, 12.0, 13.4, 14.8, 16.1, 17.5, 18.9, 20.2, 21.6, 22.9, 24.3, 25.6]) at('pressure', S('pressure') + o, 'zap', { gain: 0.4 });
 at('pressure', L('pressure', 5).start + 3.4, 'chime', { gain: 0.6 });
 swings('pressure', loopActs(rel('pressure', 5) - 0.2, E('pressure') - S('pressure'), 1.1, 'quick', 0.2));
-swings('impl', [[rel('impl', 1, 1.0), 'slash'], [rel('impl', 1, 3.4), 'slash'], [rel('impl', 2, 0.6), 'slash'], [rel('impl', 2, 2.9), 'quick'], [rel('impl', 3, 0.6), 'quick'], [rel('impl', 3, 2.4), 'quick'], [rel('impl', 4, 0.6), 'slash']]);
+{ const a = [[rel('impl', 1, 0.8), 'slash'], [rel('impl', 1, 3.6), 'slash']]; for (let x = rel('impl', 2, 0.2); x < E('impl') - S('impl') - 1; x += 0.55) a.push([x, 'quick']); swings('impl', a); for (let tt = L('impl', 1).start; tt < E('impl') - 0.5; tt += 1.4) at('impl', tt, 'zap', { gain: 0.35 }); }
 SC.impl.lines.forEach(l => at('impl', l.start, 'ui_tick'));
 const third = (E('demo') - S('demo')) / 3; for (let k = 0; k < 3; k++) { at('demo', S('demo') + k * third, 'ui_tick'); swings('demo', [[k * third + 0.5, 'quick'], [k * third + 1.6, 'slash']]); }
 for (let n = 0; n < 3; n++) at('outro', L('outro', 1).start + 1.6 + n * 0.45, 'ui_tick');
-at('outro', L('outro', 1).start + 3.0, 'chime');
+at('outro', L('outro', 1).start + 3.0, 'chime'); at('arcade', L('arcade', 1).start + 0.2, 'ui_tick');
 writeFileSync('sfx_cues.json', JSON.stringify(cues, null, 1)); console.log(cues.length, 'cues');

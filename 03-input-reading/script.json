@@ -29,8 +29,8 @@
      "rehook": "问"
     },
     {
-     "zh": "这期机制拆解，把读指令从头讲清楚，最后亲手做一个公平的版本。",
-     "en": "This time we explain input reading from the ground up, then build a fair version ourselves."
+     "zh": "这期机制拆解，把读指令从头讲清楚，最后照着影之刃零的思路，写一个能玩的 Boss。",
+     "en": "This time we explain input reading from the ground up, then build a playable boss the Phantom Blade Zero way."
     }
    ]
   },
@@ -77,7 +77,7 @@
      "en": "The earliest input reading comes from arcade fighting games."
     },
     {
-     "zh": "有人逆向过街霸二的程序，你的招式数据一产生，电脑就能看到，比第一帧画面还早一帧。",
+     "zh": "有人逆向过街霸二的程序：你的招式数据一产生，电脑就能看到，比第一帧画面还早一帧。",
      "en": "Someone reverse-engineered Street Fighter II: the CPU sees your move's data the moment it exists, a frame before the first animation frame."
     },
     {
@@ -132,8 +132,13 @@
      "en": "Psycho Mantis reads your memory card, names the Konami games you have played, and makes your controller shake by itself."
     },
     {
-     "zh": "打他的办法也很硬件，把手柄换到二号口，他就读不到你了。",
-     "en": "The fix is hardware too: plug your controller into port two, and he can no longer read you."
+     "zh": "更狠的是战斗：他能读到你手柄上的每一个操作，你怎么打，他都提前躲开，几乎是无敌的。",
+     "en": "Worse, the fight: he reads every input on your controller, dodges whatever you do in advance, and is practically invincible.",
+     "rehook": "钩子"
+    },
+    {
+     "zh": "游戏里的提示是，把手柄插到二号口。他读的是一号口，换了口，他就读不到你了。",
+     "en": "The in-game hint: plug your controller into port two. He reads port one, so once you switch, he can't read you anymore."
     }
    ]
   },
@@ -182,8 +187,8 @@
      "en": "Mash dodge, and you get a sword wave. Heal, and you get one too."
     },
     {
-     "zh": "游民星空也报道了玩家的发现：你越不会躲哪一招，它就越频繁地出哪一招。",
-     "en": "Gamersky also reported what players found: whichever move you can't dodge, it uses more and more."
+     "zh": "B 站评论区里，玩家也说出了同样的感觉：你越不会躲哪一招，它就越频繁地出哪一招。",
+     "en": "In the Bilibili comments, players describe the same feeling: whichever move you can't dodge, it uses more and more."
     },
     {
      "zh": "这些是玩家的实测和推测，不是官方说明。但它解释了一件事：它读的不是按键，而是你的状态。",
@@ -194,29 +199,29 @@
   },
   {
    "id": "impl",
-   "kicker": "07 · 实现方法",
-   "title": "给敌人一段反应时间",
+   "kicker": "07 · 影之刃式 Boss",
+   "title": "照着压力系统写一个 Boss",
    "lines": [
     {
-     "zh": "想做一个公平的敌人，可以这样写。",
-     "en": "Want a fair enemy? Here's how.",
+     "zh": "最后，我们照着这些发现，写一个影之刃式的 Boss。",
+     "en": "Finally, following these findings, we build a Phantom Blade-style boss.",
      "rehook": "钩子"
     },
     {
-     "zh": "第一，不订阅按键事件，给它一段感知延迟，看到动作以后，等十五帧左右再反应。",
-     "en": "One: don't subscribe to button events. Give it a perception delay, and after it sees the action, wait about fifteen frames before reacting."
+     "zh": "它不读按键，只读你的状态：血量、按键频率、有没有在喝药，合成一个压力分。",
+     "en": "It doesn't read buttons, only your state: health, how fast you press, whether you're healing, combined into a pressure score."
     },
     {
-     "zh": "前摇比反应时间长的招，它能躲开；比反应时间短的快招，它就躲不掉。",
-     "en": "Moves with longer wind-up than its reaction time get dodged. Faster moves land."
+     "zh": "压力分决定它抽哪一招：越慌，红光投技和剑气的权重就越高。",
+     "en": "The pressure score decides which move it draws: the more you panic, the heavier the red-flash grab and sword wave are weighted."
     },
     {
-     "zh": "第二，用你的状态给招式加权：血量低、乱按、喝药，都会让狠招的权重变高。",
-     "en": "Two: weight its moves by your state. Low health, button mashing and healing all raise the weight of its nastiest moves."
+     "zh": "红光不能格挡只能闪，蓝光可以弹反；你一乱按，它就更爱出红光。",
+     "en": "Red can't be blocked, only dodged; blue can be parried. Start mashing, and it reaches for red more often."
     },
     {
-     "zh": "难度高低，就是调这段延迟、进攻欲望和这张权重表。",
-     "en": "Difficulty is just tuning that delay, its aggression and that weight table."
+     "zh": "难度高低，就是调它的反应速度、进攻欲望和这张权重表。",
+     "en": "Difficulty is just tuning its reaction speed, its aggression and that weight table."
     }
    ]
   },
@@ -226,12 +231,12 @@
    "title": "三种敌人，亲手试试",
    "lines": [
     {
-     "zh": "我们把三种敌人做成了能玩的网页：读按键、读动作、看画面。",
-     "en": "We built all three enemies into a playable page: button reader, action reader, screen watcher."
+     "zh": "这个影之刃式的 Boss 也做成了能玩的网页，还能切换读按键、读动作、看画面三种敌人。",
+     "en": "This Phantom Blade-style boss is on a playable page too, alongside the button reader, action reader and screen watcher."
     },
     {
-     "zh": "同一刀砍过去，你能清楚地感觉到哪一个在作弊。",
-     "en": "Swing the same slash, and you can clearly feel which one is cheating."
+     "zh": "你可以亲手试试：冷静出招和狂按乱打，它的反应完全不一样。",
+     "en": "Try it yourself: calm, deliberate attacks and frantic mashing get completely different reactions."
     }
    ]
   },
