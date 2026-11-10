@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>原神元素反应 · 机制拆解 02 · 粑粑柑（梭哈ai版）</title>
+<link rel="stylesheet" href="film.css">
+<script type="importmap">{"imports":{"three":"./vendor/three/build/three.module.js","three/addons/":"./vendor/three/examples/jsm/"}}</script>
+</head>
+<body>
+<div id="stage">
+  <canvas id="gl" width="1920" height="1080"></canvas>
+  <img id="foot" alt=""><div id="footlabel"></div>
+  <div id="dim"></div>
+  <div id="vignetteL"></div>
+
+  <header id="brand">
+    <img src="brand/avatar.png" alt="">
+    <div><b>粑粑柑（梭哈ai版）</b><span>机制拆解 · 第 2 期</span></div>
+  </header>
+  <nav id="rail"></nav>
+
+  <section id="panel"><div id="kicker"></div><h1 id="title"></h1><div id="bullets"></div></section>
+
+  <div id="cards"></div>
+  <div id="hud"></div>
+  <svg id="anno" width="1920" height="1080" viewBox="0 0 1920 1080"></svg>
+  <div id="inspector"></div>
+  <div id="legend"></div>
+
+  <div id="code"><header><span class="dots"><i></i><i></i><i></i></span><span id="codefile">src/sim.js</span><span id="coderegion"></span></header><pre id="codebody"></pre></div>
+
+  <div id="bigtext"></div>
+  <div id="subs"><div id="szh"></div><div id="sen"></div></div>
+  <div id="progress"><i></i></div>
+  <div id="flash"></div>
+</div>
+<script src="timeline.js"></script>
+<script type="module" src="film.js"></script>
+</body>
+</html>

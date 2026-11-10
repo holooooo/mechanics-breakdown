@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>原神式元素反应 · 机制拆解 第 2 期 · 效果预览 + 实现方法</title>
+<meta name="description" content="用一张会衰减的附着表，复刻原神式元素附着与反应的教学原型。可交互预览、源码讲解、解析视频。">
+<link rel="icon" href="brand/avatar.png">
+<link rel="stylesheet" href="site.css">
+<script type="importmap">{"imports":{"three":"./vendor/three/build/three.module.js","three/addons/":"./vendor/three/examples/jsm/"}}</script>
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <img class="avatar" src="brand/avatar.png" alt="粑粑柑（梭哈ai版）">
+    <div class="who"><b>粑粑柑（梭哈ai版）</b><span>机制拆解 · 第 2 期</span></div>
+  </div>
+  <nav class="tabs" role="tablist">
+    <button role="tab" data-tab="preview" class="on">效果预览</button>
+    <button role="tab" data-tab="method">实现方法</button>
+    <button role="tab" data-tab="video">解析视频</button>
+  </nav>
+</header>
+
+<main>
+<section id="tab-preview" class="tab on">
+  <div class="stage">
+    <canvas id="gl"></canvas>
+    <div id="hud"></div>
+    <div class="rules">
+      <span class="chip ok">元素 → 附着在单位身上</span>
+      <span class="chip no">据玩家实测的数值，非官方</span>
+    </div>
+    <div class="hint">点击木桩选中 · 拖动旋转 · 滚轮缩放</div>
+    <div class="loading" id="loading">正在生成世界…</div>
+  </div>
+  <aside class="panel glass">
+    <div class="sec tgt">
+      <h4>目标木桩</h4>
+      <div class="seg" id="tgts">
+        <button data-id="a" class="on">木桩 A</button><button data-id="b">木桩 B</button><button data-id="c">木桩 C</button>
+      </div>
+    </div>
+    <div class="sec">
+      <h4>施加元素</h4>
+      <div class="els" id="els">
+        <button data-el="pyro">火</button><button data-el="hydro">水</button><button data-el="electro">雷</button>
+        <button data-el="cryo">冰</button><button data-el="anemo">风</button><button data-el="geo">岩</button>
+      </div>
+      <div class="seg" id="units">
+        <button data-u="1" class="on">1U</button><button data-u="2">2U</button><button data-u="4">4U</button>
+      </div>
+      <button id="b-burst" class="main">连射 7 发 (测试附着冷却)</button>
+    </div>
+    <div class="row">
+      <button id="b-pause" class="toggle">暂停</button>
+      <button id="b-reset" class="warn">重置</button>
+      <label class="inl">速度
+        <select id="speed"><option value="0.25">0.25×</option><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option><option value="4">4×</option></select>
+      </label>
+    </div>
+    <div class="sec">
+      <h4>附着表 · <span id="selname">木桩 A</span> <span id="clock" style="color:var(--dim);font-weight:400"></span></h4>
+      <table class="aura" id="aura"></table>
+      <div class="tags" id="tags"></div>
+    </div>
+    <div class="sec">
+      <h4>事件日志</h4>
+      <div class="log" id="log"></div>
+    </div>
+    <div class="stats" id="stats"></div>
+  </aside>
+</section>
+
+<section id="tab-method" class="tab">
+  <article class="doc">
+    <h1>怎么用“一张附着表”算出元素反应</h1>
+    <p class="lead">上一期的塞尔达把<b>状态放在世界的格子里传播</b>；这一期的原神把<b>元素挂在单位身上，只在命中的那一刻结算</b>。每个敌人只有一张很小的、会衰减的“附着表”，反应就是后手元素去吃掉表里的某一行。</p>
+    <p class="note">重要：米哈游没有公布元素量与内置冷却的官方数值，下面所有数字都来自玩家社区的实测（KQM Theorycrafting Library、Genshin Impact Wiki），请当作“据玩家实测”，而不是官方设定。</p>
+
+    <h2>规则速览</h2>
+    <div class="cards3">
+      <div class="card"><h3>1. 附着税：1U → 0.8U</h3><p>技能自带元素量 xU，留在目标身上的只有 0.8x。1U 留 0.8U，2U 留 1.6U，4U 留 3.2U。</p></div>
+      <div class="card"><h3>2. 持续 2.5x + 7 秒</h3><p>未被延长、未被反应消耗时，总持续 = 2.5x+7：1U 9.5 秒，2U 12 秒，4U 17 秒。衰减速率由<b>首次附着</b>决定：1U 约 11.9 秒掉 1U，4U 约 5.3 秒。</p></div>
+      <div class="card"><h3>3. 同元素取较大者</h3><p>重复附着同一种元素不是相加，而是取大（0.8U 再来 1.6U 得 1.6U），衰减沿用最先那次的速率。火是例外：新量不小于旧量时刷新速率。</p></div>
+    </div>
+
+    <h2>反应：后手元素吃掉附着</h2>
+    <table class="rtab">
+      <tr><th>后手 → 已有附着</th><th>反应</th><th>倍率</th><th>消耗（后手元素量 ×）</th></tr>
+      <tr><td>水 → 火</td><td>蒸发（强）</td><td>×2</td><td>2</td></tr>
+      <tr><td>火 → 水</td><td>蒸发（弱）</td><td>×1.5</td><td>0.5</td></tr>
+      <tr><td>火 → 冰</td><td>融化（强）</td><td>×2</td><td>2</td></tr>
+      <tr><td>冰 → 火</td><td>融化（弱）</td><td>×1.5</td><td>0.5</td></tr>
+      <tr><td>火 ↔ 雷</td><td>超载（剧变）</td><td>2.75 × 等级系数</td><td>1</td></tr>
+      <tr><td>冰 ↔ 雷</td><td>超导（剧变）</td><td>1.5 × 等级系数</td><td>1</td></tr>
+      <tr><td>水 ↔ 雷</td><td>感电（水雷共存，每秒一跳）</td><td>2 × 等级系数</td><td>每跳各 0.4U</td></tr>
+      <tr><td>水 ↔ 冰</td><td>冻结</td><td>无伤害</td><td>1</td></tr>
+      <tr><td>风 → 火 / 水 / 雷 / 冰</td><td>扩散</td><td>0.6 × 等级系数</td><td>0.5</td></tr>
+      <tr><td>岩 → 火 / 水 / 雷 / 冰</td><td>结晶（护盾）</td><td>无伤害</td><td>0.5</td></tr>
+    </table>
+    <p>增幅反应（蒸发、融化）是乘法：把<b>整次伤害</b>放大，所以吃暴击、吃技能倍率。剧变反应（超载、超导、感电……）则<b>只看角色等级与元素精通</b>，不吃攻击力、暴击，伤害 = 倍率 × 等级系数 × (1 + 16·EM/(2000+EM) + 加成)。风和岩留不下附着，只能作为触发者路过。</p>
+
+    <h2>内置冷却（ICD）：3 下或 2.5 秒</h2>
+    <p>同一个来源连续命中时，并不是每一下都挂元素：第 1 下必挂；之后每 3 下挂一次，或者距上次满 2.5 秒后的下一下必挂。“3 下”不会重置计时，“2.5 秒”会重置计数，序列是 1,0,0,1,0,0,1…。在“效果预览”里点“连射 7 发”，你会看到只有第 1、4、7 发真正附着，其余的被冷却挡住。</p>
+
+    <h2>和第 1 期对比</h2>
+    <table class="cmp">
+      <tr><th></th><th>第 1 期 · 塞尔达</th><th>第 2 期 · 原神</th></tr>
+      <tr><td>核心问题</td><td>算世界</td><td>算伤害</td></tr>
+      <tr><td>状态存在哪</td><td>48×48 个格子的温度 / 湿度 / 燃料 / 电荷</td><td>每个单位身上的一张附着表</td></tr>
+      <tr><td>何时计算</td><td>60Hz 规则 tick，一直在扩散</td><td>命中事件到来时才结算，之间只做衰减</td></tr>
+      <tr><td>蔓延</td><td>温度靠相邻格传导，能烧成一片</td><td>点得着、烧完就完，没有自行连锁</td></tr>
+      <tr><td>设计哲学</td><td>规则只和“属性”打交道，涌现</td><td>规则表是显式的，数值可被测出来</td></tr>
+    </table>
+    <p>第 1 期：<a href="https://zelda-chemistry-engine.pages.dev/" target="_blank" rel="noopener">塞尔达式化学引擎 · 效果预览 + 实现方法</a>。</p>
+
+    <h2>源码查看</h2>
+    <p>下面直接读取 <code>src/combat.js</code> 里的真实代码，每个 <code>#region</code> 是一条规则。它是纯 JS、不用随机数与时钟，所以可以在 Node 里测试，也可以被视频逐帧驱动。</p>
+    <div class="srcbar">
+      <select id="region">
+        <option value="aura">aura · 元素量与持续时间</option>
+        <option value="decay">decay · 惰性衰减</option>
+        <option value="icd">icd · 内置冷却</option>
+        <option value="apply">apply · 附着（取大）</option>
+        <option value="react">react · 反应规则表</option>
+      </select>
+      <span id="srcmeta"></span>
+    </div>
+    <pre class="code"><code id="code">加载中…</code></pre>
+
+    <h2>来源与说明</h2>
+    <ul class="src">
+      <li>KQM Theorycrafting Library · 元素量理论：<a href="https://library.keqingmains.com/combat-mechanics/elemental-effects/elemental-gauge-theory" target="_blank" rel="noopener">elemental-gauge-theory</a></li>
+      <li>KQM · 内置冷却：<a href="https://library.keqingmains.com/combat-mechanics/internal-cooldown" target="_blank" rel="noopener">internal-cooldown</a></li>
+      <li>KQM · 剧变反应：<a href="https://library.keqingmains.com/combat-mechanics/elemental-effects/transformative-reactions" target="_blank" rel="noopener">transformative-reactions</a></li>
+      <li>KQM · 伤害公式：<a href="https://library.keqingmains.com/combat-mechanics/damage/damage-formula" target="_blank" rel="noopener">damage-formula</a></li>
+      <li>Genshin Impact Wiki · Elemental Gauge Theory：<a href="https://genshin-impact.fandom.com/wiki/Elemental_Gauge_Theory" target="_blank" rel="noopener">genshin-impact.fandom.com/wiki/Elemental_Gauge_Theory</a></li>
+      <li>Genshin Impact Wiki · Internal Cooldown：<a href="https://genshin-impact.fandom.com/wiki/Internal_Cooldown" target="_blank" rel="noopener">genshin-impact.fandom.com/wiki/Internal_Cooldown</a></li>
+      <li>Genshin Impact Wiki · Level Scaling：<a href="https://genshin-impact.fandom.com/wiki/Elemental_Reaction/Level_Scaling" target="_blank" rel="noopener">Elemental_Reaction/Level_Scaling</a></li>
+    </ul>
+    <p class="note">这是一个简化的教学原型，是原创实现，不含米哈游的代码或美术资源；教学简化：不含元素精通、抗性、暴击，一次命中最多触发一种反应，冻结不做递减。倍率采用 5.2 之后的数字，所有数值均为玩家社区实测，非官方公布。</p>
+  </article>
+</section>
+
+<section id="tab-video" class="tab">
+  <div class="vwrap">
+    <div class="vposter"><img src="media/poster.jpg" alt="解析视频画面" style="width:100%;border-radius:16px;display:block"><span>机制拆解 · 第 2 期 · 原神元素反应</span></div>
+    <p class="note">完整解析视频「机制拆解 02 · 原神元素反应」发布在 B站 / 抖音，搜索作者 <b>粑粑柑（梭哈ai版）</b> 即可观看。视频里的 3D 画面和附着数字，都是用这个仓库的 <code>film.html</code> 与同一份 <code>src/combat.js</code> 逐帧渲染的。上一期：<a href="https://zelda-chemistry-engine.pages.dev/" target="_blank" rel="noopener">塞尔达化学引擎</a>。</p>
+  </div>
+</section>
+</main>
+<script type="module" src="app.js"></script>
+</body>
+</html>
