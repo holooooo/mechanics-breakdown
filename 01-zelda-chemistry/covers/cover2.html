@@ -1,0 +1,30 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{overflow:hidden;font-family:"PingFang SC",sans-serif;color:#fff;background:#000}
+#bg{position:absolute;inset:0;background:url(ref/botw_link_pose.png) no-repeat;background-size:cover}
+#shade{position:absolute;inset:0;background:radial-gradient(ellipse 70% 55% at 50% 47%,rgba(8,14,24,.62),rgba(8,14,24,.15) 70%,rgba(8,14,24,0)),linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,0) 20%,rgba(0,0,0,0) 80%,rgba(0,0,0,.25))}
+#mid{position:absolute;left:0;right:0;top:50%;transform:translateY(-54%);text-align:center}
+.tag{display:inline-block;font:800 26px "SF Mono",Menlo,monospace;letter-spacing:8px;color:#ffd27a;padding:8px 22px;border:2px solid rgba(255,210,122,.7);border-radius:999px;background:rgba(0,0,0,.35)}
+h1{font-size:150px;font-weight:900;line-height:1.02;margin-top:22px;letter-spacing:-2px;text-shadow:0 6px 0 rgba(0,0,0,.35),0 10px 50px rgba(0,0,0,.75)}
+h1 em{font-style:normal;color:#ffb347;-webkit-text-stroke:2px #5a2a00}
+h2{display:inline-block;font-size:52px;font-weight:900;margin-top:24px;padding:10px 30px;border-radius:18px;background:#ff6a2a;box-shadow:0 10px 30px rgba(0,0,0,.45)}
+.chips{display:flex;justify-content:center;gap:14px;margin-top:26px}
+.chips span{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;font-size:34px;font-weight:900;box-shadow:0 6px 20px rgba(0,0,0,.4)}
+#brand{position:absolute;top:44px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:14px;padding:8px 22px 8px 8px;border-radius:999px;background:rgba(0,0,0,.45);backdrop-filter:blur(8px)}
+#brand img{width:66px;height:66px;border-radius:50%;border:3px solid #fff;background:#fff}
+#brand b{font-size:28px;white-space:nowrap}
+.v h1{font-size:136px}
+.v #mid{transform:translateY(-62%)}
+</style></head><body>
+<div id="bg"></div><div id="shade"></div>
+<div id="brand"><img src="../brand/avatar.png"><b>粑粑柑（梭哈ai版）</b></div>
+<div id="mid"><div class="tag">WEBGL LAB · EP.5</div><h1>塞尔达<br><em>化学引擎</em></h1><h2>3 条规则，让世界自己算</h2>
+<div class="chips"><span style="background:#ff6a2a">火</span><span style="background:#2f8cff">水</span><span style="background:#9fe4ff;color:#06303f">冰</span><span style="background:#7d5cff">电</span><span style="background:#5fd3a0;color:#053524">风</span></div></div>
+<script>
+const q=new URLSearchParams(location.search),W=+q.get('w')||1440,H=+q.get('h')||1080;
+document.body.style.width=W+'px';document.body.style.height=H+'px';
+const bg=document.getElementById('bg');
+if(H>W){document.body.classList.add('v');bg.style.backgroundSize='auto 100%';bg.style.backgroundPosition='88% 50%';}
+else{bg.style.backgroundPosition='80% 50%';}
+const img=new Image();img.onload=()=>requestAnimationFrame(()=>requestAnimationFrame(()=>window.READY=true));img.src='ref/botw_link_pose.png';
+</script></body></html>

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300">
+  <defs>
+    <radialGradient id="face" cx="40%" cy="38%" r="72%">
+      <stop offset="0" stop-color="#fff59a"/><stop offset="0.65" stop-color="#f8e04a"/><stop offset="1" stop-color="#f0c62a"/>
+    </radialGradient>
+    <linearGradient id="neck" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbe9a8"/><stop offset="0.35" stop-color="#fffdf7"/></linearGradient>
+    <clipPath id="sq"><rect width="300" height="300"/></clipPath>
+  </defs>
+  <rect width="300" height="300" fill="#ffffff"/>
+  <g clip-path="url(#sq)" stroke="#111" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <!-- neck / body -->
+    <path d="M70 320 L74 236 C90 222 210 222 226 236 L230 320 Z" fill="url(#neck)" stroke-width="7"/>
+    <!-- head -->
+    <circle cx="158" cy="128" r="122" fill="url(#face)" stroke-width="8"/>
+    <!-- left eye -->
+    <path d="M108 38 C128 42 150 52 164 66" stroke-width="9"/>
+    <path d="M88 94 C112 88 140 94 162 112" stroke-width="9"/>
+    <!-- right eye -->
+    <path d="M206 70 C222 70 236 72 248 78" stroke-width="9"/>
+    <path d="M190 104 C208 100 230 106 250 120" stroke-width="9"/>
+    <!-- pout -->
+    <path d="M150 188 C146 170 160 160 170 168 C180 176 182 192 190 198" stroke-width="9"/>
+    <path d="M150 188 C148 196 154 202 160 200" stroke-width="7"/>
+    <!-- << on chest -->
+    <path d="M134 258 L104 268 L134 278" stroke-width="7"/>
+    <path d="M178 258 L148 268 L178 278" stroke-width="7"/>
+  </g>
+</svg>

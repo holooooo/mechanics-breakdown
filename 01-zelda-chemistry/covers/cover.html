@@ -1,0 +1,41 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
+<script type="importmap">{"imports":{"three":"../vendor/three/build/three.module.js","three/addons/":"../vendor/three/examples/jsm/"}}</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{overflow:hidden;background:#000;font-family:"PingFang SC",sans-serif;color:#fff}
+#c{position:absolute;inset:0}
+#grad{position:absolute;inset:0;background:linear-gradient(0deg,rgba(6,10,16,.92) 0%,rgba(6,10,16,.55) 30%,rgba(6,10,16,0) 55%),linear-gradient(180deg,rgba(6,10,16,.45),rgba(6,10,16,0) 22%)}
+#t{position:absolute;left:64px;right:64px;bottom:64px}
+.tag{font:700 22px "SF Mono",Menlo,monospace;letter-spacing:6px;color:#ffcf73}
+h1{font-size:118px;font-weight:900;line-height:1.05;margin-top:14px;letter-spacing:-2px;text-shadow:0 8px 40px rgba(0,0,0,.6)}
+h1 em{font-style:normal;color:#ffb347}
+h2{font-size:44px;font-weight:800;margin-top:18px;color:#f3ead6}
+.rules{display:flex;gap:14px;margin-top:26px}
+.rules span{padding:10px 20px;border-radius:999px;font-size:26px;font-weight:800}
+#brand{position:absolute;top:48px;right:56px;display:flex;align-items:center;gap:14px;padding:10px 20px 10px 10px;border-radius:999px;background:rgba(0,0,0,.4);backdrop-filter:blur(8px)}
+#brand img{width:70px;height:70px;border-radius:50%;border:3px solid #fff;background:#fff}
+#brand b{font-size:26px}
+.v h1{font-size:128px}
+</style></head><body>
+<canvas id="c"></canvas><div id="grad"></div>
+<div id="brand"><img src="../brand/avatar.png"><b>粑粑柑（梭哈ai版）</b></div>
+<div id="t"><div class="tag">EPISODE 5 · WEBGL LAB</div><h1>塞尔达<br><em>化学引擎</em></h1><h2>3 条规则，让世界自己算</h2>
+<div class="rules"><span style="background:#ff6a2a">火</span><span style="background:#2f8cff">水</span><span style="background:#9fe4ff;color:#06303f">冰</span><span style="background:#7d5cff">电</span><span style="background:#5fd3a0;color:#053524">风</span><span style="background:rgba(255,255,255,.14)">附源码</span></div></div>
+<script type="module">
+import { createWorld } from '../src/world.js';
+import { createSim, CELL, cellAt, cellCenter } from '../src/sim.js';
+const q = new URLSearchParams(location.search); const W = +q.get('w') || 1440, H = +q.get('h') || 1080;
+document.body.style.width = W + 'px'; document.body.style.height = H + 'px';
+if (H > W) document.body.classList.add('v');
+const cv = document.getElementById('c'); cv.width = W; cv.height = H; cv.style.width = W + 'px'; cv.style.height = H + 'px';
+const world = await createWorld(cv, { width: W, height: H, quality: 1.5 });
+const s = createSim('lift'); Object.assign(s, { CELL, cellAt, cellCenter });
+s.schedule([{ t: 0, type: 'wind', x: 0.9, z: 0.3 }, { t: 0.3, type: 'ignite', x: 0, z: 0, r: 0.6 }, { t: 0.2, type: 'glider', on: true, x: 2.5, y: 1.4, z: 1.5 }]);
+const T = 13; s.seek(T); world.setSim(s);
+const g = s.glider, v = H > W;
+const tgt = v ? [0.6, 2.6, 0] : [g.x * 0.5 - 1.2, 2.9, g.z * 0.5];
+const r = v ? 15 : 14.5, yaw = v ? 0.95 : 0.35;
+world.render(T, { cam: { pos: [tgt[0] + Math.cos(yaw) * r, tgt[1] + 3.0, tgt[2] + Math.sin(yaw) * r], target: tgt, fov: v ? 40 : 40 }, sky: { a: 'day', b: 'dusk', k: 0.7 }, updraftVis: 1, bloom: 0.8 });
+await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+window.READY = true;
+</script></body></html>

@@ -1,0 +1,515 @@
+{
+ "duration": 182.657,
+ "sampleRate": 44100,
+ "target": {
+  "I": -15,
+  "TP": -1.5,
+  "LRA": 11,
+  "voiceToBedDb_min": 18
+ },
+ "music": {
+  "method": "numpy synthesis (pads/plucks/bass, D lydian, 90 BPM)",
+  "seed": 20170303,
+  "externalSamples": false
+ },
+ "sfxEvents": [
+  {
+   "type": "whoosh",
+   "scene": "multiply",
+   "line": 0,
+   "t": 17.254,
+   "dur": 1.2
+  },
+  {
+   "type": "whoosh",
+   "scene": "engines",
+   "line": 0,
+   "t": 33.65,
+   "dur": 1.2
+  },
+  {
+   "type": "whoosh",
+   "scene": "rules",
+   "line": 0,
+   "t": 43.82,
+   "dur": 1.2
+  },
+  {
+   "type": "whoosh",
+   "scene": "data",
+   "line": 0,
+   "t": 64.238,
+   "dur": 1.2
+  },
+  {
+   "type": "whoosh",
+   "scene": "burn",
+   "line": 0,
+   "t": 77.748,
+   "dur": 1.2
+  },
+  {
+   "type": "whoosh",
+   "scene": "rain",
+   "line": 0,
+   "t": 93.758,
+   "dur": 1.2
+  },
+  {
+   "type": "whoosh",
+   "scene": "lift",
+   "line": 0,
+   "t": 105.286,
+   "dur": 1.2
+  },
+  {
+   "type": "whoosh",
+   "scene": "iceshock",
+   "line": 0,
+   "t": 119.073,
+   "dur": 1.2
+  },
+  {
+   "type": "whoosh",
+   "scene": "chain",
+   "line": 0,
+   "t": 129.594,
+   "dur": 1.2
+  },
+  {
+   "type": "whoosh",
+   "scene": "build",
+   "line": 0,
+   "t": 138.775,
+   "dur": 1.2
+  },
+  {
+   "type": "whoosh",
+   "scene": "teaser",
+   "line": 0,
+   "t": 164.083,
+   "dur": 1.2
+  },
+  {
+   "type": "whoosh",
+   "scene": "outro",
+   "line": 0,
+   "t": 171.666,
+   "dur": 1.2
+  },
+  {
+   "type": "ignite",
+   "scene": "hook",
+   "line": 0,
+   "t": 0.5,
+   "dur": 1.2
+  },
+  {
+   "type": "fire_loop",
+   "scene": "hook",
+   "line": 0,
+   "t": 0.6,
+   "dur": 2.6
+  },
+  {
+   "type": "thunder",
+   "scene": "hook",
+   "line": 0,
+   "t": 2.1,
+   "dur": 4.8
+  },
+  {
+   "type": "whoosh",
+   "scene": "hook",
+   "line": 0,
+   "t": 3.2,
+   "dur": 1.2
+  },
+  {
+   "type": "glider",
+   "scene": "hook",
+   "line": 0,
+   "t": 3.4,
+   "dur": 2.6
+  },
+  {
+   "type": "steam",
+   "scene": "hook",
+   "line": 0,
+   "t": 5.9,
+   "dur": 1.5
+  },
+  {
+   "type": "chime",
+   "scene": "hook",
+   "line": 0,
+   "t": 6.187,
+   "dur": 2.4
+  },
+  {
+   "type": "whoosh",
+   "scene": "hook",
+   "line": 0,
+   "t": 8.214,
+   "dur": 1.2
+  },
+  {
+   "type": "fire_loop",
+   "scene": "hook",
+   "line": 0,
+   "t": 8.314,
+   "dur": 8.79
+  },
+  {
+   "type": "wind",
+   "scene": "hook",
+   "line": 0,
+   "t": 8.314,
+   "dur": 8.79
+  },
+  {
+   "type": "whoosh",
+   "scene": "hook",
+   "line": 0,
+   "t": 8.434,
+   "dur": 1.2
+  },
+  {
+   "type": "chime",
+   "scene": "multiply",
+   "line": 0,
+   "t": 23.97,
+   "dur": 2.4
+  },
+  {
+   "type": "ui_tick",
+   "scene": "rules",
+   "line": 0,
+   "t": 44.22,
+   "dur": 0.12
+  },
+  {
+   "type": "ui_tick",
+   "scene": "rules",
+   "line": 0,
+   "t": 49.186,
+   "dur": 0.12
+  },
+  {
+   "type": "ui_tick",
+   "scene": "rules",
+   "line": 0,
+   "t": 53.673,
+   "dur": 0.12
+  },
+  {
+   "type": "ignite",
+   "scene": "rules",
+   "line": 0,
+   "t": 54.423,
+   "dur": 1.2
+  },
+  {
+   "type": "fire_loop",
+   "scene": "rules",
+   "line": 0,
+   "t": 54.723,
+   "dur": 9.37
+  },
+  {
+   "type": "ui_tick",
+   "scene": "data",
+   "line": 0,
+   "t": 64.588,
+   "dur": 0.12
+  },
+  {
+   "type": "ui_tick",
+   "scene": "data",
+   "line": 0,
+   "t": 67.858,
+   "dur": 0.12
+  },
+  {
+   "type": "ignite",
+   "scene": "burn",
+   "line": 0,
+   "t": 79.098,
+   "dur": 1.2
+  },
+  {
+   "type": "fire_loop",
+   "scene": "burn",
+   "line": 0,
+   "t": 79.398,
+   "dur": 14.11
+  },
+  {
+   "type": "wind",
+   "scene": "burn",
+   "line": 0,
+   "t": 89.268,
+   "dur": 4.34
+  },
+  {
+   "type": "fire_loop",
+   "scene": "rain",
+   "line": 0,
+   "t": 93.958,
+   "dur": 3.8
+  },
+  {
+   "type": "thunder",
+   "scene": "rain",
+   "line": 0,
+   "t": 95.158,
+   "dur": 4.8
+  },
+  {
+   "type": "thunder",
+   "scene": "rain",
+   "line": 0,
+   "t": 98.61,
+   "dur": 4.8
+  },
+  {
+   "type": "rain",
+   "scene": "rain",
+   "line": 0,
+   "t": 95.308,
+   "dur": 9.93
+  },
+  {
+   "type": "steam",
+   "scene": "rain",
+   "line": 0,
+   "t": 95.908,
+   "dur": 1.5
+  },
+  {
+   "type": "fire_loop",
+   "scene": "lift",
+   "line": 0,
+   "t": 105.486,
+   "dur": 13.39
+  },
+  {
+   "type": "glider",
+   "scene": "lift",
+   "line": 0,
+   "t": 105.736,
+   "dur": 12.99
+  },
+  {
+   "type": "whoosh",
+   "scene": "lift",
+   "line": 0,
+   "t": 114.625,
+   "dur": 1.2
+  },
+  {
+   "type": "fire_loop",
+   "scene": "iceshock",
+   "line": 0,
+   "t": 119.323,
+   "dur": 4.47
+  },
+  {
+   "type": "steam",
+   "scene": "iceshock",
+   "line": 0,
+   "t": 123.223,
+   "dur": 1.5
+  },
+  {
+   "type": "zap",
+   "scene": "iceshock",
+   "line": 0,
+   "t": 124.697,
+   "dur": 0.7
+  },
+  {
+   "type": "zap",
+   "scene": "iceshock",
+   "line": 0,
+   "t": 125.597,
+   "dur": 0.7
+  },
+  {
+   "type": "zap",
+   "scene": "iceshock",
+   "line": 0,
+   "t": 126.497,
+   "dur": 0.7
+  },
+  {
+   "type": "zap",
+   "scene": "iceshock",
+   "line": 0,
+   "t": 127.397,
+   "dur": 0.7
+  },
+  {
+   "type": "fire_loop",
+   "scene": "chain",
+   "line": 0,
+   "t": 129.844,
+   "dur": 4.37
+  },
+  {
+   "type": "zap",
+   "scene": "chain",
+   "line": 0,
+   "t": 129.944,
+   "dur": 0.7
+  },
+  {
+   "type": "zap",
+   "scene": "chain",
+   "line": 0,
+   "t": 133.961,
+   "dur": 0.7
+  },
+  {
+   "type": "power_on",
+   "scene": "chain",
+   "line": 0,
+   "t": 134.111,
+   "dur": 2.2
+  },
+  {
+   "type": "chime",
+   "scene": "chain",
+   "line": 0,
+   "t": 134.736,
+   "dur": 2.4
+  },
+  {
+   "type": "ui_tick",
+   "scene": "build",
+   "line": 0,
+   "t": 138.925,
+   "dur": 0.12
+  },
+  {
+   "type": "ui_tick",
+   "scene": "build",
+   "line": 0,
+   "t": 141.507,
+   "dur": 0.12
+  },
+  {
+   "type": "ui_tick",
+   "scene": "build",
+   "line": 0,
+   "t": 146.27,
+   "dur": 0.12
+  },
+  {
+   "type": "ui_tick",
+   "scene": "build",
+   "line": 0,
+   "t": 151.741,
+   "dur": 0.12
+  },
+  {
+   "type": "ui_tick",
+   "scene": "build",
+   "line": 0,
+   "t": 157.795,
+   "dur": 0.12
+  },
+  {
+   "type": "whoosh",
+   "scene": "teaser",
+   "line": 0,
+   "t": 166.433,
+   "dur": 1.2
+  },
+  {
+   "type": "fire_loop",
+   "scene": "teaser",
+   "line": 0,
+   "t": 166.633,
+   "dur": 4.78
+  },
+  {
+   "type": "ui_tick",
+   "scene": "teaser",
+   "line": 0,
+   "t": 167.533,
+   "dur": 0.12
+  },
+  {
+   "type": "ui_tick",
+   "scene": "outro",
+   "line": 0,
+   "t": 173.416,
+   "dur": 0.12
+  },
+  {
+   "type": "ui_tick",
+   "scene": "outro",
+   "line": 0,
+   "t": 173.866,
+   "dur": 0.12
+  },
+  {
+   "type": "ui_tick",
+   "scene": "outro",
+   "line": 0,
+   "t": 174.316,
+   "dur": 0.12
+  },
+  {
+   "type": "chime",
+   "scene": "outro",
+   "line": 0,
+   "t": 175.216,
+   "dur": 2.4
+  }
+ ],
+ "mixes": {
+  "bgm": {
+   "file": "build/mix_bgm.wav",
+   "voiceToBedDb_1to5kHz_during_speech": 19.5,
+   "voiceToBedDb_broadband_during_speech": 13.63,
+   "bedEnergyBelow40HzFraction": 0.0201,
+   "integratedLUFS": -15.02,
+   "truePeakDBTP": -1.5,
+   "LRA": 2.0,
+   "samplePeak": 0.8419,
+   "longestNearSilenceSec": 0.08,
+   "checks": {
+    "voiceToBed>=18": true,
+    "LUFS within +-1 of -15": true,
+    "TP<=-1.4": true,
+    "no clipping": true,
+    "no near-silence >0.5s": true
+   },
+   "pass": true,
+   "bedFilters": "highpass 60 Hz, lowpass 12 kHz, sidechain duck (music -10 dB, sfx -6 dB)"
+  },
+  "nobgm": {
+   "file": "build/mix_nobgm.wav",
+   "voiceToBedDb_1to5kHz_during_speech": 19.5,
+   "voiceToBedDb_broadband_during_speech": 23.25,
+   "bedEnergyBelow40HzFraction": 0.0427,
+   "integratedLUFS": -15.0,
+   "truePeakDBTP": -1.49,
+   "LRA": 2.6,
+   "samplePeak": 0.8418,
+   "longestNearSilenceSec": 3.02,
+   "checks": {
+    "voiceToBed>=18": true,
+    "LUFS within +-1 of -15": true,
+    "TP<=-1.4": true,
+    "no clipping": true,
+    "no near-silence >0.5s": true
+   },
+   "pass": true,
+   "bedFilters": "highpass 60 Hz, lowpass 12 kHz, sidechain duck (music -10 dB, sfx -6 dB)"
+  }
+ },
+ "pass": true
+}

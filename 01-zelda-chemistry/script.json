@@ -1,0 +1,266 @@
+{
+ "title": "塞尔达化学引擎：三条规则，让世界自己算",
+ "rehookEvery": 15,
+ "scenes": [
+  {
+   "id": "hook",
+   "kicker": "机制拆解 · 第 1 期",
+   "title": "没人写过这个场面",
+   "lines": [
+    {
+     "zh": "在塞尔达里，你点着一片草，火会顺着风烧过去，热气流还能把你托上天。",
+     "en": "In Zelda, light a patch of grass and the fire runs with the wind, and the hot air can carry you into the sky.",
+     "rehook": "钩子"
+    },
+    {
+     "zh": "你有没有想过，这是为什么？",
+     "en": "Have you ever wondered why?",
+     "rehook": "问"
+    },
+    {
+     "zh": "其实，没有人专门为这个场面写过一行剧本。",
+     "en": "In fact, nobody ever scripted this moment.",
+     "rehook": "反转"
+    },
+    {
+     "zh": "它是三条规则自己算出来的。今天我们把它拆开，再亲手写一个能玩的版本。",
+     "en": "Three rules work it out on their own. Today we take it apart, then build a playable version ourselves."
+    }
+   ]
+  },
+  {
+   "id": "multiply",
+   "kicker": "01 · 设计思路",
+   "title": "加法谜题 vs 乘法玩法",
+   "lines": [
+    {
+     "zh": "老塞尔达的谜题是加法：每个火焰机关，都是为那一个房间单独做的。",
+     "en": "Classic Zelda puzzles were additive: every fire puzzle was built for one specific room."
+    },
+    {
+     "zh": "旷野之息想要乘法：只定少数几条规则，让它们互相相乘，玩法自己长出来。",
+     "en": "Breath of the Wild wanted multiplication: a few rules that multiply each other, so play grows by itself."
+    },
+    {
+     "zh": "怎么做到？二零一七年的游戏开发者大会上，技术总监给出了答案。",
+     "en": "How? At GDC 2017, the technical director gave the answer.",
+     "rehook": "问"
+    }
+   ]
+  },
+  {
+   "id": "engines",
+   "kicker": "02 · GDC 2017",
+   "title": "物理算运动，化学算状态",
+   "lines": [
+    {
+     "zh": "物理引擎负责东西怎么动，化学引擎负责东西变成什么状态。",
+     "en": "The physics engine decides how things move. The chemistry engine decides what state they are in."
+    },
+    {
+     "zh": "火、水、冰、电、风叫做元素；草、木头、金属叫做材料。",
+     "en": "Fire, water, ice, electricity and wind are elements. Grass, wood and metal are materials."
+    }
+   ]
+  },
+  {
+   "id": "rules",
+   "kicker": "03 · 三条规则",
+   "title": "谁能改变谁？",
+   "lines": [
+    {
+     "zh": "规则一：元素能改变材料的状态。火让草燃烧，电让金属带电。",
+     "en": "Rule one: elements change the state of materials. Fire burns grass; electricity charges metal."
+    },
+    {
+     "zh": "规则二：元素能改变元素。水能浇灭火，火能融化冰。",
+     "en": "Rule two: elements change elements. Water puts out fire; fire melts ice."
+    },
+    {
+     "zh": "规则三，也是最反直觉的一条：材料不能改变材料。",
+     "en": "Rule three, and the least intuitive: materials cannot change materials.",
+     "rehook": "反转"
+    },
+    {
+     "zh": "着火的木头，并不会直接点着隔壁的木头。",
+     "en": "A burning log does not light the log next to it directly."
+    },
+    {
+     "zh": "真正跨过去的，是它放出来的元素，也就是火。",
+     "en": "What crosses the gap is the element it gives off: fire."
+    }
+   ]
+  },
+  {
+   "id": "data",
+   "kicker": "04 · 最小实现",
+   "title": "一格草，就是一组数字",
+   "lines": [
+    {
+     "zh": "我们照着这个思路，把地面切成四十八乘四十八的小格。",
+     "en": "Following that idea, we cut the ground into a 48 by 48 grid.",
+     "rehook": "钩子"
+    },
+    {
+     "zh": "每一格只记几个数字：温度、湿度、燃料、冰，还有电荷。",
+     "en": "Each cell stores just a few numbers: temperature, moisture, fuel, ice and charge."
+    },
+    {
+     "zh": "你看到的火焰、水洼和电弧，都只是这些数字的画面。",
+     "en": "The flames, puddles and arcs you see are only pictures of those numbers."
+    }
+   ]
+  },
+  {
+   "id": "burn",
+   "kicker": "05 · 燃烧与传播",
+   "title": "火是结果，热才是原因",
+   "lines": [
+    {
+     "zh": "燃烧只有一个判断：够热、有燃料、又不太湿，它就烧起来。",
+     "en": "Burning is a single check: hot enough, has fuel, not too wet. Then it ignites."
+    },
+    {
+     "zh": "烧着的格子消耗燃料，把热量放给周围八个邻居。邻居变热，又接着烧。",
+     "en": "A burning cell eats its fuel and releases heat to its eight neighbours. They heat up and catch in turn."
+    },
+    {
+     "zh": "风只做一件事：让下风方向的邻居多分一点热。火线就自己歪了过去。",
+     "en": "Wind does just one thing: downwind neighbours get a little more heat. The fire front bends on its own."
+    }
+   ]
+  },
+  {
+   "id": "rain",
+   "kicker": "06 · 规则互相制约",
+   "title": "灭火，改的是数据",
+   "lines": [
+    {
+     "zh": "那怎么灭火？下一场雨。",
+     "en": "So how do you put it out? Make it rain.",
+     "rehook": "问"
+    },
+    {
+     "zh": "雨水抬高湿度、带走热量，燃烧的判断不再成立，火就自己熄了。",
+     "en": "Rain raises moisture and draws away heat. The burning check fails, and the fire dies by itself."
+    },
+    {
+     "zh": "我们从没写过雨天关掉火焰特效，改的只是数据。",
+     "en": "We never wrote 'hide the flames when it rains'. We only changed the data."
+    }
+   ]
+  },
+  {
+   "id": "lift",
+   "kicker": "07 · 跨系统连接",
+   "title": "火，变成了飞行工具",
+   "lines": [
+    {
+     "zh": "再看飞行。把所有燃烧格的热量加起来，就是一股上升气流。",
+     "en": "Now flight. Add up the heat of every burning cell and you get an updraft.",
+     "rehook": "钩子"
+    },
+    {
+     "zh": "滑翔伞飞进气流，就会被托起来。火的输出，变成了移动的输入。",
+     "en": "A paraglider that enters the column gets lifted. Fire's output becomes movement's input."
+    },
+    {
+     "zh": "这就是乘法：火和滑翔，原本是两套毫不相干的系统。",
+     "en": "That is multiplication: fire and gliding were two unrelated systems."
+    }
+   ]
+  },
+  {
+   "id": "iceshock",
+   "kicker": "08 · 冰与电",
+   "title": "状态会继续流动",
+   "lines": [
+    {
+     "zh": "冰也一样。周围够热，冰就变少，融出来的水让地面变湿。",
+     "en": "Ice works the same way. With enough heat around, it shrinks, and the meltwater wets the ground."
+    },
+    {
+     "zh": "湿地和金属能导电。电荷沿着相邻的格子传过去，每走一步弱一点。",
+     "en": "Wet ground and metal conduct. Charge hops from cell to neighbouring cell, weaker with every step."
+    }
+   ]
+  },
+  {
+   "id": "chain",
+   "kicker": "09 · 连锁反应",
+   "title": "没人写过这个解法",
+   "lines": [
+    {
+     "zh": "现在把它们串起来：火融化冰，融水接通电路，远处的机关亮了。",
+     "en": "Now chain them: fire melts the ice, the meltwater closes the circuit, and the far switch lights up.",
+     "rehook": "反转"
+    },
+    {
+     "zh": "这个解法我们一行都没写过，是规则自己算出来的。",
+     "en": "We never wrote this solution. The rules worked it out."
+    }
+   ]
+  },
+  {
+   "id": "build",
+   "kicker": "10 · 实现方法",
+   "title": "装进你自己的游戏",
+   "lines": [
+    {
+     "zh": "想放进自己的游戏？记住三件事。",
+     "en": "Want this in your own game? Remember three things.",
+     "rehook": "问"
+    },
+    {
+     "zh": "第一，模拟和渲染分开。固定步长更新数据，画面只负责读。",
+     "en": "One: keep simulation and rendering apart. Update data on a fixed step; rendering only reads it."
+    },
+    {
+     "zh": "第二，规则只看材料属性，不看物体是谁，不要写火把碰到木箱这种特例。",
+     "en": "Two: rules look at properties, never at which object it is. No special cases like 'torch touches crate'."
+    },
+    {
+     "zh": "第三，先在小网格里把规则调稳，再搬进三维世界，用空间查询代替格子邻居。",
+     "en": "Three: tune the rules on a small grid first, then move to 3D, with spatial queries instead of grid neighbours."
+    },
+    {
+     "zh": "效果预览和全部源码都放在网页里了，点火、下雨、放电，你可以自己玩。",
+     "en": "The live preview and full source are on the web page. Light fires, make rain, send current. Try it yourself."
+    }
+   ]
+  },
+  {
+   "id": "teaser",
+   "kicker": "下期预告",
+   "title": "同一把火，两种算法",
+   "lines": [
+    {
+     "zh": "同样一把火，有的游戏烧的是世界，有的游戏烧的是伤害。",
+     "en": "The same fire: some games burn the world, others burn damage.",
+     "rehook": "钩子"
+    },
+    {
+     "zh": "下一期，我们专门拆原神的元素反应。",
+     "en": "Next time, we take apart Genshin Impact's elemental reactions."
+    }
+   ]
+  },
+  {
+   "id": "outro",
+   "kicker": "感谢观看",
+   "title": "一键三连 + 关注",
+   "lines": [
+    {
+     "zh": "如果这期对你有帮助，求一个一键三连，再点个关注。",
+     "en": "If this helped, please like, coin and favourite, and hit follow."
+    },
+    {
+     "zh": "让我薅点叔叔的羊毛，继续开发自己的游戏。我们下期见！",
+     "en": "Let me earn a little from Uncle Bilibili, so I can keep building my own game. See you next time!"
+    }
+   ]
+  }
+ ],
+ "series": "机制拆解",
+ "episode": 1
+}
