@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>读指令简史 · 机制拆解 第 3 期 · 效果预览 + 实现方法</title>
+<meta name="description" content="敌人是怎么“读”你的指令的？读按键、读动作、看画面三种方式的可交互教学原型，附帧数据图、公平性判定与源码讲解。">
+<link rel="icon" href="brand/avatar.png">
+<link rel="stylesheet" href="site.css">
+<script type="importmap">{"imports":{"three":"../vendor/three/build/three.module.js","three/addons/":"../vendor/three/examples/jsm/"}}</script>
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <img class="avatar" src="brand/avatar.png" alt="粑粑柑（梭哈ai版）">
+    <div class="who"><b>粑粑柑（梭哈ai版）</b><span>机制拆解 · 第 3 期</span></div>
+  </div>
+  <nav class="tabs" role="tablist">
+    <button role="tab" data-tab="preview" class="on">效果预览</button>
+    <button role="tab" data-tab="method">实现方法</button>
+    <button role="tab" data-tab="video">解析视频</button>
+  </nav>
+</header>
+
+<main>
+<section id="tab-preview" class="tab on">
+  <div class="left">
+    <div class="stage">
+      <canvas id="gl"></canvas>
+      <div id="hud"></div>
+      <div class="keys">
+        <span class="chip"><b>J</b> 慢斩</span><span class="chip"><b>K</b> 快斩</span><span class="chip"><b>H</b> 喝药</span>
+      </div>
+      <div class="hint">你在左，敌人在右 · 用键盘 J / K / H 或右侧按钮出招</div>
+      <div class="loading" id="loading">正在生成世界…</div>
+    </div>
+    <div id="chartbox"><span class="ct">帧数据 · 最近一次出招</span><div id="chart"></div></div>
+  </div>
+  <aside class="panel glass">
+    <div class="sec">
+      <h4>敌人怎么知道你出招</h4>
+      <div class="seg seg3" id="modes">
+        <button data-m="button">读按键</button><button data-m="state">读动作</button><button data-m="perceive" class="on">看画面</button>
+      </div>
+      <div id="modedesc" style="font-size:12px;color:var(--dim)"></div>
+    </div>
+    <div class="sec">
+      <div class="slider" id="delaybox"><span>感知延迟（仅「看画面」生效）</span><output id="delayout"></output>
+        <input type="range" id="delay" min="0" max="40" step="1" value="15"></div>
+      <div class="slider"><span>进攻欲望（会不会惩罚喝药）</span><output id="aggout"></output>
+        <input type="range" id="agg" min="0" max="100" step="5" value="100"></div>
+    </div>
+    <div class="sec">
+      <h4>出招</h4>
+      <div class="acts">
+        <button data-k="slash" id="b-slash"><kbd>J</kbd>慢斩<small>前摇 22 帧</small></button>
+        <button data-k="quick" id="b-quick"><kbd>K</kbd>快斩<small>前摇 9 帧</small></button>
+        <button data-k="heal" id="b-heal"><kbd>H</kbd>喝药<small>30 帧后回血</small></button>
+      </div>
+      <div class="mini">
+        <button data-sp="1" class="on">1×</button><button data-sp="0.25">0.25×</button><button id="b-pause" class="toggle">暂停</button><button id="b-reset" class="warn">重置</button>
+      </div>
+    </div>
+    <div class="tip" id="tip"><b>试试看：</b>先在「看画面」下出<b>快斩</b>（命中），再切到「读动作」出<b>快斩</b>（被躲开）。同一招，差别只在敌人“知道”的那一帧。</div>
+    <div class="sec">
+      <h4>公平吗？</h4>
+      <div class="fair" id="fair"></div>
+    </div>
+    <div class="sec">
+      <h4>结果记录</h4>
+      <div class="log" id="log"></div>
+    </div>
+  </aside>
+</section>
+
+<section id="tab-method" class="tab">
+  <article class="doc">
+    <h1>敌人是怎么“读”你的指令的</h1>
+    <p class="lead">“读指令”听起来像作弊：你刚一出手，敌人就已经在躲、在反击。其实把它拆开，只有一个问题：<b>敌人在哪一帧知道你要干什么</b>。答案有三种，差别只是几行代码，却是“聪明”和“不公平”之间的分界线。</p>
+    <p class="note">本页是原创教学原型，不含任何商业游戏的代码或美术。历史与游戏部分的结论按来源可信度标注：<span class="cf h">高</span> 开发者/文档证实，<span class="cf m">中</span> 媒体或单一技术来源，<span class="cf l">社区</span> 玩家社区观察、未经证实。</p>
+
+    <h2>三种“知道”的方式</h2>
+    <div class="modes3">
+      <div class="mcard a"><h3>① 读按键</h3><div class="lv">notice = act.input</div><p>你按下的那一帧，敌人就知道了，比动作开始还早 2 帧（输入缓冲）。最“全知”，也最容易让人觉得被看穿。</p></div>
+      <div class="mcard b"><h3>② 读动作</h3><div class="lv">notice = act.start</div><p>玩家的动作状态机一开始跑，就给 AI 发一个“他出手了”的通知。AI 在<b>第一帧前摇</b>就反应，没有人类感知延迟。</p></div>
+      <div class="mcard c"><h3>③ 看画面</h3><div class="lv">decide = notice + delay</div><p>像人一样：先看见起手姿势，再等一段反应时间（默认 15 帧 ≈ 250 毫秒）才行动。这一档才“公平”。</p></div>
+    </div>
+    <p>在“效果预览”里把滑块拖到 0 帧，“看画面”就变成了“读动作”；拖到 40 帧，连慢斩也能打中它。拉到哪里，就是你想给玩家的难度。</p>
+
+    <h2>公平性规则</h2>
+    <div class="formula">前摇 ≥ 感知延迟 + 闪避起手<small>慢斩 22 ≥ 15 + 6 = 21 → 躲得开　快斩 9 &lt; 21 → 躲不开　（250 ms × 60 fps ÷ 1000 ≈ 15 帧）</small></div>
+    <p>闪避的无敌帧要等 6 帧起手之后才生效，所以一个“按人类速度反应”的敌人，需要招式前摇至少有 <b>延迟 + 6</b> 帧。前摇更短的招，人类（和公平的 AI）都来不及躲；如果敌人还是躲开了，玩家就会觉得它偷看了输入。格斗游戏社区常用的人类反应范围是 12–19 帧<span class="cf m">中</span>，单纯视觉反应约 200–250 毫秒<span class="cf m">中</span>。</p>
+
+    <h2>简史</h2>
+    <h3>街霸 II：电脑比你的画面早一帧</h3>
+    <p>sf2platinum 对街机 ROM 的逆向分析指出：每一帧动画的数据里带着“摇杆/按键值”，AI 直接读它来选择反制脚本，“在你的招式第一帧画面显示之前就已经看到了”，等于在人类反应时间之外再多一帧优势<span class="cf h">高</span>。需要注意：它读的是“即将出的招式数据”，不是字面意义上的手柄硬件。其他作弊（无敌帧、蓄力指令不会失败）只有媒体转述<span class="cf l">社区</span>。</p>
+    <h3>SNK 综合征</h3>
+    <p>玩家把“你一出手 Boss 立刻反击”的 SNK 街机 Boss 叫作“SNK 综合征”，据说可追溯到《饿狼传说》的 Geese Howard，Rugal 的 Genocide Cutter 常被当作最典型的例子。这是<b>社区用语</b>，没有帧数据，也不是官方设计术语<span class="cf l">社区</span>。</p>
+
+    <h3>魂系：喝药惩罚</h3>
+    <p>玩家社区观察到：喝药时《艾尔登法环》的玛莲妮亚会立刻刺来一枪，《只狼》的弦一郎也会，GamesRadar 称其为“与喝药绑定”的攻击<span class="cf m">中</span>。Zullie the Witch 的分析认为严格说<b>不是读按键，而是读动画</b>：敌人只对游戏内信息反应，但“动画一开始播放”它们就反应<span class="cf m">中</span>。</p>
+    <p>玩家整理的 Elden Ring AI 文档（ERAiAPI）里有这样一条接口：<code>INTERUPT_UseItem</code>——“目标使用道具时触发，由 HKS 脚本 <code>act(143, 1)</code> 调用”。HKS 是角色行为（动画状态机）脚本，所以玩家的状态机在动作开始时给附近 AI 推一个中断，正好对应“读动作”那一档<span class="cf h">高·接口</span><span class="cf l">社区·解读</span>。文档只证明有这个接口，不证明某个 Boss 的某一招用了它；<b>FromSoftware 从未正式确认</b>相关设计，以上均为社区文档与分析。</p>
+
+    <h3>心理螳螂：把“读”写在硬件上</h3>
+    <p>《合金装备》（1998）里的 Psycho Mantis 会翻你的<b>记忆卡</b>，评论你玩过的科乐美游戏；战斗中他像能预判你的每个动作，破解办法是把手柄从 <b>1 号口换到 2 号口</b>，他就“读不到”了<span class="cf m">中</span>。“因为 AI 读的是 1 号口输入”这个机制解释来自社区<span class="cf l">社区</span>。他是玩笑里最字面的读指令：连解药都是硬件层面的。</p>
+
+    <h3>影之刃零：开发者明确说“没有用读指令”</h3>
+    <ul class="src">
+      <li>制作人梁其伟（Soulframe）在 Automaton 采访中说，最高难度设计成像和真人对战，但“极限状态下电脑会看穿玩家的操作输入……绝对赢不了”，因此<b>制作中完全没有使用“读指令”</b><span class="cf h">高·开发者</span>。</li>
+      <li>最高难度<b>逆天者</b>（Hellwalker）的 AI 会根据玩家行为动态变化，没有固定套路<span class="cf h">高·开发者</span>。</li>
+      <li>最简单的<b>入门</b>难度主要降低的是敌人的“进攻欲望”和“对玩家行动的反应速度”，而不是削血量。这正是本页的两个滑块<span class="cf h">高·开发者</span>。</li>
+      <li><b>杀气</b>（Sha-Chi）：敌我共用的一条资源，类似体力 + 架势 + 防御；打空对方的杀气就破防。中文名来自国内媒体与攻略，数值细节非官方<span class="cf m">中</span>。</li>
+      <li>红光/蓝光提示（红=闪避，蓝=弹反）把“该怎么应对”画在敌人身上——这是“公平反馈”的范例：让人类有机会看见、再反应<span class="cf m">中</span>。</li>
+    </ul>
+
+    <h2>时间线：一次出招发生了什么</h2>
+    <table class="timeline-tbl">
+      <tr><th>帧</th><th>读按键</th><th>读动作</th><th>看画面</th></tr>
+      <tr><td>按下 (input)</td><td>敌人知道 →</td><td>—</td><td>—</td></tr>
+      <tr><td>+2 动作开始</td><td>已在反应</td><td>敌人知道 →</td><td>敌人开始“等”</td></tr>
+      <tr><td>+2+延迟</td><td>—</td><td>—</td><td>敌人决定行动</td></tr>
+      <tr><td>+6 起手之后</td><td colspan="3">闪避无敌帧才生效，持续 16 帧；刚好盖住判定帧才算躲开</td></tr>
+    </table>
+
+    <h2>源码查看</h2>
+    <p>下面读取 <code>src/duel.js</code> 里的真实代码，每个 <code>#region</code> 是一条规则。它是确定性的纯函数（整数帧、无随机时钟），所以能被视频逐帧驱动，也能在页面里实时跑。</p>
+    <div class="srcbar">
+      <select id="region">
+        <option value="modes">modes · 三种“知道”的时刻</option>
+        <option value="perceive">perceive · 感知延迟</option>
+        <option value="fair">fair · 公平性判定</option>
+        <option value="react">react · 敌人的闪避反应</option>
+      </select>
+      <span id="srcmeta"></span>
+    </div>
+    <pre class="code"><code id="code">加载中…</code></pre>
+
+    <h2>来源与可信度</h2>
+    <ul class="src">
+      <li>街霸 II 逆向：<a href="https://sf2platinum.wordpress.com/2017/01/20/the-ai-engine/" target="_blank" rel="noopener">sf2platinum · The AI engine</a><span class="cf h">高</span>；摘要：<a href="https://www.gamedeveloper.com/programming/have-a-peek-inside-the-ai-code-of-i-street-fighter-ii-i-" target="_blank" rel="noopener">Game Developer</a><span class="cf m">中</span></li>
+      <li>SNK 综合征：<a href="https://giantbomb.com/wiki/Concepts/SNK_Boss_Syndrome" target="_blank" rel="noopener">Giant Bomb wiki</a><span class="cf l">社区</span>；<a href="https://gog.com/forum/snk/samurai_shodown_2_how_to_fight_the_cpu" target="_blank" rel="noopener">GOG 论坛 · 侍魂 2 打电脑</a><span class="cf l">社区</span></li>
+      <li>魂系喝药惩罚：<a href="https://gamesradar.com/this-elden-ring-boss-most-annoying-attack-is-bound-directly-to-your-healing-flask" target="_blank" rel="noopener">GamesRadar</a><span class="cf m">中</span>；<a href="https://www.pcgamer.com/elden-ring-dataminer-explains-why-enemies-smack-you-when-you-reach-for-a-potion" target="_blank" rel="noopener">PC Gamer</a><span class="cf m">中</span>；<a href="https://www.youtube.com/watch?v=XSbuGGnntRA" target="_blank" rel="noopener">Zullie the Witch 视频</a><span class="cf m">中</span></li>
+      <li>ERAiAPI（Elden Ring AI 文档）：<a href="https://eladidu.github.io/readable-ds-lua/d1/d81/class_ai_func.html" target="_blank" rel="noopener">AiFunc / IsInterupt</a><span class="cf h">接口</span> <span class="cf l">解读为社区</span></li>
+      <li>FromSoftware 未确认：<a href="https://www.vidaextra.com/accion/jefes-phantom-blade-zero-hacen-que-muchos-jugadores-creian-que-hacian-elden-ring-aprender-jugador-adaptarse" target="_blank" rel="noopener">Vidaextra</a><span class="cf m">中</span></li>
+      <li>Psycho Mantis：<a href="https://en.wikipedia.org/wiki/Psycho_Mantis" target="_blank" rel="noopener">Wikipedia</a><span class="cf m">中</span>；<a href="https://www.gamepro.de/artikel/playstation-1-bosskampf-heute-nicht-mehr-moeglich,3428233.html" target="_blank" rel="noopener">GamePro</a><span class="cf l">机制解释为社区</span></li>
+      <li>影之刃零制作人采访：<a href="https://automaton-media.com/articles/interviewsjp/20261009-472623/" target="_blank" rel="noopener">Automaton（日语，2026-10-09）</a><span class="cf h">开发者</span>；<a href="https://nc.inverse.com/gaming/phantom-blade-zero-hard-mode-different-game-hellwalker-wuxia" target="_blank" rel="noopener">Inverse</a><span class="cf m">中</span></li>
+      <li>杀气 Sha-Chi：<a href="https://www.pcgamer.com/games/action/phantom-blade-zero-preview-chinese-action-games-soulslikes-kung-fu" target="_blank" rel="noopener">PC Gamer</a>、<a href="https://gamersocialclub.ca/2025/08/28/phantom-blade-zero-hands-on-preview" target="_blank" rel="noopener">Gamersocialclub</a><span class="cf m">中</span>，数值细节<span class="cf l">非官方</span></li>
+      <li>人类反应时间：<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6916673" target="_blank" rel="noopener">PMC6916673</a>（小样本）、<a href="https://ki.infil.net/reaction.html" target="_blank" rel="noopener">KI reaction</a>、<a href="https://www.gamedeveloper.com/programming/the-killer-groove-the-shadow-ai-of-killer-instinct" target="_blank" rel="noopener">Killer Groove</a><span class="cf m">中</span></li>
+      <li>公平 AI：<a href="https://www.gamedeveloper.com/game-platforms/analysis-game-ai-our-cheatin-hearts" target="_blank" rel="noopener">Our Cheatin' Hearts（Soren Johnson）</a><span class="cf h">高</span>；<a href="https://arxiv.org/pdf/1904.03821" target="_blank" rel="noopener">arXiv 1904.03821</a><span class="cf m">中</span></li>
+    </ul>
+    <p class="note">教学简化：帧数是为演示设计的，不对应任何商业游戏的真实数值；“读动作”只代表魂系文档暗示的通知机制，并不是对某个 Boss 脚本的还原。</p>
+  </article>
+</section>
+
+<section id="tab-video" class="tab">
+  <div class="vwrap">
+    <div class="vposter"><img src="media/poster.jpg" alt="解析视频画面" style="width:100%;border-radius:16px;display:block"><span>机制拆解 · 第 3 期 · 读指令简史</span></div>
+    <p class="note">完整解析视频「机制拆解 03 · 读指令简史」发布在 B站 / 抖音，搜索作者 <b>粑粑柑（梭哈ai版）</b> 即可观看。视频里的 3D 对决画面与帧数据图，都是用本页同一份 <code>src/duel.js</code> 逐帧渲染的。游戏实机素材不包含在仓库内。</p>
+    <div class="vlinks">
+      <a href="../01-zelda-chemistry/" rel="noopener">第 1 期 · 塞尔达式化学引擎<small>把状态放在世界的格子里传播</small></a>
+      <a href="../02-genshin-elements/" target="_blank" rel="noopener">第 2 期 · 原神式元素反应<small>每个单位身上一张会衰减的附着表</small></a>
+    </div>
+  </div>
+</section>
+</main>
+<script type="module" src="app.js"></script>
+</body>
+</html>

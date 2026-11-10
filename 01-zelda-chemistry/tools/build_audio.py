@@ -380,7 +380,14 @@ def main():
     voice = np.frombuffer(r.stdout, "<f4").copy(); n = len(voice); dur = n / SR
     if abs(dur - tl["duration"]) > 0.01: raise SystemExit(f"voice {dur} != timeline {tl['duration']}")
     print(f"duration {dur:.2f}s; composing music ...", flush=True)
-    music = compose_music(n, dur)
+    plan_p = ROOT / "music.json"
+    plan = json.loads(plan_p.read_text(encoding="utf-8")) if plan_p.exists() else None
+    if plan:
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        from score import compose_score
+        music = compose_score(n, dur, tl, plan)
+    else:
+        music = compose_music(n, dur)
     cues = load_cues(tl)
     sfx, events = compose_sfx(n, tl, cues)
     active = speech_mask(voice)
@@ -389,7 +396,17 @@ def main():
     d_music = duck_curve(voice, active, 0.32)           # ~ -10 dB under speech
     d_sfx = duck_curve(voice, active, 0.5)              # ~ -6 dB
     fade = (np.minimum(1, np.arange(n) / SR / 1.0) * np.minimum(1, np.maximum(0, dur - np.arange(n) / SR) / 2.0))[:, None].astype(np.float32)
-    music_b = bed_filter(music * d_music[:, None]) * fade
+    if plan:
+        # spectral ducking: carve only the speech band (0.9-5.5 kHz) hard, keep lows/drums mostly intact
+        from scipy.signal import sosfiltfilt
+        sb = _sos("band", [900, 5500], 2)
+        band = np.stack([sosfiltfilt(sb, music[:, c]) for c in range(2)], 1).astype(np.float32)
+        rest = music - band
+        g_band = duck_curve(voice, active, 0.12)       # ~ -18 dB in the speech band while talking
+        g_rest = duck_curve(voice, active, 0.6)        # ~ -4.4 dB broadband while talking
+        music_b = bed_filter(rest * g_rest[:, None] + band * g_band[:, None]) * fade
+    else:
+        music_b = bed_filter(music * d_music[:, None]) * fade
     sfx_b = bed_filter(sfx * d_sfx[:, None]) * fade
     vref = band_rms(voice, msk)
 
@@ -403,8 +420,14 @@ def main():
     for name, use_music in (("bgm", True), ("nobgm", False)):
         bed0 = music_b * 0.0 + sfx_b if not use_music else music_b + sfx_b
         if use_music:
-            k_music = 10 ** ((v2b(music_b) - (TARGET_V2B + 1.0)) / 20)       # music alone sits at target+1 dB
+            k_music = 10 ** ((v2b(music_b) - (TARGET_V2B + (0.6 if plan else 1.0))) / 20)       # music alone sits at target+~1 dB (speech band)
             k_sfx = 10 ** ((v2b(sfx_b) - (TARGET_V2B + 2.0)) / 20)           # sfx average at target+2 dB (events add on top)
+            # presence vs clarity: also keep the music at least BROADBAND_MIN dB under the voice (whole spectrum)
+            def bb(x):
+                vr = np.sqrt(np.mean(voice[msk].astype(np.float64) ** 2)); br = np.sqrt(np.mean(x[msk].astype(np.float64) ** 2))
+                return 20 * np.log10(vr / max(br, 1e-12))
+            BROADBAND_MIN = 10.0
+            if bb(music_b * k_music) < BROADBAND_MIN: k_music *= 10 ** ((bb(music_b * k_music) - BROADBAND_MIN) / 20)
             bed = music_b * k_music + sfx_b * k_sfx
         else:
             k_music = 0.0
@@ -420,7 +443,7 @@ def main():
     write_wav16(BUILD / "music.wav", music_b)
     write_wav16(BUILD / "sfx.wav", np.clip(sfx_b, -1, 1))
     val = {"duration": round(dur, 3), "sampleRate": SR, "target": {"I": -15, "TP": -1.5, "LRA": 11, "voiceToBedDb_min": 18},
-           "music": {"method": "numpy synthesis (pads/plucks/bass, D lydian, 90 BPM)", "seed": SEED, "externalSamples": False},
+           "music": {"method": ("scene-aware numpy score " + json.dumps(plan, ensure_ascii=False)) if plan else "numpy synthesis (pads/plucks/bass, D lydian, 90 BPM)", "seed": SEED, "externalSamples": False},
            "sfxEvents": events, "mixes": {}}
     ok_all = True
     for name, (mix, bed, v, km, ks) in mixes.items():

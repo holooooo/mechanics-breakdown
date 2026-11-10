@@ -1,0 +1,29 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{overflow:hidden;font-family:"PingFang SC",sans-serif;color:#fff;background:#000}
+#bg{position:absolute;inset:0;background-size:cover;background-position:center}
+#shade{position:absolute;inset:0;background:radial-gradient(ellipse 62% 30% at 50% 52%,rgba(6,18,26,.55),rgba(6,18,26,0) 75%),linear-gradient(180deg,rgba(0,0,0,.28),rgba(0,0,0,0) 16%)}
+#mid{position:absolute;left:0;right:0;text-align:center}
+.tag{display:inline-flex;align-items:center;gap:14px;font-size:30px;font-weight:700;letter-spacing:12px;color:#ffe2a6;text-shadow:0 2px 12px rgba(0,0,0,.6)}
+.tag i{width:60px;height:2px;background:linear-gradient(90deg,transparent,#ffd27a)}
+.tag i:last-child{transform:scaleX(-1)}
+h1{font-size:142px;font-weight:900;letter-spacing:6px;line-height:1.08;margin-top:14px;background:linear-gradient(180deg,#ffffff 30%,#ffe3a8 70%,#ffb85a);-webkit-background-clip:text;color:transparent;filter:drop-shadow(0 6px 24px rgba(0,0,0,.65)) drop-shadow(0 2px 2px rgba(0,0,0,.5))}
+h2{display:inline-block;margin-top:22px;font-size:46px;font-weight:800;letter-spacing:4px;padding:12px 36px;border-radius:999px;background:rgba(10,20,28,.55);border:1.5px solid rgba(255,214,140,.6);backdrop-filter:blur(6px);text-shadow:0 2px 8px rgba(0,0,0,.5)}
+h2 b{color:#ffb347}
+#brand{position:absolute;top:40px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:14px;padding:8px 24px 8px 8px;border-radius:999px;background:rgba(0,0,0,.42);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.18)}
+#brand img{width:64px;height:64px;border-radius:50%;border:3px solid #fff;background:#fff}
+#brand b{font-size:27px;white-space:nowrap}
+.v h1{font-size:132px;letter-spacing:2px}
+</style></head><body>
+<div id="bg"></div><div id="shade"></div>
+<div id="brand"><img src="../brand/avatar.png"><b>粑粑柑（梭哈ai版）</b></div>
+<div id="mid"><div class="tag"><i></i>机制拆解 · 01<i></i></div><h1>塞尔达化学引擎</h1><h2><b>3 条规则</b>，让世界自己算</h2></div>
+<script>
+const q=new URLSearchParams(location.search),W=+q.get('w')||1440,H=+q.get('h')||1080,v=H>W;
+document.body.style.width=W+'px';document.body.style.height=H+'px';if(v)document.body.classList.add('v');
+const src=v?'gen/gpt_3x4.png':'gen/gpt_4x3.png';
+document.getElementById('bg').style.backgroundImage=`url(${src})`;
+const mid=document.getElementById('mid');mid.style.top=(v?0.47:0.42)*H+'px';
+if(v){document.querySelector('h1').innerHTML='塞尔达<br>化学引擎';}
+const img=new Image();img.onload=()=>requestAnimationFrame(()=>requestAnimationFrame(()=>window.READY=true));img.src=src;
+</script></body></html>

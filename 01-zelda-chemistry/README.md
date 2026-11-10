@@ -20,7 +20,7 @@
 ## 在线预览
 
 - 效果预览 + 实现方法：https://holooooo.github.io/zelda-chemistry-engine/
-- 镜像（Cloudflare）：https://zelda-chemistry-engine.pages.dev/
+- 镜像（Cloudflare）：../01-zelda-chemistry/
 
 ## 本地预览
 

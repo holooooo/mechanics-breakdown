@@ -7,7 +7,7 @@
 <meta name="description" content="用一张会衰减的附着表，复刻原神式元素附着与反应的教学原型。可交互预览、源码讲解、解析视频。">
 <link rel="icon" href="brand/avatar.png">
 <link rel="stylesheet" href="site.css">
-<script type="importmap">{"imports":{"three":"./vendor/three/build/three.module.js","three/addons/":"./vendor/three/examples/jsm/"}}</script>
+<script type="importmap">{"imports":{"three":"../vendor/three/build/three.module.js","three/addons/":"../vendor/three/examples/jsm/"}}</script>
 </head>
 <body>
 <header class="top">
@@ -113,7 +113,7 @@
       <tr><td>蔓延</td><td>温度靠相邻格传导，能烧成一片</td><td>点得着、烧完就完，没有自行连锁</td></tr>
       <tr><td>设计哲学</td><td>规则只和“属性”打交道，涌现</td><td>规则表是显式的，数值可被测出来</td></tr>
     </table>
-    <p>第 1 期：<a href="https://zelda-chemistry-engine.pages.dev/" target="_blank" rel="noopener">塞尔达式化学引擎 · 效果预览 + 实现方法</a>。</p>
+    <p>第 1 期：<a href="../01-zelda-chemistry/" target="_blank" rel="noopener">塞尔达式化学引擎 · 效果预览 + 实现方法</a>。</p>
 
     <h2>源码查看</h2>
     <p>下面直接读取 <code>src/combat.js</code> 里的真实代码，每个 <code>#region</code> 是一条规则。它是纯 JS、不用随机数与时钟，所以可以在 Node 里测试，也可以被视频逐帧驱动。</p>
@@ -146,7 +146,7 @@
 <section id="tab-video" class="tab">
   <div class="vwrap">
     <div class="vposter"><img src="media/poster.jpg" alt="解析视频画面" style="width:100%;border-radius:16px;display:block"><span>机制拆解 · 第 2 期 · 原神元素反应</span></div>
-    <p class="note">完整解析视频「机制拆解 02 · 原神元素反应」发布在 B站 / 抖音，搜索作者 <b>粑粑柑（梭哈ai版）</b> 即可观看。视频里的 3D 画面和附着数字，都是用这个仓库的 <code>film.html</code> 与同一份 <code>src/combat.js</code> 逐帧渲染的。上一期：<a href="https://zelda-chemistry-engine.pages.dev/" target="_blank" rel="noopener">塞尔达化学引擎</a>。</p>
+    <p class="note">完整解析视频「机制拆解 02 · 原神元素反应」发布在 B站 / 抖音，搜索作者 <b>粑粑柑（梭哈ai版）</b> 即可观看。视频里的 3D 画面和附着数字，都是用这个仓库的 <code>film.html</code> 与同一份 <code>src/combat.js</code> 逐帧渲染的。上一期：<a href="../01-zelda-chemistry/" target="_blank" rel="noopener">塞尔达化学引擎</a>。</p>
   </div>
 </section>
 </main>

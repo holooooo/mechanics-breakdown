@@ -34,7 +34,7 @@ node tools/serve.mjs . 8017
 
 - KQM Theorycrafting Library：[元素量理论](https://library.keqingmains.com/combat-mechanics/elemental-effects/elemental-gauge-theory)、[内置冷却](https://library.keqingmains.com/combat-mechanics/internal-cooldown)、[剧变反应](https://library.keqingmains.com/combat-mechanics/elemental-effects/transformative-reactions)、[伤害公式](https://library.keqingmains.com/combat-mechanics/damage/damage-formula)
 - Genshin Impact Wiki：[Elemental Gauge Theory](https://genshin-impact.fandom.com/wiki/Elemental_Gauge_Theory)、[Internal Cooldown](https://genshin-impact.fandom.com/wiki/Internal_Cooldown)、[Level Scaling](https://genshin-impact.fandom.com/wiki/Elemental_Reaction/Level_Scaling)
-- 上一期：[塞尔达式化学引擎](https://zelda-chemistry-engine.pages.dev/)（塞尔达算世界 / 原神算伤害）
+- 上一期：[塞尔达式化学引擎](../01-zelda-chemistry/)（塞尔达算世界 / 原神算伤害）
 
 ## 关于实机画面
 

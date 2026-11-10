@@ -1,0 +1,702 @@
+[
+ {
+  "scene": "levels",
+  "line": 0,
+  "offset": -0.15,
+  "type": "whoosh",
+  "gain": 0.3
+ },
+ {
+  "scene": "arcade",
+  "line": 0,
+  "offset": -0.15,
+  "type": "whoosh",
+  "gain": 0.3
+ },
+ {
+  "scene": "souls",
+  "line": 0,
+  "offset": -0.15,
+  "type": "whoosh",
+  "gain": 0.3
+ },
+ {
+  "scene": "mantis",
+  "line": 0,
+  "offset": -0.15,
+  "type": "whoosh",
+  "gain": 0.3
+ },
+ {
+  "scene": "pb0",
+  "line": 0,
+  "offset": -0.15,
+  "type": "whoosh",
+  "gain": 0.3
+ },
+ {
+  "scene": "impl",
+  "line": 0,
+  "offset": -0.15,
+  "type": "whoosh",
+  "gain": 0.3
+ },
+ {
+  "scene": "demo",
+  "line": 0,
+  "offset": -0.15,
+  "type": "whoosh",
+  "gain": 0.3
+ },
+ {
+  "scene": "outro",
+  "line": 0,
+  "offset": -0.15,
+  "type": "whoosh",
+  "gain": 0.3
+ },
+ {
+  "scene": "hook",
+  "line": 0,
+  "offset": -0.3,
+  "type": "zap",
+  "gain": 0.45
+ },
+ {
+  "scene": "hook",
+  "line": 0,
+  "offset": 0.8,
+  "type": "zap",
+  "gain": 0.45
+ },
+ {
+  "scene": "hook",
+  "line": 0,
+  "offset": 1.8,
+  "type": "zap",
+  "gain": 0.45
+ },
+ {
+  "scene": "hook",
+  "line": 0,
+  "offset": 2.7,
+  "type": "zap",
+  "gain": 0.45
+ },
+ {
+  "scene": "hook",
+  "line": 0,
+  "offset": 4,
+  "type": "zap",
+  "gain": 0.45
+ },
+ {
+  "scene": "hook",
+  "line": 0,
+  "offset": 5.2,
+  "type": "zap",
+  "gain": 0.45
+ },
+ {
+  "scene": "hook",
+  "line": 0,
+  "offset": 6.3,
+  "type": "zap",
+  "gain": 0.45
+ },
+ {
+  "scene": "hook",
+  "line": 0,
+  "offset": 7.8,
+  "type": "zap",
+  "gain": 0.45
+ },
+ {
+  "scene": "hook",
+  "line": 0,
+  "offset": 8.9,
+  "type": "zap",
+  "gain": 0.45
+ },
+ {
+  "scene": "hook",
+  "line": 0,
+  "offset": 10,
+  "type": "zap",
+  "gain": 0.45
+ },
+ {
+  "scene": "hook",
+  "line": 0,
+  "offset": 1.7,
+  "type": "thunder",
+  "gain": 0.4
+ },
+ {
+  "scene": "hook",
+  "line": 0,
+  "offset": 7.711,
+  "type": "chime",
+  "gain": 0.7
+ },
+ {
+  "scene": "hook",
+  "line": 0,
+  "offset": 10.593,
+  "type": "whoosh",
+  "gain": 0.8
+ },
+ {
+  "scene": "hook",
+  "line": 0,
+  "offset": 11.693,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "hook",
+  "line": 0,
+  "offset": 13.293,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "hook",
+  "line": 0,
+  "offset": 14.893,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "hook",
+  "line": 0,
+  "offset": 16.493,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "levels",
+  "line": 0,
+  "offset": 0.9,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "levels",
+  "line": 0,
+  "offset": 3.1,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "levels",
+  "line": 0,
+  "offset": 0.2,
+  "type": "ui_tick"
+ },
+ {
+  "scene": "levels",
+  "line": 0,
+  "offset": 3.866,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "levels",
+  "line": 0,
+  "offset": 6.066,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "levels",
+  "line": 0,
+  "offset": 3.166,
+  "type": "ui_tick"
+ },
+ {
+  "scene": "levels",
+  "line": 0,
+  "offset": 7.805,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "levels",
+  "line": 0,
+  "offset": 10.005,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "levels",
+  "line": 0,
+  "offset": 7.105,
+  "type": "ui_tick"
+ },
+ {
+  "scene": "levels",
+  "line": 0,
+  "offset": 12.136,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "levels",
+  "line": 0,
+  "offset": 14.336,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "levels",
+  "line": 0,
+  "offset": 11.436,
+  "type": "ui_tick"
+ },
+ {
+  "scene": "levels",
+  "line": 0,
+  "offset": 16.914,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "levels",
+  "line": 0,
+  "offset": 19.114,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "levels",
+  "line": 0,
+  "offset": 16.214,
+  "type": "ui_tick"
+ },
+ {
+  "scene": "arcade",
+  "line": 0,
+  "offset": 0.583,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "arcade",
+  "line": 0,
+  "offset": 2.483,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "arcade",
+  "line": 0,
+  "offset": 4.383,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "arcade",
+  "line": 0,
+  "offset": 6.283,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "arcade",
+  "line": 0,
+  "offset": 8.183,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "arcade",
+  "line": 0,
+  "offset": 10.083,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "arcade",
+  "line": 0,
+  "offset": 11.983,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "arcade",
+  "line": 0,
+  "offset": 13.883,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "souls",
+  "line": 0,
+  "offset": 5.329,
+  "type": "steam",
+  "gain": 0.35
+ },
+ {
+  "scene": "souls",
+  "line": 0,
+  "offset": 5.479,
+  "type": "zap",
+  "gain": 0.5
+ },
+ {
+  "scene": "souls",
+  "line": 0,
+  "offset": 9.283,
+  "type": "steam",
+  "gain": 0.35
+ },
+ {
+  "scene": "souls",
+  "line": 0,
+  "offset": 9.433,
+  "type": "zap",
+  "gain": 0.5
+ },
+ {
+  "scene": "souls",
+  "line": 0,
+  "offset": 15.134,
+  "type": "steam",
+  "gain": 0.35
+ },
+ {
+  "scene": "souls",
+  "line": 0,
+  "offset": 15.284,
+  "type": "zap",
+  "gain": 0.5
+ },
+ {
+  "scene": "souls",
+  "line": 0,
+  "offset": 0.4,
+  "type": "zap",
+  "gain": 0.45
+ },
+ {
+  "scene": "souls",
+  "line": 0,
+  "offset": 1.5,
+  "type": "zap",
+  "gain": 0.45
+ },
+ {
+  "scene": "souls",
+  "line": 0,
+  "offset": 2.6,
+  "type": "zap",
+  "gain": 0.45
+ },
+ {
+  "scene": "souls",
+  "line": 0,
+  "offset": 3.8,
+  "type": "zap",
+  "gain": 0.45
+ },
+ {
+  "scene": "souls",
+  "line": 0,
+  "offset": 4.8,
+  "type": "zap",
+  "gain": 0.45
+ },
+ {
+  "scene": "mantis",
+  "line": 0,
+  "offset": 0.2,
+  "type": "chime"
+ },
+ {
+  "scene": "mantis",
+  "line": 0,
+  "offset": 4.079,
+  "type": "ui_tick"
+ },
+ {
+  "scene": "mantis",
+  "line": 0,
+  "offset": 4.429,
+  "type": "ui_tick"
+ },
+ {
+  "scene": "mantis",
+  "line": 0,
+  "offset": 4.779,
+  "type": "ui_tick"
+ },
+ {
+  "scene": "mantis",
+  "line": 0,
+  "offset": 5.129,
+  "type": "ui_tick"
+ },
+ {
+  "scene": "mantis",
+  "line": 0,
+  "offset": 5.479,
+  "type": "wind",
+  "dur": 2.4,
+  "gain": 0.5
+ },
+ {
+  "scene": "mantis",
+  "line": 0,
+  "offset": 10.085,
+  "type": "power_on"
+ },
+ {
+  "scene": "pb0",
+  "line": 0,
+  "offset": 0.3,
+  "type": "zap",
+  "gain": 0.45
+ },
+ {
+  "scene": "pb0",
+  "line": 0,
+  "offset": 1.2,
+  "type": "zap",
+  "gain": 0.45
+ },
+ {
+  "scene": "pb0",
+  "line": 0,
+  "offset": 2.2,
+  "type": "zap",
+  "gain": 0.45
+ },
+ {
+  "scene": "pb0",
+  "line": 0,
+  "offset": 3.5,
+  "type": "zap",
+  "gain": 0.45
+ },
+ {
+  "scene": "pb0",
+  "line": 0,
+  "offset": 4.4,
+  "type": "zap",
+  "gain": 0.45
+ },
+ {
+  "scene": "pb0",
+  "line": 0,
+  "offset": 5.6,
+  "type": "zap",
+  "gain": 0.45
+ },
+ {
+  "scene": "pb0",
+  "line": 0,
+  "offset": 6.8,
+  "type": "zap",
+  "gain": 0.45
+ },
+ {
+  "scene": "pb0",
+  "line": 0,
+  "offset": 7.9,
+  "type": "zap",
+  "gain": 0.45
+ },
+ {
+  "scene": "pb0",
+  "line": 0,
+  "offset": 9,
+  "type": "zap",
+  "gain": 0.45
+ },
+ {
+  "scene": "pb0",
+  "line": 0,
+  "offset": 0.05,
+  "type": "chime",
+  "gain": 0.6
+ },
+ {
+  "scene": "pb0",
+  "line": 0,
+  "offset": 10.802,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "pb0",
+  "line": 0,
+  "offset": 12.702,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "pb0",
+  "line": 0,
+  "offset": 14.602,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "pb0",
+  "line": 0,
+  "offset": 16.502,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "pb0",
+  "line": 0,
+  "offset": 18.402,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "impl",
+  "line": 0,
+  "offset": 4.012,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "impl",
+  "line": 0,
+  "offset": 6.412,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "impl",
+  "line": 0,
+  "offset": 9.554,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "impl",
+  "line": 0,
+  "offset": 11.637,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "impl",
+  "line": 0,
+  "offset": 14.638,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "impl",
+  "line": 0,
+  "offset": 0,
+  "type": "ui_tick"
+ },
+ {
+  "scene": "impl",
+  "line": 0,
+  "offset": 2.612,
+  "type": "ui_tick"
+ },
+ {
+  "scene": "impl",
+  "line": 0,
+  "offset": 8.554,
+  "type": "ui_tick"
+ },
+ {
+  "scene": "impl",
+  "line": 0,
+  "offset": 13.955,
+  "type": "ui_tick"
+ },
+ {
+  "scene": "demo",
+  "line": 0,
+  "offset": 0,
+  "type": "ui_tick"
+ },
+ {
+  "scene": "demo",
+  "line": 0,
+  "offset": 0.683,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "demo",
+  "line": 0,
+  "offset": 2,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "demo",
+  "line": 0,
+  "offset": 2.975,
+  "type": "ui_tick"
+ },
+ {
+  "scene": "demo",
+  "line": 0,
+  "offset": 3.658,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "demo",
+  "line": 0,
+  "offset": 4.975,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "demo",
+  "line": 0,
+  "offset": 5.95,
+  "type": "ui_tick"
+ },
+ {
+  "scene": "demo",
+  "line": 0,
+  "offset": 6.633,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "demo",
+  "line": 0,
+  "offset": 7.95,
+  "type": "whoosh",
+  "gain": 0.55
+ },
+ {
+  "scene": "outro",
+  "line": 0,
+  "offset": 1.6,
+  "type": "ui_tick"
+ },
+ {
+  "scene": "outro",
+  "line": 0,
+  "offset": 2.05,
+  "type": "ui_tick"
+ },
+ {
+  "scene": "outro",
+  "line": 0,
+  "offset": 2.5,
+  "type": "ui_tick"
+ },
+ {
+  "scene": "outro",
+  "line": 0,
+  "offset": 3,
+  "type": "chime"
+ }
+]

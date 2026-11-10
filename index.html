@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>机制拆解 · 粑粑柑（梭哈ai版）</title>
+<meta name="description" content="用代码拆游戏机制：每期一个可玩的网页原型 + 开源实现。">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0b0f15;color:#f2efe6;font-family:"PingFang SC","Noto Sans CJK SC",sans-serif;min-height:100vh}
+a{color:inherit;text-decoration:none}
+header{display:flex;align-items:center;gap:16px;padding:28px clamp(18px,5vw,64px)}
+header img{width:58px;height:58px;border-radius:50%;border:3px solid #fff;background:#fff}
+header b{font-size:22px;display:block}
+header span{font-size:14px;color:#ffcf73;letter-spacing:3px}
+header .gh{margin-left:auto;font-size:14px;padding:9px 16px;border:1px solid rgba(255,255,255,.25);border-radius:999px}
+.hero{padding:30px clamp(18px,5vw,64px) 10px}
+.hero h1{font-size:clamp(40px,7vw,84px);font-weight:900;letter-spacing:2px}
+.hero h1 em{font-style:normal;color:#ffb347}
+.hero p{margin-top:12px;color:#b9c5cd;font-size:18px;max-width:760px;line-height:1.7}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px;padding:36px clamp(18px,5vw,64px) 60px}
+.ep{background:#141a22;border:1px solid rgba(255,255,255,.08);border-radius:18px;overflow:hidden;transition:transform .2s,border-color .2s;display:flex;flex-direction:column}
+.ep:hover{transform:translateY(-4px);border-color:#ffcf73}
+.ep img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
+.ep .b{padding:18px 20px 20px;display:flex;flex-direction:column;gap:8px;flex:1}
+.ep .n{font:700 13px "SF Mono",Menlo,monospace;letter-spacing:3px;color:#ffcf73}
+.ep h2{font-size:24px}
+.ep p{color:#aeb9c1;font-size:15px;line-height:1.6;flex:1}
+.ep .go{font-size:14px;color:#ffcf73}
+footer{padding:0 clamp(18px,5vw,64px) 40px;color:#7d8a94;font-size:13px;line-height:1.8}
+</style>
+</head>
+<body>
+<header>
+  <img src="brand/avatar.png" alt="">
+  <div><b>粑粑柑（梭哈ai版）</b><span>机制拆解 · 用代码拆游戏</span></div>
+  <a class="gh" href="https://github.com/holooooo/mechanics-breakdown" target="_blank" rel="noopener">GitHub 源码 ↗</a>
+</header>
+<section class="hero">
+  <h1>机制<em>拆解</em></h1>
+  <p>每期拆一个游戏机制：讲清原理，再用 WebGL 写一个能玩的版本。网页里可以亲手试，源码全部开源。解析视频发布在 B 站 / 抖音。</p>
+</section>
+<main class="grid">
+  <a class="ep" href="01-zelda-chemistry/">
+    <img src="covers/01.jpg" alt="">
+    <div class="b"><div class="n">EP 01</div><h2>塞尔达化学引擎</h2><p>三条规则让世界自己算：燃烧蔓延、风、雨水灭火、上升气流、融冰导电的连锁机关。</p><div class="go">进入可玩网页 →</div></div>
+  </a>
+  <a class="ep" href="02-genshin-elements/">
+    <img src="covers/02.jpg" alt="">
+    <div class="b"><div class="n">EP 02</div><h2>元素导论 · 原神元素反应</h2><p>附着、元素量、强弱蒸发、附着冷却：给木桩挂元素，看附着条被一口吃掉。</p><div class="go">进入可玩网页 →</div></div>
+  </a>
+  <a class="ep" href="03-input-reading/">
+    <img src="covers/03.jpg" alt="">
+    <div class="b"><div class="n">EP 03</div><h2>读指令简史</h2><p>读按键、读动作、看画面三种敌人：从街霸二、魂系列、心理螳螂讲到影之刃零。</p><div class="go">进入可玩网页 →</div></div>
+  </a>
+</main>
+<footer>代码采用 MIT 协议；vendor/three 为 Three.js r170（MIT）。各期场景与规则代码为原创教学原型，不含任何游戏的代码或素材；游戏名称与画面版权归各自权利人所有。</footer>
+</body>
+</html>
