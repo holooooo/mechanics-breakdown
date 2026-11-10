@@ -1,7 +1,7 @@
-build/
-out/
-footage/
-footage_src/
+/*/build/
+/*/out/
+/*/footage/
+/*/footage_src/
 node_modules/
 .DS_Store
 *.log
