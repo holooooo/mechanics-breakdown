@@ -1,0 +1,325 @@
+{
+ "title": "游戏里的跳字，其实是一台老虎机",
+ "series": "机制拆解",
+ "episode": 4,
+ "rehookEvery": 15,
+ "scenes": [
+  {
+   "id": "hook",
+   "kicker": "机制拆解 · 第 4 期",
+   "title": "数字有什么用？",
+   "lines": [
+    {
+     "zh": "小丑牌里，分数打得太高，屏幕上会直接跳出一个词：naneinf。",
+     "en": "In Balatro, score high enough and the screen just shows one word: naneinf.",
+     "say": "小丑牌里，分数打得太高，屏幕上会直接跳出一个词，nan e inf。",
+     "rehook": "钩子"
+    },
+    {
+     "zh": "意思是，这个数字大到连电脑都存不下了。",
+     "en": "It means the number got too big for the computer to store."
+    },
+    {
+     "zh": "原神里，一下暴击一百二十多万；魔界战记更夸张，一招打出八十二亿。",
+     "en": "In Genshin Impact a single crit lands for over 1.2 million; Disgaea goes further: one move, 8.2 billion.",
+     "say": "原神里，一下暴击一百二十多万，魔界战记更夸张，一招打出八十二亿。"
+    },
+    {
+     "zh": "可怪物只要血条归零就会死，这些数字对输赢没有一点用。",
+     "en": "A monster dies when its health hits zero. These numbers do nothing for winning."
+    },
+    {
+     "zh": "那为什么，你一看到它们，就停不下来？",
+     "en": "So why can't you stop once you see them?",
+     "rehook": "问"
+    },
+    {
+     "zh": "左右两边，伤害一模一样。你更想砍哪一边？",
+     "en": "Left and right deal exactly the same damage. Which one do you want to hit?",
+     "rehook": "钩子"
+    },
+    {
+     "zh": "这期机制拆解，从一行白字开始，一层一层加，加出一个让人上瘾的跳字。",
+     "en": "This episode starts from one line of white text and adds layer after layer until the numbers become addictive."
+    }
+   ]
+  },
+  {
+   "id": "brain",
+   "kicker": "00 · 先说大脑",
+   "title": "多巴胺在等什么？",
+   "lines": [
+    {
+     "zh": "先说大脑。多巴胺不等于快乐，它最在意的是：比预期更好。",
+     "en": "First, the brain. Dopamine isn't pleasure. What it cares about most is: better than expected.",
+     "rehook": "问"
+    },
+    {
+     "zh": "1997 年，神经科学家舒尔茨发现，意料之中的奖励，多巴胺神经元几乎不动。",
+     "en": "In 1997, neuroscientist Wolfram Schultz found that dopamine neurons barely react to an expected reward.",
+     "say": "一九九七年，神经科学家舒尔茨发现，意料之中的奖励，多巴胺神经元几乎不动。"
+    },
+    {
+     "zh": "只有奖励比预期大，它才会猛地放电。",
+     "en": "Only when the reward beats the prediction do they fire hard."
+    },
+    {
+     "zh": "所以跳字真正的任务只有一个：让每一刀，都有一点超出预期的可能。",
+     "en": "So a damage number really has one job: give every hit a chance to beat your expectation.",
+     "rehook": "反转"
+    },
+    {
+     "zh": "接下来八层，每一层都在干这件事。",
+     "en": "Each of the next eight layers does exactly that."
+    }
+   ]
+  },
+  {
+   "id": "l0",
+   "kicker": "L0 · 能显示",
+   "title": "一行白字",
+   "lines": [
+    {
+     "zh": "第零层，能显示。在命中点写一个数字，零点八秒后消失。",
+     "en": "Layer zero: show it. Write a number at the hit point, remove it after 0.8 seconds.",
+     "rehook": "问"
+    },
+    {
+     "zh": "信息一点不少，可你基本感觉不到自己打中了。",
+     "en": "No information is missing, yet you barely feel that you hit anything."
+    }
+   ]
+  },
+  {
+   "id": "l1",
+   "kicker": "L1 · 动起来",
+   "title": "上飘 + 淡出",
+   "lines": [
+    {
+     "zh": "第一层，让它动起来：往上飘，后半段淡出，出生点再随机左右偏一点。",
+     "en": "Layer one: make it move. Float up, fade in the second half, and jitter the spawn point left and right."
+    },
+    {
+     "zh": "眼睛天生会被运动抓住，数字一动，你就会去看它。",
+     "en": "Eyes are wired to catch motion. Once the number moves, you look at it."
+    }
+   ]
+  },
+  {
+   "id": "l2",
+   "kicker": "L2 · 弹出来",
+   "title": "回弹 + 描边",
+   "lines": [
+    {
+     "zh": "第二层，弹出来。先冲到一点三倍，再回弹到原大小，这条曲线叫 easeOutBack。",
+     "en": "Layer two: pop. Overshoot to 1.3x, then settle back. That curve is called easeOutBack.",
+     "say": "第二层，弹出来。先冲到一点三倍，再回弹到原大小，这条曲线叫 ease out back。"
+    },
+    {
+     "zh": "再加粗描边，四个位置轮流出生，数字就不会糊成一团。",
+     "en": "Add a thick outline and rotate between four spawn slots, so numbers never smear together."
+    },
+    {
+     "zh": "2012 年有个演讲叫《Juice it or lose it》，两位开发者只加了这类缓动和弹跳，一个打砖块就从无聊变得上头。",
+     "en": "In the 2012 talk 'Juice it or lose it', two developers added only this kind of easing and bounce, and a dull Breakout clone became compelling.",
+     "say": "二零一二年有个演讲叫，juice it or lose it，两位开发者只加了这类缓动和弹跳，一个打砖块就从无聊变得上头。",
+     "rehook": "反转"
+    }
+   ]
+  },
+  {
+   "id": "l3",
+   "kicker": "L3 · 分等级",
+   "title": "暴击 = 老虎机",
+   "lines": [
+    {
+     "zh": "第三层，分等级。字号跟着伤害的对数走，一百和一万，一眼就能分开。",
+     "en": "Layer three: rank it. Font size follows the log of damage, so 100 and 10,000 separate at a glance."
+    },
+    {
+     "zh": "暴击单独一档：放大，变成金红色，歪一点，再抖一下。",
+     "en": "Crits get their own tier: bigger, gold-to-red, tilted, with a shake."
+    },
+    {
+     "zh": "关键是，暴击是随机的。你永远不知道下一刀会不会出。",
+     "en": "The key is that crits are random. You never know if the next hit will be one.",
+     "rehook": "问"
+    },
+    {
+     "zh": "心理学叫它可变比率强化，老虎机用的就是这一招。",
+     "en": "Psychology calls it a variable-ratio schedule. It's exactly what slot machines use.",
+     "rehook": "反转"
+    },
+    {
+     "zh": "怪物猎人世界更进一步：打在弱点上，数字变成橙色，顺手教你该打哪儿。",
+     "en": "Monster Hunter World goes further: hits on a weak spot turn orange, quietly teaching you where to aim."
+    }
+   ]
+  },
+  {
+   "id": "l4",
+   "kicker": "L4 · 打击感",
+   "title": "顿帧 · 震屏 · 火花",
+   "lines": [
+    {
+     "zh": "第四层，打击感。数字不能自己爽，得拉着整个画面一起爽。",
+     "en": "Layer four: impact. The number can't feel good alone; the whole screen has to join in.",
+     "rehook": "问"
+    },
+    {
+     "zh": "暴击那一下，画面停住七十五毫秒，这叫顿帧。再叠上震屏、闪白和火花。",
+     "en": "On a crit, freeze the frame for 75 milliseconds. That's hit-stop. Stack screen shake, a white flash and sparks."
+    },
+    {
+     "zh": "暴击数字也不再上飘，而是被一刀打飞出去，带着重力划一道弧线。",
+     "en": "The crit number stops floating and gets knocked away instead, arcing under gravity."
+    },
+    {
+     "zh": "Vlambeer 的演讲《The art of screenshake》，就是靠这些一层层，把一个平庸的射击游戏做出了手感。",
+     "en": "Vlambeer's talk 'The art of screenshake' used exactly these layers to give a bland shooter real game feel.",
+     "say": "Vlambeer 的演讲，the art of screen shake，就是靠这些一层层，把一个平庸的射击游戏做出了手感。"
+    }
+   ]
+  },
+  {
+   "id": "l5",
+   "kicker": "L5 · 攒起来",
+   "title": "让数字往上「数」",
+   "lines": [
+    {
+     "zh": "第五层，攒起来。连击时每下都跳一个小数字，你只会看到一片噪音。",
+     "en": "Layer five: stack it. If every hit in a combo pops its own number, all you see is noise.",
+     "rehook": "问"
+    },
+    {
+     "zh": "所以把它们合成一个总数。每命中一次，总数往上滚一截，再鼓一下。",
+     "en": "So merge them into one total. Every hit rolls it up a notch and gives it a bump."
+    },
+    {
+     "zh": "连击结束，再重重砸一下，变成金色。",
+     "en": "When the combo ends, slam it once and turn it gold."
+    },
+    {
+     "zh": "小丑牌最上头的就是这个：筹码乘倍率，一张一张结算，分数在你眼前一路往上数。",
+     "en": "That's Balatro's most addictive moment: chips times mult, scored card by card, the total counting up in front of you."
+    },
+    {
+     "zh": "舒尔茨还发现，多巴胺的反应会往前挪，挪到预示奖励的那个信号上。等待揭晓，本身就成了奖励。",
+     "en": "Schultz also found the dopamine response moves earlier, onto the signal that predicts the reward. Waiting for the reveal becomes a reward itself.",
+     "rehook": "反转"
+    }
+   ]
+  },
+  {
+   "id": "l6",
+   "kicker": "L6 · 涨上去",
+   "title": "从万到亿到兆",
+   "lines": [
+    {
+     "zh": "第六层，涨上去。问题是：一百涨到两百你很爽，一亿涨到一亿零一百，你毫无感觉。",
+     "en": "Layer six: grow it. The problem: 100 to 200 feels great, 100 million to 100 million and 100 feels like nothing.",
+     "rehook": "问"
+    },
+    {
+     "zh": "这叫韦伯-费希纳定律，人对数量的感受是对数的。",
+     "en": "That's the Weber–Fechner law: we perceive quantity logarithmically.",
+     "say": "这叫韦伯费希纳定律，人对数量的感受是对数的。"
+    },
+    {
+     "zh": "想一直有感觉，就只能做乘法：装备翻倍，技能翻倍，伤害从万到亿到兆。",
+     "en": "To keep feeling it, you can only multiply: double the gear, double the skill, damage from ten-thousands to hundred-millions to trillions."
+    },
+    {
+     "zh": "数字长到看不清，就换单位：一点二万，三点四亿。",
+     "en": "When numbers get too long to read, switch units: 1.2万, 3.4亿."
+    },
+    {
+     "zh": "但膨胀有代价。魔兽世界在 2013 年宣布压缩数值：火球术从四万六千九百二十八，压到两千二百零九。",
+     "en": "But inflation has a price. At BlizzCon 2013 WoW announced a stat squish: Fireball went from 46,928 to 2,209.",
+     "say": "但膨胀有代价。魔兽世界在二零一三年宣布压缩数值，火球术从四万六千九百二十八，压到两千二百零九。",
+     "rehook": "反转"
+    },
+    {
+     "zh": "原因之一很硬核：Boss 的血量用三十二位整数存，快要撑破了。",
+     "en": "One reason was hardcore: boss health was stored in 32-bit integers and was about to overflow.",
+     "say": "原因之一很硬核，Boss 的血量用三十二位整数存，快要撑破了。"
+    },
+    {
+     "zh": "小丑牌没有压缩。分数超过大约十的三百零八次方，就是开头那个 naneinf。",
+     "en": "Balatro never squished. Past about ten to the 308th, you get the naneinf from the opening.",
+     "say": "小丑牌没有压缩。分数超过大约十的三百零八次方，就是开头那个，nan e inf。"
+    }
+   ]
+  },
+  {
+   "id": "l7",
+   "kicker": "L7 · 收得住",
+   "title": "同屏上限 · 暴击优先",
+   "lines": [
+    {
+     "zh": "第七层，收得住。吸血鬼幸存者打到后期满屏都是字，不少玩家干脆把跳字关掉，画面才不卡。",
+     "en": "Layer seven: keep it in check. Late in Vampire Survivors the screen is all text; many players turn damage numbers off just to stop the lag.",
+     "rehook": "问"
+    },
+    {
+     "zh": "所以终版要设上限：同屏最多七个，小数字淡下去，暴击永远优先。",
+     "en": "So the final version sets a cap: at most seven on screen, small ones fade back, crits always win."
+    },
+    {
+     "zh": "暗黑4后来也加了开关，可以只隐藏某几类数字。",
+     "en": "Diablo IV later added switches to hide only certain kinds of numbers.",
+     "say": "暗黑四后来也加了开关，可以只隐藏某几类数字。"
+    }
+   ]
+  },
+  {
+   "id": "counter",
+   "kicker": "反转 · 没有数字",
+   "title": "那数字越多越好？",
+   "lines": [
+    {
+     "zh": "那是不是数字越多越好？",
+     "en": "So is more numbers always better?",
+     "rehook": "问"
+    },
+    {
+     "zh": "艾尔登法环默认一个伤害数字都不显示，靠顿帧、音效和敌人的硬直，照样让你觉得每一刀都砍到了肉。",
+     "en": "Elden Ring shows no damage numbers by default. Hit-stop, sound and enemy stagger still make every swing land."
+    },
+    {
+     "zh": "跳字其实是在给打击感配字幕。动作够扎实的游戏，可以不要它。",
+     "en": "Damage numbers are subtitles for impact. A game with solid enough feel can do without them.",
+     "rehook": "反转"
+    },
+    {
+     "zh": "反过来，有些游戏把战力吹到几百万，只是想让你觉得：再充一点，就能更大。",
+     "en": "Flip it around: some games inflate a 'power' number into the millions just to make you feel that one more purchase will make it bigger."
+    },
+    {
+     "zh": "数字本身不会让人上瘾。让人上瘾的，是下一刀可能更大。",
+     "en": "Numbers themselves aren't addictive. What's addictive is that the next hit might be bigger."
+    }
+   ]
+  },
+  {
+   "id": "outro",
+   "kicker": "机制拆解 · 第 4 期",
+   "title": "八层，一个木桩",
+   "lines": [
+    {
+     "zh": "八层代码都开源在机制拆解网站，可以自己切层级、调暴击率、开数值膨胀。",
+     "en": "All eight layers are open source on the Mechanics Breakdown site: switch layers, tune crit rate, turn on inflation."
+    },
+    {
+     "zh": "你玩过跳字最爽的游戏是哪一个？评论区告诉我。",
+     "en": "Which game has the most satisfying damage numbers you've played? Tell me in the comments.",
+     "rehook": "问"
+    },
+    {
+     "zh": "我是粑粑柑，三连关注，下期接着拆。",
+     "en": "I'm Babagan. Like, follow, and see you next breakdown."
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,3753 @@
+[
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 3.1,
+  "type": "coin",
+  "gain": 0.3,
+  "pitch": 0
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 3.352,
+  "type": "coin",
+  "gain": 0.3,
+  "pitch": 1
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 3.554,
+  "type": "coin",
+  "gain": 0.3,
+  "pitch": 2
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 3.712,
+  "type": "coin",
+  "gain": 0.3,
+  "pitch": 3
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 3.835,
+  "type": "coin",
+  "gain": 0.3,
+  "pitch": 4
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 3.927,
+  "type": "coin",
+  "gain": 0.3,
+  "pitch": 5
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 3.993,
+  "type": "coin",
+  "gain": 0.3,
+  "pitch": 6
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 4.037,
+  "type": "coin",
+  "gain": 0.3,
+  "pitch": 7
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 4.064,
+  "type": "coin",
+  "gain": 0.3,
+  "pitch": 8
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 4.076,
+  "type": "coin",
+  "gain": 0.3,
+  "pitch": 9
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 6.154,
+  "type": "slam",
+  "gain": 0.6
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 6.204,
+  "type": "glitch",
+  "gain": 0.9
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 14.475,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": 0.1
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 14.795,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": -0.16
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 15.115,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": -0.16
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 15.135,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 0
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 15.435,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": 0.06
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 15.455,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 1
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 15.755,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": 0.09
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 15.775,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 2
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 16.075,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": 0.25
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 16.095,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 3
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 16.395,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": -0.09
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 16.415,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 4
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 16.715,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": -0.01
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 16.735,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 5
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 17.035,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": 0.12
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 17.055,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 6
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 17.355,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": 0.11
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 17.375,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 7
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 17.675,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": -0.19
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 17.695,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 8
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 17.995,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": 0.21
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 18.015,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 9
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 21.193,
+  "type": "hit",
+  "gain": 0.48,
+  "pan": -0.08
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 21.693,
+  "type": "crit",
+  "gain": 0.6000000000000001,
+  "pan": -0.03
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 22.193,
+  "type": "hit",
+  "gain": 0.48,
+  "pan": -0.19
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 22.643,
+  "type": "tap",
+  "gain": 0.4,
+  "pan": 0.25
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 22.753,
+  "type": "tap",
+  "gain": 0.4,
+  "pan": -0.29
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 22.863,
+  "type": "tap",
+  "gain": 0.4,
+  "pan": 0.06
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 22.883,
+  "type": "coin",
+  "gain": 0.256,
+  "pitch": 0
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 22.973,
+  "type": "tap",
+  "gain": 0.4,
+  "pan": 0.17
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 22.993,
+  "type": "coin",
+  "gain": 0.256,
+  "pitch": 1
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 23.083,
+  "type": "crit",
+  "gain": 0.6000000000000001,
+  "pan": -0.25
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 23.103,
+  "type": "coin",
+  "gain": 0.256,
+  "pitch": 2
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 23.193,
+  "type": "tap",
+  "gain": 0.4,
+  "pan": -0.34
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 23.213,
+  "type": "coin",
+  "gain": 0.256,
+  "pitch": 3
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 23.303,
+  "type": "tap",
+  "gain": 0.4,
+  "pan": 0.24
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 23.323,
+  "type": "coin",
+  "gain": 0.256,
+  "pitch": 4
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 23.413,
+  "type": "crit",
+  "gain": 0.6000000000000001,
+  "pan": -0.07
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 23.433,
+  "type": "coin",
+  "gain": 0.256,
+  "pitch": 5
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 23.663,
+  "type": "slam",
+  "gain": 0.36000000000000004
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 24.193,
+  "type": "hit",
+  "gain": 0.48,
+  "pan": 0.05
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 24.693,
+  "type": "hit",
+  "gain": 0.48,
+  "pan": -0.28
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 25.193,
+  "type": "hit",
+  "gain": 0.48,
+  "pan": -0.23
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 25.693,
+  "type": "hit",
+  "gain": 0.48,
+  "pan": 0.25
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 26.193,
+  "type": "crit",
+  "gain": 0.6000000000000001,
+  "pan": 0.32
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 26.693,
+  "type": "crit",
+  "gain": 0.6000000000000001,
+  "pan": -0.19
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 27.193,
+  "type": "hit",
+  "gain": 0.48,
+  "pan": -0.08
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 27.693,
+  "type": "hit",
+  "gain": 0.48,
+  "pan": -0.22
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 28.193,
+  "type": "hit",
+  "gain": 0.48,
+  "pan": 0.31
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 28.693,
+  "type": "hit",
+  "gain": 0.48,
+  "pan": 0.12
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 29.193,
+  "type": "hit",
+  "gain": 0.48,
+  "pan": -0.06
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 29.693,
+  "type": "hit",
+  "gain": 0.48,
+  "pan": 0.26
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 30.193,
+  "type": "hit",
+  "gain": 0.48,
+  "pan": -0.18
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 30.693,
+  "type": "crit",
+  "gain": 0.6000000000000001,
+  "pan": 0.03
+ },
+ {
+  "scene": "hook",
+  "line": null,
+  "offset": 30.834,
+  "type": "whoosh",
+  "gain": 0.35
+ },
+ {
+  "scene": "brain",
+  "line": null,
+  "offset": 14.05,
+  "type": "crit",
+  "gain": 0.44999999999999996,
+  "pan": 0.34
+ },
+ {
+  "scene": "brain",
+  "line": null,
+  "offset": 14.65,
+  "type": "hit",
+  "gain": 0.36,
+  "pan": 0.21
+ },
+ {
+  "scene": "brain",
+  "line": null,
+  "offset": 15.25,
+  "type": "hit",
+  "gain": 0.36,
+  "pan": -0.33
+ },
+ {
+  "scene": "brain",
+  "line": null,
+  "offset": 15.85,
+  "type": "crit",
+  "gain": 0.44999999999999996,
+  "pan": 0.17
+ },
+ {
+  "scene": "brain",
+  "line": null,
+  "offset": 16.45,
+  "type": "hit",
+  "gain": 0.36,
+  "pan": -0.18
+ },
+ {
+  "scene": "brain",
+  "line": null,
+  "offset": 17.05,
+  "type": "hit",
+  "gain": 0.36,
+  "pan": 0.02
+ },
+ {
+  "scene": "brain",
+  "line": null,
+  "offset": 17.65,
+  "type": "hit",
+  "gain": 0.36,
+  "pan": 0.19
+ },
+ {
+  "scene": "brain",
+  "line": null,
+  "offset": 18.25,
+  "type": "hit",
+  "gain": 0.36,
+  "pan": 0.25
+ },
+ {
+  "scene": "brain",
+  "line": null,
+  "offset": 18.85,
+  "type": "hit",
+  "gain": 0.36,
+  "pan": -0.08
+ },
+ {
+  "scene": "brain",
+  "line": null,
+  "offset": 19.45,
+  "type": "hit",
+  "gain": 0.36,
+  "pan": -0.07
+ },
+ {
+  "scene": "brain",
+  "line": null,
+  "offset": 20.05,
+  "type": "hit",
+  "gain": 0.36,
+  "pan": -0.3
+ },
+ {
+  "scene": "brain",
+  "line": null,
+  "offset": 20.65,
+  "type": "hit",
+  "gain": 0.36,
+  "pan": 0.01
+ },
+ {
+  "scene": "brain",
+  "line": null,
+  "offset": 21.25,
+  "type": "hit",
+  "gain": 0.36,
+  "pan": 0.25
+ },
+ {
+  "scene": "brain",
+  "line": null,
+  "offset": 21.47,
+  "type": "whoosh",
+  "gain": 0.35
+ },
+ {
+  "scene": "l0",
+  "line": null,
+  "offset": 0.25,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.19,
+  "pitch": 0
+ },
+ {
+  "scene": "l0",
+  "line": null,
+  "offset": 0.87,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.13,
+  "pitch": 0
+ },
+ {
+  "scene": "l0",
+  "line": null,
+  "offset": 1.49,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.26,
+  "pitch": 0
+ },
+ {
+  "scene": "l0",
+  "line": null,
+  "offset": 2.11,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.06,
+  "pitch": 0
+ },
+ {
+  "scene": "l0",
+  "line": null,
+  "offset": 2.73,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.28,
+  "pitch": 0
+ },
+ {
+  "scene": "l0",
+  "line": null,
+  "offset": 3.35,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.17,
+  "pitch": 0
+ },
+ {
+  "scene": "l0",
+  "line": null,
+  "offset": 3.97,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.26,
+  "pitch": 0
+ },
+ {
+  "scene": "l0",
+  "line": null,
+  "offset": 4.59,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.26,
+  "pitch": 0
+ },
+ {
+  "scene": "l0",
+  "line": null,
+  "offset": 5.21,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.11,
+  "pitch": 0
+ },
+ {
+  "scene": "l0",
+  "line": null,
+  "offset": 5.83,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.23,
+  "pitch": 0
+ },
+ {
+  "scene": "l0",
+  "line": null,
+  "offset": 6.45,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.23,
+  "pitch": 0
+ },
+ {
+  "scene": "l0",
+  "line": null,
+  "offset": 7.07,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.1,
+  "pitch": 0
+ },
+ {
+  "scene": "l0",
+  "line": null,
+  "offset": 7.69,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.19,
+  "pitch": 0
+ },
+ {
+  "scene": "l0",
+  "line": null,
+  "offset": 8.31,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.11,
+  "pitch": 0
+ },
+ {
+  "scene": "l0",
+  "line": null,
+  "offset": 8.43,
+  "type": "whoosh",
+  "gain": 0.35
+ },
+ {
+  "scene": "l1",
+  "line": null,
+  "offset": 0.25,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.19,
+  "pitch": 0
+ },
+ {
+  "scene": "l1",
+  "line": null,
+  "offset": 0.87,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.13,
+  "pitch": 0
+ },
+ {
+  "scene": "l1",
+  "line": null,
+  "offset": 1.49,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.26,
+  "pitch": 0
+ },
+ {
+  "scene": "l1",
+  "line": null,
+  "offset": 2.11,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.06,
+  "pitch": 0
+ },
+ {
+  "scene": "l1",
+  "line": null,
+  "offset": 2.73,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.28,
+  "pitch": 0
+ },
+ {
+  "scene": "l1",
+  "line": null,
+  "offset": 3.35,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.17,
+  "pitch": 0
+ },
+ {
+  "scene": "l1",
+  "line": null,
+  "offset": 3.97,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.26,
+  "pitch": 0
+ },
+ {
+  "scene": "l1",
+  "line": null,
+  "offset": 4.59,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.26,
+  "pitch": 0
+ },
+ {
+  "scene": "l1",
+  "line": null,
+  "offset": 5.21,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.11,
+  "pitch": 0
+ },
+ {
+  "scene": "l1",
+  "line": null,
+  "offset": 5.83,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.23,
+  "pitch": 0
+ },
+ {
+  "scene": "l1",
+  "line": null,
+  "offset": 6.45,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.23,
+  "pitch": 0
+ },
+ {
+  "scene": "l1",
+  "line": null,
+  "offset": 7.07,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.1,
+  "pitch": 0
+ },
+ {
+  "scene": "l1",
+  "line": null,
+  "offset": 7.69,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.19,
+  "pitch": 0
+ },
+ {
+  "scene": "l1",
+  "line": null,
+  "offset": 8.31,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.11,
+  "pitch": 0
+ },
+ {
+  "scene": "l1",
+  "line": null,
+  "offset": 8.93,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0,
+  "pitch": 0
+ },
+ {
+  "scene": "l1",
+  "line": null,
+  "offset": 9.55,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.26,
+  "pitch": 0
+ },
+ {
+  "scene": "l1",
+  "line": null,
+  "offset": 9.921,
+  "type": "whoosh",
+  "gain": 0.35
+ },
+ {
+  "scene": "l2",
+  "line": null,
+  "offset": 0.25,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.19,
+  "pitch": 0
+ },
+ {
+  "scene": "l2",
+  "line": null,
+  "offset": 0.87,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.13,
+  "pitch": 0
+ },
+ {
+  "scene": "l2",
+  "line": null,
+  "offset": 1.49,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.26,
+  "pitch": 0
+ },
+ {
+  "scene": "l2",
+  "line": null,
+  "offset": 2.11,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.06,
+  "pitch": 0
+ },
+ {
+  "scene": "l2",
+  "line": null,
+  "offset": 2.73,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.28,
+  "pitch": 0
+ },
+ {
+  "scene": "l2",
+  "line": null,
+  "offset": 3.35,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.17,
+  "pitch": 0
+ },
+ {
+  "scene": "l2",
+  "line": null,
+  "offset": 3.97,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.26,
+  "pitch": 0
+ },
+ {
+  "scene": "l2",
+  "line": null,
+  "offset": 4.59,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.26,
+  "pitch": 0
+ },
+ {
+  "scene": "l2",
+  "line": null,
+  "offset": 5.21,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.11,
+  "pitch": 0
+ },
+ {
+  "scene": "l2",
+  "line": null,
+  "offset": 5.83,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.23,
+  "pitch": 0
+ },
+ {
+  "scene": "l2",
+  "line": null,
+  "offset": 6.45,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.23,
+  "pitch": 0
+ },
+ {
+  "scene": "l2",
+  "line": null,
+  "offset": 7.07,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.1,
+  "pitch": 0
+ },
+ {
+  "scene": "l2",
+  "line": null,
+  "offset": 7.69,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.19,
+  "pitch": 0
+ },
+ {
+  "scene": "l2",
+  "line": null,
+  "offset": 8.31,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.11,
+  "pitch": 0
+ },
+ {
+  "scene": "l2",
+  "line": null,
+  "offset": 8.93,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0,
+  "pitch": 0
+ },
+ {
+  "scene": "l2",
+  "line": null,
+  "offset": 9.55,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.26,
+  "pitch": 0
+ },
+ {
+  "scene": "l2",
+  "line": null,
+  "offset": 10.17,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.34,
+  "pitch": 0
+ },
+ {
+  "scene": "l2",
+  "line": null,
+  "offset": 10.79,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.02,
+  "pitch": 0
+ },
+ {
+  "scene": "l2",
+  "line": null,
+  "offset": 11.41,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.19,
+  "pitch": 0
+ },
+ {
+  "scene": "l2",
+  "line": null,
+  "offset": 12.03,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.24,
+  "pitch": 0
+ },
+ {
+  "scene": "l2",
+  "line": null,
+  "offset": 12.65,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.33,
+  "pitch": 0
+ },
+ {
+  "scene": "l2",
+  "line": null,
+  "offset": 13.27,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.2,
+  "pitch": 0
+ },
+ {
+  "scene": "l2",
+  "line": null,
+  "offset": 13.89,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.29,
+  "pitch": 0
+ },
+ {
+  "scene": "l2",
+  "line": null,
+  "offset": 14.51,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.32,
+  "pitch": 0
+ },
+ {
+  "scene": "l2",
+  "line": null,
+  "offset": 15.13,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.15,
+  "pitch": 0
+ },
+ {
+  "scene": "l2",
+  "line": null,
+  "offset": 15.75,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.19,
+  "pitch": 0
+ },
+ {
+  "scene": "l2",
+  "line": null,
+  "offset": 16.37,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.25,
+  "pitch": 0
+ },
+ {
+  "scene": "l2",
+  "line": null,
+  "offset": 16.99,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.04,
+  "pitch": 0
+ },
+ {
+  "scene": "l2",
+  "line": null,
+  "offset": 17.61,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.2,
+  "pitch": 0
+ },
+ {
+  "scene": "l2",
+  "line": null,
+  "offset": 18.09,
+  "type": "whoosh",
+  "gain": 0.35
+ },
+ {
+  "scene": "l2",
+  "line": null,
+  "offset": 18.23,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.2,
+  "pitch": 0
+ },
+ {
+  "scene": "l3",
+  "line": null,
+  "offset": 0.25,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.22,
+  "pitch": 5
+ },
+ {
+  "scene": "l3",
+  "line": null,
+  "offset": 0.85,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.35,
+  "pitch": 5
+ },
+ {
+  "scene": "l3",
+  "line": null,
+  "offset": 1.45,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.2,
+  "pitch": 5
+ },
+ {
+  "scene": "l3",
+  "line": null,
+  "offset": 2.05,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.06,
+  "pitch": 0
+ },
+ {
+  "scene": "l3",
+  "line": null,
+  "offset": 2.65,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.06,
+  "pitch": 0
+ },
+ {
+  "scene": "l3",
+  "line": null,
+  "offset": 3.25,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.14,
+  "pitch": 0
+ },
+ {
+  "scene": "l3",
+  "line": null,
+  "offset": 3.85,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.07,
+  "pitch": 0
+ },
+ {
+  "scene": "l3",
+  "line": null,
+  "offset": 4.45,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.32,
+  "pitch": 0
+ },
+ {
+  "scene": "l3",
+  "line": null,
+  "offset": 5.05,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.21,
+  "pitch": 0
+ },
+ {
+  "scene": "l3",
+  "line": null,
+  "offset": 9.85,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.16,
+  "pitch": 0
+ },
+ {
+  "scene": "l3",
+  "line": null,
+  "offset": 10.45,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.28,
+  "pitch": 0
+ },
+ {
+  "scene": "l3",
+  "line": null,
+  "offset": 11.05,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.27,
+  "pitch": 0
+ },
+ {
+  "scene": "l3",
+  "line": null,
+  "offset": 11.65,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.25,
+  "pitch": 0
+ },
+ {
+  "scene": "l3",
+  "line": null,
+  "offset": 12.25,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.07,
+  "pitch": 0
+ },
+ {
+  "scene": "l3",
+  "line": null,
+  "offset": 12.85,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.27,
+  "pitch": 5
+ },
+ {
+  "scene": "l3",
+  "line": null,
+  "offset": 13.45,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.31,
+  "pitch": 0
+ },
+ {
+  "scene": "l3",
+  "line": null,
+  "offset": 14.05,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.12,
+  "pitch": 0
+ },
+ {
+  "scene": "l3",
+  "line": null,
+  "offset": 14.65,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.26,
+  "pitch": 0
+ },
+ {
+  "scene": "l3",
+  "line": null,
+  "offset": 15.25,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.1,
+  "pitch": 0
+ },
+ {
+  "scene": "l3",
+  "line": null,
+  "offset": 15.85,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.25,
+  "pitch": 0
+ },
+ {
+  "scene": "l3",
+  "line": null,
+  "offset": 16.45,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.35,
+  "pitch": 0
+ },
+ {
+  "scene": "l3",
+  "line": null,
+  "offset": 17.05,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.24,
+  "pitch": 5
+ },
+ {
+  "scene": "l3",
+  "line": null,
+  "offset": 17.65,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.19,
+  "pitch": 0
+ },
+ {
+  "scene": "l3",
+  "line": null,
+  "offset": 18.25,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.13,
+  "pitch": 5
+ },
+ {
+  "scene": "l3",
+  "line": null,
+  "offset": 18.85,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.12,
+  "pitch": 0
+ },
+ {
+  "scene": "l3",
+  "line": null,
+  "offset": 19.45,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.05,
+  "pitch": 0
+ },
+ {
+  "scene": "l3",
+  "line": null,
+  "offset": 20.05,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.09,
+  "pitch": 0
+ },
+ {
+  "scene": "l3",
+  "line": null,
+  "offset": 20.65,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.07,
+  "pitch": 5
+ },
+ {
+  "scene": "l3",
+  "line": null,
+  "offset": 21.25,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.06,
+  "pitch": 0
+ },
+ {
+  "scene": "l3",
+  "line": null,
+  "offset": 21.85,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.24,
+  "pitch": 0
+ },
+ {
+  "scene": "l3",
+  "line": null,
+  "offset": 22.45,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.15,
+  "pitch": 0
+ },
+ {
+  "scene": "l3",
+  "line": null,
+  "offset": 23.05,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.34,
+  "pitch": 0
+ },
+ {
+  "scene": "l3",
+  "line": null,
+  "offset": 23.65,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": 0.29,
+  "pitch": 0
+ },
+ {
+  "scene": "l3",
+  "line": null,
+  "offset": 24.175,
+  "type": "whoosh",
+  "gain": 0.35
+ },
+ {
+  "scene": "l3",
+  "line": null,
+  "offset": 24.25,
+  "type": "tap",
+  "gain": 0.55,
+  "pan": -0.3,
+  "pitch": 0
+ },
+ {
+  "scene": "l4",
+  "line": null,
+  "offset": 0.25,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": -0.35
+ },
+ {
+  "scene": "l4",
+  "line": null,
+  "offset": 0.97,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": 0.11
+ },
+ {
+  "scene": "l4",
+  "line": null,
+  "offset": 1.69,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": 0.02
+ },
+ {
+  "scene": "l4",
+  "line": null,
+  "offset": 2.41,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": 0.27
+ },
+ {
+  "scene": "l4",
+  "line": null,
+  "offset": 3.13,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": -0.02
+ },
+ {
+  "scene": "l4",
+  "line": null,
+  "offset": 3.85,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": -0.32
+ },
+ {
+  "scene": "l4",
+  "line": null,
+  "offset": 4.57,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": -0.05
+ },
+ {
+  "scene": "l4",
+  "line": null,
+  "offset": 5.29,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": 0.05
+ },
+ {
+  "scene": "l4",
+  "line": null,
+  "offset": 6.01,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": 0.17
+ },
+ {
+  "scene": "l4",
+  "line": null,
+  "offset": 6.73,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": -0.21
+ },
+ {
+  "scene": "l4",
+  "line": null,
+  "offset": 7.45,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": -0.26
+ },
+ {
+  "scene": "l4",
+  "line": null,
+  "offset": 8.17,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": 0.31
+ },
+ {
+  "scene": "l4",
+  "line": null,
+  "offset": 8.89,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": 0.27
+ },
+ {
+  "scene": "l4",
+  "line": null,
+  "offset": 9.61,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": 0.18
+ },
+ {
+  "scene": "l4",
+  "line": null,
+  "offset": 10.33,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": 0.1
+ },
+ {
+  "scene": "l4",
+  "line": null,
+  "offset": 15.37,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": 0.26
+ },
+ {
+  "scene": "l4",
+  "line": null,
+  "offset": 16.09,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": -0.03
+ },
+ {
+  "scene": "l4",
+  "line": null,
+  "offset": 16.81,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": 0.07
+ },
+ {
+  "scene": "l4",
+  "line": null,
+  "offset": 17.53,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": -0.1
+ },
+ {
+  "scene": "l4",
+  "line": null,
+  "offset": 18.25,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": -0.28
+ },
+ {
+  "scene": "l4",
+  "line": null,
+  "offset": 18.97,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": 0.21
+ },
+ {
+  "scene": "l4",
+  "line": null,
+  "offset": 19.69,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": 0.2
+ },
+ {
+  "scene": "l4",
+  "line": null,
+  "offset": 20.41,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": -0.28
+ },
+ {
+  "scene": "l4",
+  "line": null,
+  "offset": 21.13,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": 0.11
+ },
+ {
+  "scene": "l4",
+  "line": null,
+  "offset": 21.85,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": 0.32
+ },
+ {
+  "scene": "l4",
+  "line": null,
+  "offset": 22.123,
+  "type": "whoosh",
+  "gain": 0.35
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 0.25,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": -0.26
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 0.95,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": 0.27
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 1.2,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": 0.07
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 1.32,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": 0
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 1.34,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 0
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 1.44,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": 0.26
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 1.46,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 1
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 1.56,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": 0.02
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 1.58,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 2
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 1.68,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": 0.09
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 1.7,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 3
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 1.8,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": -0.24
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 1.82,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 4
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 1.92,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": 0.15
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 1.94,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 5
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 2.04,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": -0.31
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 2.06,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 6
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 2.16,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": -0.09
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 2.18,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 7
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 2.41,
+  "type": "slam",
+  "gain": 0.45
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 3.05,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": 0.25
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 3.75,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": -0.11
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 4.3,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": 0.06
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 4.42,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": -0.2
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 4.54,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": -0.02
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 4.56,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 0
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 4.66,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": 0.08
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 4.68,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 1
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 4.78,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": 0.04
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 4.8,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 2
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 4.9,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": 0.22
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 4.92,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 3
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 5.02,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": 0.1
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 5.04,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 4
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 5.14,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": -0.16
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 5.16,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 5
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 5.26,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": -0.12
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 5.28,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 6
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 5.51,
+  "type": "slam",
+  "gain": 0.45
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 6.55,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": 0.06
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 7.4,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": 0.02
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 7.52,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": -0.24
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 7.64,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": -0.05
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 7.66,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 0
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 7.76,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": 0.06
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 7.78,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 1
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 7.88,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": -0.02
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 7.9,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 2
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 8,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": -0.21
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 8.02,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 3
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 8.12,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": -0.02
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 8.14,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 4
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 8.24,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": -0.08
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 8.26,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 5
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 8.36,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": 0.08
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 8.38,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 6
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 8.61,
+  "type": "slam",
+  "gain": 0.45
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 9.35,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": 0.17
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 10.05,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": 0.02
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 10.5,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": 0.22
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 10.62,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": 0.23
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 10.74,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": 0.32
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 10.76,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 0
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 10.86,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": 0.28
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 10.88,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 1
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 10.98,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": -0.16
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 11,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 2
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 11.1,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": -0.06
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 11.12,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 3
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 11.22,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": 0.18
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 11.24,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 4
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 11.34,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": -0.16
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 11.36,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 5
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 11.46,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": 0.1
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 11.48,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 6
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 11.71,
+  "type": "slam",
+  "gain": 0.45
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 12.15,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": -0.35
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 12.85,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": 0.25
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 20.04,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": -0.26
+ },
+ {
+  "scene": "l5",
+  "line": null,
+  "offset": 27.648,
+  "type": "whoosh",
+  "gain": 0.35
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 10.7,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": -0.06
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 11.135,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": 0.17
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 11.255,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": 0.09
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 11.375,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": 0.17
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 11.395,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 0
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 11.495,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": 0.14
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 11.515,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 1
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 11.615,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": 0.19
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 11.635,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 2
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 11.735,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": -0.09
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 11.755,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 3
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 11.855,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": -0.31
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 11.875,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 4
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 11.975,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": 0.24
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 11.995,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 5
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 12.225,
+  "type": "slam",
+  "gain": 0.45
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 16.455,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": 0.29
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 16.575,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": 0
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 16.695,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": -0.17
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 16.715,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 0
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 16.815,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": 0.23
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 16.835,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 1
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 16.935,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": 0.06
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 16.955,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 2
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 17.055,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": 0.03
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 17.075,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 3
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 17.175,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": 0.23
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 17.195,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 4
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 17.425,
+  "type": "slam",
+  "gain": 0.45
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 17.85,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": -0.19
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 18.4,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": 0.1
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 18.935,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": 0.22
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 19.055,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": -0.17
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 19.175,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": -0.12
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 19.195,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 0
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 19.295,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": -0.25
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 19.315,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 1
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 19.415,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": 0.07
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 19.435,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 2
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 19.535,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": 0.28
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 19.555,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 3
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 19.655,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": 0.25
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 19.675,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 4
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 19.775,
+  "type": "tap",
+  "gain": 0.5,
+  "pan": 0.31
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 19.795,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 5
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 20.025,
+  "type": "slam",
+  "gain": 0.45
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 20.6,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": 0.28
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 24.131,
+  "type": "whoosh",
+  "gain": 0.5
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 33.843,
+  "type": "coin",
+  "gain": 0.28,
+  "pitch": 0
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 34.063,
+  "type": "coin",
+  "gain": 0.28,
+  "pitch": 1
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 34.283,
+  "type": "coin",
+  "gain": 0.28,
+  "pitch": 2
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 34.503,
+  "type": "coin",
+  "gain": 0.28,
+  "pitch": 3
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 34.723,
+  "type": "coin",
+  "gain": 0.28,
+  "pitch": 4
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 34.943,
+  "type": "coin",
+  "gain": 0.28,
+  "pitch": 5
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 35.163,
+  "type": "coin",
+  "gain": 0.28,
+  "pitch": 6
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 35.383,
+  "type": "coin",
+  "gain": 0.28,
+  "pitch": 7
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 35.603,
+  "type": "coin",
+  "gain": 0.28,
+  "pitch": 8
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 35.823,
+  "type": "coin",
+  "gain": 0.28,
+  "pitch": 9
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 35.993,
+  "type": "slam",
+  "gain": 0.5
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 36.043,
+  "type": "glitch",
+  "gain": 0.9
+ },
+ {
+  "scene": "l6",
+  "line": null,
+  "offset": 40.105,
+  "type": "whoosh",
+  "gain": 0.35
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 7.39,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": -0.3
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 7.53,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 0
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 7.57,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": -0.12
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 7.59,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 1
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 7.65,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 2
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 7.71,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 3
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 7.75,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": -0.13
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 7.77,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 4
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 7.83,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 5
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 7.89,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 6
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 7.93,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": -0.09
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 7.95,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 7
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 8.01,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 8
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 8.07,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 9
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 8.11,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": 0.13
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 8.13,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 10
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 8.19,
+  "type": "coin",
+  "gain": 0.32,
+  "pitch": 11
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 8.23,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": 0.19
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 8.41,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": -0.21
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 8.59,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": -0.06
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 8.71,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": 0.05
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 8.89,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": 0.08
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 9.07,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": 0.18
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 9.25,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": 0.18
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 9.43,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": -0.09
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 9.61,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": 0.06
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 9.67,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": 0.23
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 9.73,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": -0.05
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 9.91,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": 0.02
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 10.03,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": -0.26
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 10.21,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": 0.28
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 10.39,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": -0.23
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 10.51,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": -0.18
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 10.69,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": -0.1
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 10.87,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": 0.04
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 11.05,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": -0.18
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 11.23,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": 0.09
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 11.41,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": -0.21
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 11.47,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": 0.34
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 11.59,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": 0.05
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 11.77,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": -0.14
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 11.95,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": 0.18
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 12.13,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": -0.28
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 12.25,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": -0.03
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 12.31,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": 0.21
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 12.49,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": -0.34
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 12.67,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": -0.07
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 12.85,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": 0.21
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 13.03,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": 0.08
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 13.09,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": 0.09
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 13.27,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": 0.03
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 13.45,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": 0.33
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 13.63,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": -0.19
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 13.81,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": 0.32
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 13.99,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": -0.3
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 14.17,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": -0.35
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 14.29,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": -0.32
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 14.47,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": 0.22
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 14.65,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": 0.06
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 14.83,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": 0.07
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 15.01,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": -0.13
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 15.07,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": -0.03
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 15.25,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": 0.05
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 15.43,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": 0.3
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 15.49,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": 0.09
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 15.67,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": 0.33
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 15.73,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": 0.21
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 15.85,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": 0.16
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 15.91,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": 0.12
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 16.09,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": -0.18
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 16.27,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": 0.14
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 16.45,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": 0.29
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 16.51,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": 0.07
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 16.69,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": -0.2
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 16.75,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": -0.09
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 16.93,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": -0.34
+ },
+ {
+  "scene": "l7",
+  "line": null,
+  "offset": 16.959,
+  "type": "whoosh",
+  "gain": 0.35
+ },
+ {
+  "scene": "counter",
+  "line": null,
+  "offset": 9.35,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": 0.15
+ },
+ {
+  "scene": "counter",
+  "line": null,
+  "offset": 10.05,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": -0.27
+ },
+ {
+  "scene": "counter",
+  "line": null,
+  "offset": 10.75,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": 0.05
+ },
+ {
+  "scene": "counter",
+  "line": null,
+  "offset": 11.45,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": -0.33
+ },
+ {
+  "scene": "counter",
+  "line": null,
+  "offset": 12.15,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": 0.05
+ },
+ {
+  "scene": "counter",
+  "line": null,
+  "offset": 12.85,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": -0.16
+ },
+ {
+  "scene": "counter",
+  "line": null,
+  "offset": 13.55,
+  "type": "hit",
+  "gain": 0.6,
+  "pan": 0.16
+ },
+ {
+  "scene": "counter",
+  "line": null,
+  "offset": 14.25,
+  "type": "crit",
+  "gain": 0.75,
+  "pan": 0.19
+ },
+ {
+  "scene": "counter",
+  "line": null,
+  "offset": 15.058,
+  "type": "coin",
+  "gain": 0.25,
+  "pitch": 0
+ },
+ {
+  "scene": "counter",
+  "line": null,
+  "offset": 15.458,
+  "type": "coin",
+  "gain": 0.25,
+  "pitch": 1
+ },
+ {
+  "scene": "counter",
+  "line": null,
+  "offset": 15.858,
+  "type": "coin",
+  "gain": 0.25,
+  "pitch": 2
+ },
+ {
+  "scene": "counter",
+  "line": null,
+  "offset": 16.258,
+  "type": "coin",
+  "gain": 0.25,
+  "pitch": 3
+ },
+ {
+  "scene": "counter",
+  "line": null,
+  "offset": 16.658,
+  "type": "coin",
+  "gain": 0.25,
+  "pitch": 4
+ },
+ {
+  "scene": "counter",
+  "line": null,
+  "offset": 17.058,
+  "type": "coin",
+  "gain": 0.25,
+  "pitch": 5
+ },
+ {
+  "scene": "counter",
+  "line": null,
+  "offset": 17.458,
+  "type": "coin",
+  "gain": 0.25,
+  "pitch": 6
+ },
+ {
+  "scene": "counter",
+  "line": null,
+  "offset": 17.858,
+  "type": "coin",
+  "gain": 0.25,
+  "pitch": 7
+ },
+ {
+  "scene": "counter",
+  "line": null,
+  "offset": 20.55,
+  "type": "crit",
+  "gain": 0.375,
+  "pan": 0.11
+ },
+ {
+  "scene": "counter",
+  "line": null,
+  "offset": 21.25,
+  "type": "hit",
+  "gain": 0.3,
+  "pan": 0.03
+ },
+ {
+  "scene": "counter",
+  "line": null,
+  "offset": 21.95,
+  "type": "crit",
+  "gain": 0.375,
+  "pan": 0.06
+ },
+ {
+  "scene": "counter",
+  "line": null,
+  "offset": 22.65,
+  "type": "crit",
+  "gain": 0.375,
+  "pan": 0.04
+ },
+ {
+  "scene": "counter",
+  "line": null,
+  "offset": 23.35,
+  "type": "crit",
+  "gain": 0.375,
+  "pan": 0.33
+ },
+ {
+  "scene": "counter",
+  "line": null,
+  "offset": 24.05,
+  "type": "crit",
+  "gain": 0.375,
+  "pan": 0.23
+ },
+ {
+  "scene": "counter",
+  "line": null,
+  "offset": 24.75,
+  "type": "crit",
+  "gain": 0.375,
+  "pan": 0.33
+ },
+ {
+  "scene": "counter",
+  "line": null,
+  "offset": 25.1,
+  "type": "whoosh",
+  "gain": 0.35
+ },
+ {
+  "scene": "outro",
+  "line": null,
+  "offset": 0.25,
+  "type": "hit",
+  "gain": 0.3,
+  "pan": 0.28
+ },
+ {
+  "scene": "outro",
+  "line": null,
+  "offset": 0.85,
+  "type": "hit",
+  "gain": 0.3,
+  "pan": 0.32
+ },
+ {
+  "scene": "outro",
+  "line": null,
+  "offset": 1.45,
+  "type": "crit",
+  "gain": 0.375,
+  "pan": 0.3
+ },
+ {
+  "scene": "outro",
+  "line": null,
+  "offset": 2.05,
+  "type": "hit",
+  "gain": 0.3,
+  "pan": -0.23
+ },
+ {
+  "scene": "outro",
+  "line": null,
+  "offset": 2.65,
+  "type": "hit",
+  "gain": 0.3,
+  "pan": 0.04
+ },
+ {
+  "scene": "outro",
+  "line": null,
+  "offset": 3.25,
+  "type": "hit",
+  "gain": 0.3,
+  "pan": 0.01
+ },
+ {
+  "scene": "outro",
+  "line": null,
+  "offset": 3.85,
+  "type": "crit",
+  "gain": 0.375,
+  "pan": 0.3
+ },
+ {
+  "scene": "outro",
+  "line": null,
+  "offset": 4.45,
+  "type": "crit",
+  "gain": 0.375,
+  "pan": -0.24
+ },
+ {
+  "scene": "outro",
+  "line": null,
+  "offset": 5.05,
+  "type": "hit",
+  "gain": 0.3,
+  "pan": -0.1
+ },
+ {
+  "scene": "outro",
+  "line": null,
+  "offset": 5.65,
+  "type": "hit",
+  "gain": 0.3,
+  "pan": -0.14
+ },
+ {
+  "scene": "outro",
+  "line": null,
+  "offset": 5.995,
+  "type": "chime",
+  "gain": 0.6
+ },
+ {
+  "scene": "outro",
+  "line": null,
+  "offset": 9.724,
+  "type": "ui_tick"
+ },
+ {
+  "scene": "outro",
+  "line": null,
+  "offset": 10.074,
+  "type": "ui_tick"
+ },
+ {
+  "scene": "outro",
+  "line": null,
+  "offset": 10.424,
+  "type": "ui_tick"
+ }
+]

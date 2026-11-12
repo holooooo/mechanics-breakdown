@@ -1,0 +1,73 @@
+/* 机制拆解 04 additions */
+#panel { top: 210px; width: 600px; }
+#title { font-size: 64px; }
+#bullets .bullet { font-size: 27px; }
+#code { left: 92px; right: auto; top: auto; bottom: 214px; width: 600px; }
+#codebody { font-size: 19px; line-height: 1.55; padding: 16px 20px 18px; }
+
+#ladder { position: absolute; left: 92px; top: 132px; display: flex; gap: 8px; z-index: 12; opacity: 0; }
+#ladder i { font: 800 17px "SF Mono", Menlo, monospace; font-style: normal; padding: 6px 10px; border-radius: 8px; background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.45); border: 1px solid rgba(255,255,255,0.1); }
+#ladder i.done { color: #ffd98a; background: rgba(255,190,90,0.12); border-color: rgba(255,200,110,0.35); }
+#ladder i.on { color: #2a1600; background: #ffc35a; border-color: #ffd98a; box-shadow: 0 0 18px rgba(255,180,70,0.7); }
+
+.split-tag { position: absolute; top: 150px; transform: translateX(-50%); font-size: 34px; font-weight: 900; padding: 10px 26px; border-radius: 14px; background: rgba(0,0,0,0.55); border: 1px solid rgba(255,255,255,0.2); letter-spacing: 2px; white-space: nowrap; }
+.split-tag small { display: block; font-size: 18px; font-weight: 500; color: #c9d3da; letter-spacing: 1px; text-align: center; }
+.split-tag.hot { border-color: #ffc35a; color: #ffd98a; box-shadow: 0 0 30px rgba(255,170,60,0.35); }
+.vs { position: absolute; left: 960px; top: 540px; transform: translate(-50%,-50%); font: 900 70px "Impact", sans-serif; color: #fff; text-shadow: 0 0 30px #ff7a1a; }
+.divider { position: absolute; left: 958px; top: 0; bottom: 0; width: 4px; background: linear-gradient(#0000, #ffc35a, #0000); }
+
+.lad8 { display: flex; gap: 14px; justify-content: center; }
+.lad8 div { width: 176px; padding: 18px 10px; border-radius: 18px; text-align: center; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.16); }
+.lad8 div b { display: block; font: 900 40px "Impact", sans-serif; color: #ffc35a; }
+.lad8 div span { font-size: 24px; font-weight: 800; }
+
+.brainchart .pn { width: 1240px; margin-bottom: 24px; }
+.brainchart h4 { font-size: 26px; font-weight: 800; margin-bottom: 8px; display: flex; gap: 16px; align-items: baseline; }
+.brainchart h4 small { font-size: 19px; color: #b9c5cd; font-weight: 500; }
+.note { position: absolute; font-size: 17px; color: rgba(255,255,255,0.55); letter-spacing: 1px; }
+
+.cmp { display: grid; grid-template-columns: 330px 1fr 190px; gap: 18px 26px; align-items: center; font-size: 34px; font-weight: 800; }
+.cmp .bar { height: 34px; border-radius: 17px; background: rgba(255,255,255,0.08); overflow: hidden; }
+.cmp .bar i { display: block; height: 100%; border-radius: 17px; background: linear-gradient(90deg, #ff8a2a, #ffd27a); }
+.cmp .pct { font: 900 40px "Impact", sans-serif; color: #ffd27a; text-align: right; }
+.cmp .pct.dead { color: #7d8a94; }
+
+.squish { text-align: center; }
+.squish .lab { font-size: 28px; color: #ffcf73; letter-spacing: 4px; font-weight: 800; }
+.squish .num { font: 900 190px "Impact", sans-serif; line-height: 1.05; color: #fff; text-shadow: 0 0 40px rgba(255,140,40,0.6); -webkit-text-stroke: 3px #2a0e00; }
+.squish .sub { font-size: 24px; color: #b9c5cd; margin-top: 6px; }
+.int32 { width: 1100px; margin: 30px auto 0; text-align: left; }
+.int32 .bar { height: 48px; border-radius: 12px; background: rgba(255,255,255,0.08); border: 2px solid rgba(255,255,255,0.3); overflow: hidden; position: relative; }
+.int32 .bar i { display: block; height: 100%; background: repeating-linear-gradient(45deg, #ff5a2a 0 18px, #ff7a3a 18px 36px); }
+.int32 .row { display: flex; justify-content: space-between; font-size: 24px; margin-top: 10px; color: #dfe6ea; font-weight: 700; }
+.int32 .row b { font-family: "SF Mono", Menlo, monospace; color: #ffd27a; }
+
+.settings { width: 640px; }
+.settings .opt { display: flex; justify-content: space-between; align-items: center; padding: 18px 6px; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 28px; font-weight: 700; }
+.tog { width: 84px; height: 44px; border-radius: 22px; background: rgba(255,255,255,0.18); position: relative; }
+.tog::after { content: ""; position: absolute; top: 5px; left: 5px; width: 34px; height: 34px; border-radius: 50%; background: #fff; }
+.tog.on { background: #43c46a; } .tog.on::after { left: 45px; }
+
+.power { width: 620px; text-align: center; }
+.power .pl { font-size: 30px; color: #ffcf73; letter-spacing: 8px; font-weight: 900; }
+.power .pv { font: 900 120px "Impact", sans-serif; background: linear-gradient(#fff6a8, #ff9a1a); -webkit-background-clip: text; color: transparent; filter: drop-shadow(0 6px 24px rgba(255,140,30,0.6)); }
+.power .up { font: 900 40px "Impact", sans-serif; color: #5fe07a; }
+.power .pay { display: inline-block; margin-top: 24px; padding: 18px 70px; border-radius: 999px; background: linear-gradient(#ff7aa8, #ff3d7a); font-size: 38px; font-weight: 900; box-shadow: 0 10px 40px rgba(255,60,120,0.55); }
+
+.check { font-size: 30px; font-weight: 800; }
+.check div { padding: 12px 0; display: flex; gap: 16px; align-items: center; }
+.check div i { font-style: normal; width: 40px; height: 40px; border-radius: 10px; display: grid; place-items: center; background: rgba(255,255,255,0.1); font-size: 26px; }
+.check div.on i { background: #ffc35a; color: #2a1600; }
+.check div.off { opacity: 0.3; }
+
+.strip { display: flex; gap: 8px; }
+.strip i { width: 46px; height: 62px; border-radius: 10px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18); display: grid; place-items: center; font: 900 18px "Impact", sans-serif; font-style: normal; color: #8c99a3; }
+.strip i.c { background: linear-gradient(#ffe27a, #ff7a1a); color: #3a0c00; border-color: #fff0b0; box-shadow: 0 0 18px rgba(255,150,40,0.7); }
+.strip i.now { outline: 3px solid #fff; }
+
+#bigtext .l1 .gl { display: inline-block; }
+.site { width: 1180px; border-radius: 18px; overflow: hidden; border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 40px 100px rgba(0,0,0,0.6); }
+.site img { display: block; width: 100%; }
+.site .bar { padding: 10px 18px; font: 500 18px "SF Mono", Menlo, monospace; color: #9fb0bd; background: #11161f; }
+
+#subs.top { bottom: auto; top: 150px; }

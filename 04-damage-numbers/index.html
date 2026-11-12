@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>跳字简史 · 机制拆解 第 4 期 · 效果预览 + 实现方法</title>
+<meta name="description" content="伤害数字是怎么一层一层“爽”起来的？从 L0 纯文本到 L7 收得住，可交互教学原型：暴击、顿帧、连击滚动、数值膨胀与万/亿缩写，附源码讲解。">
+<link rel="icon" href="brand/avatar.png">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <img class="avatar" src="brand/avatar.png" alt="粑粑柑（梭哈ai版）">
+    <div class="who"><b>粑粑柑（梭哈ai版）</b><span>机制拆解 · 第 4 期 · 跳字</span></div>
+  </div>
+  <nav class="tabs" role="tablist">
+    <button role="tab" data-tab="preview" class="on">效果预览</button>
+    <button role="tab" data-tab="method">实现方法</button>
+    <button role="tab" data-tab="video">解析视频</button>
+  </nav>
+</header>
+
+<main>
+<section id="tab-preview" class="tab on">
+  <div class="stage" id="stage">
+    <canvas id="cv"></canvas>
+    <div class="hudbar" id="hud">
+      <span class="chip">屏上数字 <b id="h-n">0</b></span>
+      <span class="chip">上一击 <b id="h-last">—</b></span>
+      <span class="chip">连击总数 <b id="h-total">—</b></span>
+      <span class="chip stop" id="h-stop">顿帧中</span>
+    </div>
+    <div class="lvtag" id="lvtag"></div>
+    <div class="hint">点击画面 / 空格 / J 攻击 · K 连击 · C 必暴击 · 0–7 切换层级</div>
+  </div>
+  <aside class="panel glass">
+    <div class="sec">
+      <h4>层级（累加）</h4>
+      <div class="lvgrid" id="levels"></div>
+      <div class="tip" id="lvdesc"></div>
+    </div>
+    <div class="sec">
+      <h4>出手</h4>
+      <div class="acts">
+        <button id="b-hit" class="main"><kbd>Space / J</kbd>攻击</button>
+        <button id="b-burst"><kbd>K</kbd>连击 ×8</button>
+        <button id="b-crit"><kbd>C</kbd>必暴击</button>
+      </div>
+      <div class="mini">
+        <button id="b-auto" class="toggle">自动攻击</button>
+        <button id="b-cmp" class="toggle">左右对比（L0 vs 当前）</button>
+      </div>
+    </div>
+    <div class="sec">
+      <h4>参数</h4>
+      <div class="slider"><span>暴击率</span><output id="critout">25%</output><input type="range" id="crit" min="0" max="100" step="1" value="25"></div>
+      <label>数字格式
+        <select id="fmt">
+          <option value="auto">自动（L6 起用 万/亿）</option>
+          <option value="raw">原样 12345678</option>
+          <option value="comma">千分位 12,345,678</option>
+          <option value="en">英文 K / M / B</option>
+          <option value="zh">中文 万 / 亿 / 兆</option>
+          <option value="sci">科学计数 1.23e7</option>
+        </select>
+      </label>
+      <div class="mini"><button id="b-inf" class="toggle">数值膨胀</button><div class="slider inl" id="infbox"><span>每秒增长</span><output id="infout">×1.28</output><input type="range" id="inf" min="0.05" max="0.6" step="0.01" value="0.25"></div></div>
+    </div>
+    <div class="sec">
+      <h4>时间</h4>
+      <div class="mini">
+        <button data-sp="1" class="on">1×</button><button data-sp="0.25">0.25×</button><button id="b-pause" class="toggle">暂停</button><button id="b-reset" class="warn">清屏</button>
+      </div>
+    </div>
+    <div class="note small">数字的基础值 120，浮动 ±35%，暴击 ×2.6。开了“数值膨胀”后基础值按指数增长，配合 L6 的 万/亿 缩写看看会发生什么。</div>
+  </aside>
+</section>
+
+<section id="tab-method" class="tab">
+  <article class="doc">
+    <h1>伤害数字，是怎么一层一层“爽”起来的</h1>
+    <p class="lead">同一个“打了 1234 点伤害”，可以只是一行字，也可以是一场小型庆典。把它拆开，每一层只多做一件事：位移、弹性、分级、停顿、合并、膨胀、收敛。<b>画面状态 = f(命中列表, 时间, 层级)</b>——整个系统是一个没有 DOM、没有隐藏状态的纯函数。</p>
+    <p class="note">本页是原创教学原型，不含任何商业游戏的代码或美术。案例结论按来源可信度标注：<span class="cf h">官方</span> 官方/开发者说法，<span class="cf m">媒体</span> 媒体或单一技术来源，<span class="cf l">社区</span> 玩家社区观察、未经证实，<span class="cf t">待核实</span> 凭记忆、上稿前需复核。</p>
+
+    <h2>数据流</h2>
+    <div class="pipe">
+      <div>makeHit<small>造一次命中：数值、暴击、随机偏移</small></div><i>→</i>
+      <div>chainHits<small>排序、编号、连击链</small></div><i>→</i>
+      <div>layout(hits, t, L)<small>按层级算出绘制指令</small></div><i>→</i>
+      <div>drawArena<small>Canvas 2D 只负责画</small></div>
+    </div>
+    <div class="formula">amount = base · e^(growth·t) · mul · (1 − spread + 2·spread·r) · (crit ? critMul : 1)<small>r、crit、位置偏移都来自 hash(i, seed)：同样的输入永远画出同样的画面，视频渲染和网页预览共用一份代码</small></div>
+
+    <h2>八层，每层多一件事</h2>
+    <div id="layers"></div>
+
+    <h2>数字格式化</h2>
+    <p>数字大了以后，位数本身就成了噪声。<code>fmt(n, style)</code> 提供五种写法；<code>short()</code> 取三位有效数字，避免宽度抖动。在下面输入试试：</p>
+    <div class="fmtlab">
+      <label>数值 <input type="number" id="fmtin" value="12345678" min="0" step="1"></label>
+      <table class="rtab" id="fmtout"></table>
+    </div>
+
+    <h2>为什么这样会“爽”：几条心理学</h2>
+    <div class="cards3">
+      <div class="card"><h3>即时反馈</h3><p>动作与结果之间的延迟越短，因果越清晰。数字、挥砍、闪白、顿帧都在命中那一帧同时发生；它们不是装饰，是“我打中了”的确认信号。</p></div>
+      <div class="card"><h3>可变比率奖励</h3><p>暴击 = 不确定的大奖励。强化理论里，可变比率是最难消退的强化时序之一：你永远在等下一个黄色大字。<span class="cf m">心理学</span></p></div>
+      <div class="card"><h3>期待（数数）</h3><p>连击总数不是直接跳到结果，而是往上“数”。过程被拉长到 0.14 秒一档，期待感本身就是奖励；Balatro 把这一点做成了整个游戏。<span class="cf m">媒体</span></p></div>
+    </div>
+    <h3>韦伯–费希纳与数值膨胀</h3>
+    <p>人对强度的感知大致与刺激的<b>对数</b>成正比（Weber–Fechner）。所以 +10 在 100 上明显，在 10 亿上无感。想让玩家持续感觉“变强了”，数字就得按数量级往上滚，于是有了：字号取 log10、万/亿 缩写、颜色换挡。代价是膨胀：数字大到无法比较时，要么像魔界战记那样把膨胀当玩法，要么像魔兽世界那样周期性“压缩”（stat squish）。</p>
+    <h3>反方与无障碍</h3>
+    <p>数字不是越多越好。暗黑 4 玩家抱怨数字刷屏“失去意义”，官方后来提供了关闭战斗文字的选项；《艾尔登法环》默认不显示伤害数字，靠动画、硬直和音效传达打击（<span class="cf t">待核实</span> 常识性观察）。L7 的“同屏上限”就是在做这个取舍。落地时请至少给玩家：<b>可关闭、可缩放、可降噪</b>三个开关，并且别只靠红绿区分信息。</p>
+
+    <h2>案例与来源</h2>
+    <table class="cmp">
+      <tr><th>游戏</th><th>做法</th><th>可信度</th></tr>
+      <tr><td>暗黑 3 / 4</td><td>暴击更大更亮；大数加千分位；D4 玩家抱怨数字刷屏，S5 起可完全关闭战斗文字</td><td><span class="cf m">媒体</span><span class="cf l">社区</span></td></tr>
+      <tr><td>魔界战记</td><td>单次伤害可到千万亿级以上（各媒体口径不一，本页不写死具体上限），“数字膨胀本身就是后期玩法”</td><td><span class="cf m">媒体</span></td></tr>
+      <tr><td>魔兽世界</td><td>十年数值膨胀后多次“数值压缩”（stat squish），同样的相对强度换成更好读的数字。注意：暗影国度的等级压缩不是数值压缩</td><td><span class="cf h">官方历史</span><span class="cf l">社区</span></td></tr>
+      <tr><td>怪物猎人：世界</td><td>数字颜色编码效果：橙=弱点、白=中性、紫=抗性；数字同时是“打点地图”</td><td><span class="cf l">社区</span></td></tr>
+      <tr><td>Balatro</td><td>筹码×倍率逐张牌依次触发、数字滚动累加，把“乘法”拆成可见的时序</td><td><span class="cf m">媒体</span></td></tr>
+      <tr><td>吸血鬼幸存者</td><td>海量弹幕与数字刷屏，后期卡顿，玩家反馈关闭伤害数字可缓解；无开发者官方声明</td><td><span class="cf l">社区</span></td></tr>
+      <tr><td>Warframe</td><td>按伤害类型与暴击等级给数字着色（黄/橙/红分级暴击）</td><td><span class="cf h">官方 Wiki</span></td></tr>
+      <tr><td>艾尔登法环（反例）</td><td>默认无伤害数字，用动画、硬直、音效反馈</td><td><span class="cf t">待核实</span></td></tr>
+    </table>
+    <h3>来源</h3>
+    <ul class="src" id="srclist"></ul>
+    <h3>原理讲座</h3>
+    <ul class="src">
+      <li>Jonasson &amp; Purho《Juice it or lose it》——同一套玩法加缓动、缩放、粒子、音效后手感质变 <a href="https://www.youtube.com/watch?v=Fy0aCDmgnxg" target="_blank" rel="noopener">视频</a> <span class="cf t">待核实</span></li>
+      <li>Jan Willem Nijman《The art of screenshake》——逐步叠加后坐力、震屏、击退、停顿 <a href="https://www.youtube.com/watch?v=AJdEqssNZ-U" target="_blank" rel="noopener">视频</a> <span class="cf t">待核实</span></li>
+      <li>Weber–Fechner 定律 <a href="https://en.wikipedia.org/wiki/Weber%E2%80%93Fechner_law" target="_blank" rel="noopener">Wikipedia</a> · 强化理论 <a href="https://en.wikipedia.org/wiki/Reinforcement" target="_blank" rel="noopener">Wikipedia</a> · easeOutBack <a href="https://easings.net/#easeOutBack" target="_blank" rel="noopener">easings.net</a></li>
+    </ul>
+
+    <h2>源码</h2>
+    <div class="srcbar">
+      <select id="file"><option value="dmgtext">src/dmgtext.js · 分层系统（纯函数）</option><option value="arena">src/arena.js · Canvas 2D 渲染</option></select>
+      <select id="fn"></select>
+      <span id="srcmeta"></span>
+    </div>
+    <pre class="code" id="codebox"><code id="code">读取中…</code></pre>
+  </article>
+</section>
+
+<section id="tab-video" class="tab">
+  <div class="vwrap">
+    <div class="vposter"><img src="media/poster.jpg" alt="解析视频画面" style="width:100%;border-radius:16px;display:block" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><div class="noposter">封面制作中</div><span>机制拆解 · 第 4 期 · 跳字</span></div>
+    <p class="note">完整解析视频「机制拆解 04 · 跳字」将发布在 B站 / 抖音，搜索作者 <b>粑粑柑（梭哈ai版）</b> 即可观看。<span class="todo">视频链接：待发布后补充（B站 / 抖音）。</span>视频里的竞技场画面，用的是本页同一份 <code>src/dmgtext.js</code> + <code>src/arena.js</code> 逐帧渲染的。</p>
+    <div class="vlinks">
+      <a href="https://mechanics-breakdown.pages.dev/01-zelda-chemistry/" target="_blank" rel="noopener">第 1 期 · 塞尔达式化学引擎<small>把状态放在世界的格子里传播</small></a>
+      <a href="https://mechanics-breakdown.pages.dev/02-genshin-elements/" target="_blank" rel="noopener">第 2 期 · 原神式元素反应<small>每个单位身上一张会衰减的附着表</small></a>
+      <a href="https://mechanics-breakdown.pages.dev/03-input-reading/" target="_blank" rel="noopener">第 3 期 · 读指令简史<small>敌人在哪一帧知道你要干什么</small></a>
+      <a href="https://mechanics-breakdown.pages.dev/" target="_blank" rel="noopener">全部期数 · mechanics-breakdown.pages.dev<small>机制拆解系列合集</small></a>
+    </div>
+  </div>
+</section>
+</main>
+<script type="module" src="app.js"></script>
+</body>
+</html>
